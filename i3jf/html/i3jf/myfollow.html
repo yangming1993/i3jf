@@ -1,0 +1,382 @@
+{% extends "i3jf/base.html" %}
+        {% block css %}
+
+		<link rel="stylesheet" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" href="{{static_url}}css/follow.css">
+		{% endblock %}
+
+		{% block content %}
+		<div id="pageHead">
+			<div class="pageheadContent">
+				<div class="leftHead">
+					<div class="mainTittle left">
+						<a href="/"><img src="{{static_url}}images/logo.png" alt=""></a>
+					</div>
+					<div class="separateD" style="border-right: 4px solid rgb(102, 102, 102);"></div>
+					<div class="subTittle left" style="display: inline-block;">
+						<span class="subWord">我的关注</span>
+					</div>
+				</div>
+				<div class="searchOverall">
+										<input type="text" placeholder="请输入搜索内容" class="left searchInput">
+					<span class="left searchBtn">搜&nbsp;&nbsp;索</span>
+				</div>
+			</div>
+		</div>
+		 		<div id="containerBox">
+			<div id="container" class="">
+				<div class="shopCar">
+					<div class="success">
+						<h2></h2>
+						<a href="/static/i3jf/shopping_cart.html" class="calculate">去购物车结算</a>
+						<div class="goOn">
+							<span>您还可以&nbsp;</span>
+							<a href="javascript:;">继续购物</a>
+						</div>
+					</div>
+				</div>
+					<div class="fol-body">
+						<ul class="fol-list" id="folList">
+
+						</ul>
+				        <div class="fol-emp hidden" id="folEmp">
+				            <p class="cat-img"><img src="{{static_url}}images/cat-emp.png" alt="" title=""></p>
+				            <div class="emp-tips">
+				                <p>还没有关注的商品哦~</p>
+				                <p>关注后，当商品降价、促销、补货会提醒您哦~</p>
+				                <h4><a class="return-index" href="/">去首页看看</a></h4>
+				            </div>
+				        </div>
+						<div class="imgLoad hidden" id="loading">
+							<div class="outer"></div>
+							<div class="inner"></div>
+						</div>
+				        <div class="clear"></div>
+					</div>
+			</div>
+		</div>
+
+		{% endblock %}
+
+		{% block js %}
+		<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+		<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+		<script type="text/javascript">
+
+			var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+                logged_in(); //已登陆
+            }else{
+                not_logged_in(); //未登录
+                window.location.href = '/api/user/login/';
+            }
+            //未登录可以执行的方法
+            function not_logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+            };
+            //已登录执行的方法
+            function logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+                cartAmount();//购物车数量
+            };
+
+
+
+			doSomething()
+			//登录后执行的操作
+		    function doSomething(){
+		        showFolList();
+		    }
+
+			//调用关注列表接口
+			function showFolList() {
+				showLoading();
+				// console.log("关注列表接口进入");
+				$.ajax({
+					url:'/api/user/favourite/list',
+					type:'GET',
+					datatype:'json',
+					data:{
+
+					},
+					success:function(data){
+						var data = JSON.parse(data);
+						// console.log(data);
+						var folList = data.list;
+						if(folList.length > 0) {
+							$('#folList').removeClass('hidden');
+							var html = '';
+							$.each(folList, function(index, content) {
+								html = '<li class="fol-item" folId="' + content.id + '" itemSku="' + content.sku + '">' +
+											'<a class="item-img" href="/api/product/detail/?sku='+content.sku+'" target="_blank">' + '<img placepic="true" wait="true" src="' + content.image + '" alt="' + content.name + '" title="' + content.name + '" />' +'</a>'+
+											'<p class="item-name">' + '<a href="/api/product/detail/?sku='+content.sku+'" target="_blank"><span class="sales-promotion c0a2a"></span>' + content.name + '</a>' + '</p>' +
+											'<div class="item-price">'+content.amount+'<span class="unit">积分</span></div>' +
+											'<div class="item-manage">' +
+												'<button class="add-cat" onclick="addToCart(this);" itemSku="' + content.sku + '">加入购物车</button>' +
+												'<button class="cancel-fol" onclick="cancelFol(this);">取消关注</button>' +
+											'</div>'+
+										'</li>';
+								$('#folList').append(html);
+								setScrollPics();
+							});
+							checkSkuList(folList);
+	                        hideLoading();
+						} else {
+							hideLoading();
+							$('#folEmp').removeClass('hidden');
+						}
+
+					},
+					error:function(error){
+						alert("关注列表失败,请刷新...");
+						// var mainMsg = errmsg;
+						// var msgInfo = {
+						// 	'mainMsg': mainMsg,
+						// 	'alertType': true
+						// };
+						// diyAlert(msgInfo,true);
+					}
+				})
+			}
+
+			function checkSkuList(list){
+				var eachList;
+				var skuList = [];
+				var bool=true;
+				var limit = 16;
+				if(list.length>=limit)
+				{
+					bool=false;
+					eachList=list.slice(0,limit);
+				}
+				else
+				{
+					bool=true;
+					eachList = list;
+				}
+				$.each(eachList,function(index,content){
+					skuList.push({
+						'sku':content.sku,
+						'saleId':(!content.saleId) ? '' : content.saleId
+					});
+				});
+				// getProductAmount(skuList,list);
+				if(!bool){
+					var newList = list.slice(limit);
+					checkSkuList(newList,list);
+				}
+			}
+
+			var loadList = [];
+
+			function getProductAmount(skuList,allValue){
+					// var whole = getCookie('area');
+					var nowCode = $('#citys .active').attr('city-code');
+					var json = {
+						'skuList':skuList
+					}
+					// if(whole)
+					// {
+					// 	json.cityId=$.evalJSON(whole).city.code;
+					// }
+					loadList.push(false);
+					var loadItem = loadList.length-1;
+					// console.log("")
+					ajaxAction(
+						'POST',
+						apiPath('/api/product/price/list/sale'),
+						json,
+						true,
+						function (data,textStatus){
+							loadList[loadItem] = true;
+							var amountList = data.priceList;
+							$.each(skuList,function(key,showValue){
+								var nowSku = showValue.sku;
+								var hasMatch = false;
+								$.each(amountList,function(index,content){
+									try{
+										if(content.saleId){
+											$('.fol-item[itemsku = '+content.skuId+'] .sales-promotion').text('【促销】');
+										}
+										if(nowSku == content.skuId){
+											var amountItem = '';
+											if(!content.amount || content.amount <= 0){
+												amountItem = '<span class="unit">该地区暂不销售</span>';
+												$('.fol-item[itemsku = '+content.skuId+'] .add-cat').removeAttr('onclick');
+											}else{
+												if(content.saleId){
+													amountItem = content.saleAmount + '<span class="unit">积分</span><span class="old-price">'+ content.amount +'</span>';
+													$('.fol-item[itemsku = '+content.skuId+'] .add-cat').prop('disabled',false);
+												}else{
+													amountItem = content.amount + '<span class="unit">积分</span>';
+													$('.fol-item[itemsku = '+content.skuId+'] .add-cat').prop('disabled',false);
+												}
+											}
+											$('.fol-item[itemsku = '+content.skuId+'] .item-price').html(amountItem);
+											hasMatch = true;
+										}
+									}catch(e){
+										// console.log(e);
+									}
+								});
+								if(!hasMatch){
+									var amountItem = '<span class="unit">该地区暂不销售</span>';
+									$('.fol-item[itemsku = '+nowSku+'] .add-cat').removeAttr('onclick');
+									$('.fol-item[itemsku = '+nowSku+'] .item-price').html(amountItem);
+								}
+							});
+							checkLoadPrice(allValue);
+						},function (errno,errmsg){
+							loadList[loadItem] = true;
+							checkLoadPrice(allValue);
+						}
+					);
+				// }
+			}
+
+			//判断是否全部获取完成
+			function checkLoadPrice(allValue){
+				var flag = true;
+				$.each(loadList,function(index,content){
+					if(!content){
+						flag = false;
+						return false;
+					}
+				});
+				if(flag){
+					loadList = [];
+				}
+			}
+
+			//加入购物车
+			function addToCart(content, fn) {
+				var itemSku = $(content).attr('itemSku');    //获取商品sku
+				// console.log(itemSku);
+				var folId = $(content).parent('div').parent('.fol-item').attr('folId');    //获取商品id
+				// console.log("加入购物车接口进入");
+				$.ajax({
+					url:'/api/user/cart/create/',
+					type:'POST',
+					datatype:'json',
+					data:{
+						'sku':itemSku
+					},
+					success:function(data){
+						var data = JSON.parse(data);
+						var errno = data.errno;
+						if (errno == 0) {
+							// console.log("加入购物车接口回调成功---"+data);
+							$('.fol-body').hide();
+							$('.shopCar').show();
+							$('.shopCar h2').text('商品已成功加入购物车！');
+							$('.goOn a').click(function(){
+								$('.fol-body').show();
+								$('.shopCar').hide();
+							})
+						}else{
+							// console.log("加入购物车接口回调异常---"+data);
+						}
+					},
+					error:function(error){
+						alert("加入购物车失败,请刷新...");
+						// var mainMsg = errmsg;
+						// var msgInfo = {
+						// 	'mainMsg': mainMsg,
+						// 	'alertType': true
+						// };
+						// diyAlert(msgInfo,true);
+					}
+				})
+			}
+
+			//取消关注
+			function cancelFol(content) {
+				// console.log(111);
+				var folId = $(content).parent('div').parent('.fol-item').attr('folId');
+				var itemSku = $(content).parent('div').parent('.fol-item').attr('itemSku');
+				var mainMsg = '确定取消关注该商品吗？';
+				// var msgInfo = {
+				// 	'mainMsg': mainMsg,
+				// 	'sureFun': function() {
+
+				// 	}
+				// };
+				$('.tooltip').show();
+				$('.toolback').show();
+				$('.tooltip strong').text(mainMsg);
+				$('.cancel .confirm').text('确认');
+				$('.cancel .abolish').text('取消');
+				$('.cancel .confirm').click(function(){
+					doCancelFol(folId,itemSku);
+				});
+				$('.cancel .abolish').click(function(){
+					$('.tooltip').hide();
+					$('.toolback').hide();
+				})
+				// diyAlert(msgInfo,true);
+			}
+			//确认取消关注
+			function doCancelFol(folId,sku) {
+				// console.log("取消关注接口进入");
+				// console.log(folId+"----"+sku);
+				$.ajax({
+					url:'/api/user/favourite/remove/',
+					type:'POST',
+					datatype:'json',
+					data:{
+						'id':folId
+					},
+					success:function(data){
+						var data = JSON.parse(data);
+						var errno = data.errno;
+						if (errno == 0) {
+							// console.log("取消关注接口回调成功---"+data);
+							// deleteFollow(sku);
+							location.reload();
+							var mainMsg = '已取消关注!';
+							var msgInfo = {
+								'mainMsg': mainMsg,
+								'alertType': true,
+								'sureFun': function() {
+									location.reload();
+								}
+							};
+							// diyAlert(msgInfo,true);
+						}else{
+							// console.log("取消关注接口回调异常---"+data);
+						}
+					},
+					error:function(error){
+						alert("取消关注失败,请刷新...");
+						var mainMsg = errmsg;
+						var msgInfo = {
+							'mainMsg': mainMsg,
+							'alertType': true
+						};
+						// diyAlert(msgInfo,true);
+					}
+				})
+			}
+
+			//图片懒加载
+			function setScrollPics() {
+				// loadPicture();
+				// $(window).scroll(function(){
+				// 	loadPicture();
+				// });
+			}
+
+			//等待显示转圈
+			function showLoading() {
+				$('#loading').removeClass('hidden');
+			}
+
+			//隐藏转圈
+			function hideLoading() {
+				$('#loading').addClass('hidden');
+			}
+		</script>
+		{% endblock %}

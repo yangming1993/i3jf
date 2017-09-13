@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>超级积分</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="{{static_url}}admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/skin-blue.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/myModify.css">
+
+    <style type="text/css">
+          .login-box, .register-box{
+            padding: 15px 0px;
+            border: 2px solid rgba(0,0,0,0.5);
+            box-shadow: 4px 4px 10px 2px;
+          }
+          #showError{
+            display: block;
+            margin-bottom: 10px;
+            color: red;
+          }
+        #captcha {
+            border-radius: 2px;
+            cursor: pointer;
+            position: absolute;
+            z-index: 3;
+            right: 0;
+            top: 0;
+            width: 100px;
+            height: 34px;
+        }
+    </style>
+  </head>
+  <body class="skin-blue sidebar-mini">
+
+    <div class="login-box">
+      <div class="login-logo">
+        <a><b>超级积分</b></a>
+      </div><!-- /.login-logo -->
+      <div id="loginPanl" class="login-box-body">
+        <p class="login-box-msg"></p>
+        <div class="form-group has-feedback">
+          <input type="email" class="form-control" placeholder="用户名" paramet-data="true" data-key="username" data-value="username" onfocus="initShowError(&#39;showError&#39;);">
+        </div>
+        <div class="form-group has-feedback">
+          <input type="password" class="form-control" placeholder="密码" paramet-data="true" data-key="password" data-value="password" onfocus="initShowError(&#39;showError&#39;);" onkeyup="checkEnter(event);">
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input type="text" class="form-control" style="padding-right: 100px" placeholder="验证码" paramet-data="true" data-key="checkimg" data-value="checkimg" onfocus="initShowError(&#39;showError&#39;);" onkeyup="checkEnter(event);">
+          <div onclick="getCaptcha('#captcha');"><img id="captcha" src=""/></div>
+        </div>
+        <div class="row">
+          <div class="col-xs-8">
+            <span id="showError" style="color:red;">&nbsp;</span>
+          </div>
+        </div>
+        <button id="doLogin" class="btn btn-primary btn-block btn-flat" onclick="checkParamet(this);">登录</button>
+      </div>
+    </div>
+
+    <script src="{{static_url}}admin/js/jQuery-2.1.4.min.js"></script>
+    <script src="{{static_url}}admin/js/bootstrap.min.js"></script>
+    <script src="{{static_url}}admin/js/checkAction.js"></script>
+    <script src="{{static_url}}admin/js/app.min.js"></script>
+    <script src="{{static_url}}admin/js/public.js"></script>
+    <script src="{{static_url}}admin/js/base.js"></script>
+    <script>
+      $(function(){
+        initLogin();
+        getCaptcha("#captcha");
+      });
+
+      function initLogin(){
+
+      }
+
+      //获取图片验证码
+      function getCaptcha(target){
+        console.log(target);
+        $.ajax({
+            url:'/api/oam/user/get_captcha',
+            type:'GET',
+            datatype:'json',
+            data:{
+
+            },
+            success:function(data){
+                console.log(data);
+                $(target).attr('src',data.captcha_url);
+            },
+            error:function(error){
+                alert("获取图片失败");
+            }
+        })
+      }
+
+      function checkEnter(e){
+        if(e.keyCode == 13){
+          checkParamet(document.getElementById('doLogin'));
+        }
+      }
+
+      function checkParamet(target){
+        var savePwd = $('#savePwd').prop('checked');
+        var json = autoBindJson($('#loginPanl')[0]);
+        console.log(json);
+        var showError = $('#showError');
+        if(!checkNull(json.username,'请填写用户名',function(checkItem,errmsg){
+          showError.text(errmsg);
+        })) return;
+        if(!checkNull(json.password,'请填写登录密码',function(checkItem,errmsg){
+          showError.text(errmsg);
+        })) return;
+        if(!checkNull(json.checkimg,'请填写验证码',function(checkItem,errmsg){
+          showError.text(errmsg);
+        })) return;
+        adminLogin(target);
+      }
+
+      function adminLogin(target){
+        changeBind(target,true);
+        var json = autoBindJson($('#loginPanl')[0]);
+        var mobile = $(".form-control[type=email]").val();
+        var password = $(".form-control[type=password]").val();
+        var captcha = $(".form-control[type=text]").val();
+        $.ajax({
+            url:'/api/oam/user/login',
+            type:'POST',
+            datatype:'json',
+            data:{
+                'mobile':mobile,
+                'password':password,
+                'captcha':captcha
+            },
+            success:function(data){
+                var data = JSON.parse(data);
+                console.log(data);
+                if (data.errno == 0) {
+                    clickCounter(mobile);
+                    location.href = '/api/oam/data_analysis/';
+                    alert("登录成功！");
+                }else{
+                   $('#showError').text(data.errmsg);
+                   getCaptcha("#captcha");
+                   $("#doLogin").removeAttr('disabled');
+                }
+            },
+            error:function(error){
+              changeBind(target,false);
+              getCaptcha("#captcha");
+              alert("登录失败");
+            }
+        })
+      }
+
+      //session记录登录
+      function clickCounter(name)
+      {
+        if(typeof(Storage)!=="undefined")
+        {
+          sessionStorage.setItem("adminLogin",name);
+        }
+        else
+        {
+          alert("抱歉，请打开高版本浏览器");
+        }
+      }
+    </script>
+
+
+</body></html>

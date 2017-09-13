@@ -1,0 +1,59 @@
+    body{
+        overflow-x:auto;
+    }
+    .iconImg, .iconImg img {
+        max-width: 20px;
+        max-height: 20px;
+    }
+    .iconImg {
+        background-color: rgba(0, 0, 0, 0.8);
+        text-align: center;
+        margin: 0 auto;
+    }
+    .editPanel {
+        width: 700px;
+        height: 380px;
+    }
+    .selectType{
+        margin-top:7px;
+    }
+    .panel-body .submitDiv {
+        margin-top: 30px;
+    }
+    #selectPage {
+        width: 220px;
+        padding-left: 10px;
+        height: 30px;
+    }
+    #onlineBtn{
+        margin-right: 20px;
+    }
+    .row .control-label{
+        padding-top: 7px;
+        margin-bottom: 0;
+        text-align: right;
+    }
+    .nailDiv{
+        background-color: #000;
+    }
+    .file-name{
+        width:90px;
+    }
+    #submitForm .form-group{
+        height: 34px;
+    }
+    .tips{
+        margin-top: 34px;
+    }
+      .logo{
+        font-size:26px;
+        font-weight:bold;
+        /* color:#222d32; */
+      }
+      .logo span{
+
+      }
+      .tips{
+        font-size: 10px;
+        color:darkgray;
+      }

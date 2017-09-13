@@ -1,0 +1,729 @@
+{% extends "i3jf/admin/template.html" %}
+    {% block css %}
+    <link rel="stylesheet" href="{{static_url}}admin/css/bootstrap.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/AdminLTE.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/skin-blue.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/dataTables.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/goods.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/myModify.css">
+    {% endblock %}
+        {% block content %}
+          <ul class="sidebar-menu">
+            <li class="header">菜单</li>
+            <li id="dataMenage" class="treeview">
+              <a href="/api/oam/data_analysis/"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i> <span>数据分析</span></a>
+
+            </li>
+            <li id="userMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> <span>用户管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu active">
+                <li id="1" class="active"><a href="/api/oam/user/lists">用户列表</a></li>
+              </ul>
+            </li>
+            <li id="orderMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-hamburger"></i> <span>订单管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/order/lists">订单列表</a></li>
+                <!-- <li id="2"><a href="/static/i3jf/admin/special.html">异常订单</a></li> -->
+                <li id="3"><a href="/api/oam/returned/history">退货历史</a></li>
+              </ul>
+            </li>
+            <li id="contentMenage" class="treeview active">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-signal"></i> <span>数据管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/price/set">价格管理</a></li>
+                <li id="2" class="active"><a href="/api/oam/product/lists">产品列表</a></li><!--
+                <li id="4"><a href="/static/i3jf/admin/bind.html">分类管理</a></li> -->
+              </ul>
+            </li>
+            <li id="marketMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-film"></i> <span>推广管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/banner/ads/list">首页轮播管理</a></li>
+                <li id="2"><a href="/api/oam/channel/product/lists">首页频道管理</a></li>
+                <!-- <li id="3"><a href="/static/i3jf/admin/pull.html">精品推荐管理</a></li> -->
+              </ul>
+            </li>
+            <li id="productList" class="treeview">
+              <a href="/api/oam/get/product/detail"><i class="glyphicon glyphicon-volume-down"></i>
+              <span>获取产品信息</span> </a>
+
+            </li>
+            <li class="treeview">
+              <a href="/api/oam/get/area/detail"><i class="glyphicon glyphicon-th-large"></i> <span>地区管理</span> </a>
+            </li>
+          </ul>
+        </section>
+
+      </aside>
+      <div class="content-wrapper" style="min-height: 897px;">
+        <section class="content-header">
+          <h1>
+               数据管理
+               <small>产品列表</small>
+          </h1>
+        </section>
+        <section class="content">
+              <div class="box box-default color-palette-box">
+        <div class="control-panel">
+            <div class="control-line form-horizontal">
+<!--                 <div id="category1" class="custom-item">
+                    <label for="category1" class="selectLabel">子站：</label>
+                    <select class="form-control category" onchange="changeEditCategoryD2(1);"><option value="-1" selected="selected">全部分类</option><option value="1">积分数码</option><option value="27">积分超市</option><option value="58">积分时尚</option><option value="82">积分娱乐</option></select>
+                </div> -->
+                <div id="category2" class="custom-item">
+                    <label for="category2" class="selectLabel">一级分类：</label>
+                    <select class="form-control category" onchange="changeEditCategoryD2(2);"><option value="-1" selected="selected">全部分类</option></select>
+                </div>
+                <div id="category3" class="custom-item">
+                    <label for="category3" class="selectLabel">二级分类：</label>
+                    <select class="form-control category" onchange="changeEditCategoryD2(3);"><option value="-1" selected="selected">全部分类</option></select>
+                </div>
+            </div>
+            <div class="control-line">
+                <div id="category4" class="custom-item">
+                    <label for="category4" class="selectLabel">三级分类：</label>
+                    <select class="form-control category"><option value="-1" selected="selected">全部分类</option></select>
+                </div>
+                <div id="control-btns" class=" ">
+                    <button id="doSearch" class="status-item btn btn-primary" onclick="searchOrder(this);">搜索</button>
+                    <button id="doReset" class="status-item btn btn-warning" onclick="resetOrder();">重置</button>
+                    <!-- <button id="updateCache" class=" btn btn-warning pull-right">更新缓存</button> -->
+                </div>
+            </div>
+
+        </div>
+        <div class="box-body">
+            <div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+               <div class="row">
+                  <div class="col-sm-6"></div>
+                  <div class="col-sm-6"></div>
+               </div>
+              <div class="row">
+               <div class="col-sm-12">
+                  <table id="dataTable" class="table table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="dataTable_info">
+
+                  </table>
+
+                  <div id="dataTable_processing" class="dataTables_processing" style="display: none;">处理中...</div>
+                </div>
+              </div>
+
+            </div>
+        </div>
+    </div>
+
+        </section>
+      </div>
+      <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
+    </div>
+    <div class="fixedLayer">
+    <div class="fixedContainer">
+    </div>
+</div>
+
+    <img id="basePicInfo" src="" style="display:none;">
+    {% endblock %}
+
+    {% block js %} 
+    <script src="{{static_url}}admin/js/jQuery-2.1.4.min.js"></script>
+    <script src="{{static_url}}admin/js/bootstrap.min.js"></script>
+    <script src="{{static_url}}admin/js/checkAction.js"></script>
+    <script src="{{static_url}}admin/js/public.js"></script>
+    <script src="{{static_url}}admin/js/base.js"></script>
+    <script src="{{static_url}}admin/js/dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+          var checkLogin = new checkLogin();//判断登录
+          if (checkLogin.flag) {
+
+          }else{
+            window.location.href = "/api/oam/admin/login";
+          }
+
+          //判断登录
+          function checkLogin(){
+              var loginName = '';
+              var loginList = '';
+              var topOrderN = '';
+              //获取session 判断登录
+              var Login = sessionStorage.getItem("adminLogin");
+              console.log(Login);
+              // var Login = getSessionstronge("login");
+              if (Login == null) {  //没有登录
+                  console.log("没登录");
+                  this.flag = false;
+              }else{  //登录
+                  console.log("已经登陆");
+                  this.flag = true;
+                  $(".info p").eq(0).text(Login);
+                  $(".hidden-xs").text(Login);
+              }
+          }
+
+          initMenu('content',2);
+          //获取产品列表
+          getProtectList(false);
+          // getEditCategoryInfo(0,1);
+          loadDefaultInfo();
+
+        });
+        var upInfo = {};
+        var uploadConst ={
+            "unitType":1,
+            "maxSize":10240,
+            "checkFileExt":function(encUrl){
+                if (!encUrl.match(/(.jpeg|.png|.gif|.jpg)/i)) {
+                    return false;
+                }
+                return true;
+            }
+        }
+        var webConst = {
+            "fileNullmsg":"请上传图片！",
+            "fileErrmsg":"图片格式错误！",
+            "checkUpPicture":function(data){
+
+            }
+        };
+        var uploadPic={};
+        $.extend(uploadPic,uploadConst);
+
+        function getProtectList(keepFlag,searchCondition){
+          $.fn.dataTable.ext.errMode = 'none';
+            dt = $('#dataTable').dataTable({
+                "paging": true,//分页
+                "ordering": true,//是否启用排序
+                "searching": true,//搜索
+                "paginationType":"full_numbers",
+                "autoWidth":true,
+                "processing":true, //加载开启
+                "ajax": {
+                    "url":"/api/oam/product/list",
+                    "dataSrc":"productlist"
+                },
+                "language": {
+                  lengthMenu: '<select class="form-control input-xsmall">' + '<option value="1">1</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="30">30</option>' + '<option value="40">40</option>' + '<option value="50">50</option>' + '</select>条记录',//左上角的分页大小显示。
+                  search: '<span>关键字搜索：</span>',
+                  paginate: {//分页的样式内容。
+                    previous: "上一页",
+                    next: "下一页",
+                    first: "第一页",
+                    last: "最后"
+                  },
+                  processing : "载入中...<img src='/static/i3jf/admin/images/loading.gif' style='width:100px;height:100px;' />",
+                  zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
+                  //下面三者构成了总体的左下角的内容。
+                  info: "总共_PAGES_ 页，显示第_START_ 到第 _END_ ，筛选之后得到 _TOTAL_ 条，初始_MAX_ 条 ",//左下角的信息显示，大写的词为关键字。
+                  infoEmpty: "0条记录",//筛选为空时左下角的显示。
+                  infoFiltered: ""//筛选之后的左下角筛选提示，
+                },
+                 "mData":"acceptId",
+                            "mRender":function(data,type,full){
+                                if(data !=null){
+                                    if(full.acceptUser !=null){
+                                        return full.acceptUser.userName;
+                                    }
+                                }else{
+                                    return "";
+                                }
+                            },
+
+                "columns": [
+                    {
+                      "title":'',
+                      "class":'th-center td-center',
+                      "width":"3%"
+                    },
+                    {
+                      "data":"sku",
+                      "title":'sku',
+                      "class":'th-center td-center',
+                      "width":"4.7%"
+                    },
+                    {
+                      "data":"name",
+                      "title":'产品名称',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"image",
+                      "title":'图片',
+                      "class":'th-center td-center',
+                      "width":"8.0%"
+                    },
+                    {
+                      "data":"credit_amount",
+                      "title":'积分价格',
+                      "class":'th-center td-center',
+                      "width":"5.4%"
+                    },
+                    // {
+                    //   "data":"adminId",
+                    //   "title":'最后修改管理员id',
+                    //   "class":'th-center td-center',
+                    //   "width":"6.0%"
+                    // },
+                    // {
+                    //   "data":"category__name",
+                    //   "title":'管理员名称',
+                    //   "class":'th-center td-center',
+                    //   "width":"4.7%"
+                    // },
+                    {
+                      "data":"last_sync",
+                      "title":'最后同步时间',
+                      "class":'th-center td-center',
+                      "width":"5.0%"
+                    },
+                    // {
+                    //   "data":"updateTime",
+                    //   "title":'最后修改时间',
+                    //   "class":'th-center td-center',
+                    //   "width":"5.0%"
+                    // },
+                    {
+                      "data":"category_d1__id",
+                      "title":'所属一级分类id',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },
+                    {
+                      "data":"category_d1__name",
+                      "title":'所属一级分类名称',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },
+                    {
+                      "data":"category_d2__id",
+                      "title":'所属二级分类id',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },
+                    {
+                      "data":"category_d2__name",
+                      "title":'所属二级分类名称',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },
+                    {
+                      "data":"categoryD3Id",
+                      "title":'所属三级分类id',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },
+                    {
+                      "data":"categoryD3Name",
+                      "title":'所属三级分类名称',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },
+                    /*{
+                      "data":"tag",
+                      "title":'标签',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },*/
+                    {
+                      "title":'操作',
+                      "class":'th-center td-center',
+                      "width":"7.2%"
+                    }
+                ],
+                "columnDefs": [
+                  {
+                      "render": function(data,type,row){
+                          var inputDiv = '<input type="checkbox" class="table-checkbox" name="showLists" data-name="'+row.name+'" data-id="'+row.id+'"/>';
+                          return inputDiv;
+                      },
+                      "targets":0
+                  },{
+                      "render":function(data,type,row){
+                          var imgs = '<img class="pic" src="'+row.image+'">';
+                          return imgs;
+                      },
+                      "targets":3
+                  },{
+                      "render": function(data,type,row){
+                          return '<a target="_blank" href="/static/i3jf/detail_page.html?sku='+row.sku+'" class="btn btn-sm checkInfo">查看详情</a><br><a href="javascript:void(0);" class="btn btn-sm modify">编辑</a><br><a href="javascript:void(0);" class="btn btn-sm delInfo">删除</a>';
+                      },
+                      "targets":12
+                  },
+                ],
+                "createdRow":function(row,data,index){
+                    function showOrgImg(url){
+                        var oImg = $('<img style="max-height:600px;max-width:800px;">');
+                        oImg.load(function() {
+                            var oWidth = $(oImg)[0].width+'px';
+                            var oHeight = $(oImg)[0].height+'px';
+                            $('.fixedContainer').html('<div class="image-prev"></div>')
+                            $('.fixedContainer .image-prev').html(oImg);
+                            $('.fixedContainer').css({
+                                'width':oWidth,
+                                'height':oHeight,
+                                'max-width':'800px',
+                                'max-height':'600px',
+                                'box-shadow':'0px 0px 10px rgba(0,0,0,0)',
+                                'background-color':'rgba(0,0,0,0)'
+                            });
+                            $('.fixedContainer img').after('<div class="closeBtn"><img src="{{static_url}}admin/images/close.png" alt=""/></div>');
+                            $('.closeBtn').css('right','-30px');
+                            $('.fixedLayer').css('display','block');
+                            $('.closeBtn').css('display','block');
+                        });
+                        oImg.attr('src',url);
+                    }
+                    $('.fixedContainer').on('click','.closeBtn',function(){
+                        $('.fixedLayer').css('display','none');
+                        $('.fixedContainer').html('');
+                    });
+                    $('td',row).eq(3).on('click',function(){
+                        showOrgImg(data.image);
+                    });
+                    $('td',row).eq(12).find('.modify').off('click').on('click',function(){
+                        upInfo.sku = data.sku;
+                        showModify(data);
+                    });
+                    $('td',row).eq(12).find('.delInfo').off('click').on('click',function(){
+                        console.log("删除");
+                        delData(data);
+                    });
+                }
+            });
+        };
+
+        function delData(data){
+          $.ajax({
+            url:'/api/oam/product/delete',
+            type:'POST',
+            datatype:'json',
+            data:{
+              'id':data.id
+            },
+            success:function(data){
+              alert("删除成功！");
+              window.location.reload();
+            },
+            error:function(error){
+              alert("删除失败！");
+            }
+          })
+        };
+        function showModify(rowData){
+            editType = 1;
+            var editPanel = '<div class="editPanel panel panel-primary" style="width:400px;height:358px;">'
+                        +'<div class="panel-heading">编辑</div>'
+                        +'<div class="panel-body">'
+                            +'<div class="form-horizontal">'
+                                +'<div class="form-group">'
+                                    +'<label class="col-sm-3 control-label">所属分类</label>'
+                                    +'<div class="col-sm-9 margin-negative">'
+                                        // +'<select class="form-control level" id="level0" onchange="changeCategoryD2();"></select>'
+                                        +'<select class="form-control level" id="level1" onchange="changeCategoryD2();"></select>'
+                                        +'<select class="form-control level" id="level2" onchange="getCategoryInfo(this.value,3);"></select>'
+                                        +'<select class="form-control level" id="level3"></select>'
+                                    +'</div>'
+                                +'</div>'
+                            +'</div>'
+                            +'<div class="form-horizontal">'
+                                +'<div class="form-group">'
+                                    +'<label class="col-sm-3 control-label">产品名称</label>'
+                                    +'<div class="col-sm-9">'
+                                        +'<input type="text" class="form-control" id="productName"/>'
+                                    +'</div>'
+                                +'</div>'
+                            +'</div>'
+                            +'<div class="form-horizontal">'
+                                +'<div class="form-group">'
+                                    +'<label class="col-sm-3 control-label" >产品缩略</label>'
+                                    +'<div class="col-sm-9">'
+                                        +'<input type="text" class="form-control" id="productPicture"/>'
+                                    +'</div>'
+                                +'</div>'
+                            +'</div>'
+                            // +'<div class="form-horizontal">'
+                            //     +'<div class="form-group">'
+                            //         +'<label class="col-sm-3 control-label" >标签</label>'
+                            //         +'<div class="col-sm-9">'
+                            //             +'<input type="text" class="form-control" id="tag"/>'
+                            //             +'<div class="tips">两个标签之间请用“,”分隔</div>'
+                            //         +'</div>'
+                            //     +'</div>'
+                            // +'</div>'
+                            +'<div class="submitDiv form-group">'
+                                +'<label class="col-sm-3 control-label" ></label>'
+                                +'<div class="col-sm-9">'
+                                    +'<input type="button" class="btn btn-primary saveBtn" value="保存"/>'
+                                    +'<input type="button" class="btn btn-default cancelBtn" value="取消"/>'
+                                +'</div>'
+                            +'</div>'
+                        +'</div>'
+                    +'</div>';
+            $('.fixedContainer').html(editPanel);
+            setDefaultEditValue(rowData);
+            $('.submitDiv .saveBtn').on('click',function(){
+                if(!checkNull($('#productName').val(),'请填写产品名称')) return;
+//                if(!checkNull($('#productPrice').val(),'请填写积分价格')) return;
+                if(!checkNull($('#productPicture').val(),'请填写缩略图地址')) return;
+                // if(!$('select#level0').val()||!$('select#level1').val()||!$('select#level2').val()||!$('select#level3').val()){
+                //     alert('选择所属分类错误，请重新选择');
+                //     return;
+                // }
+                upInfo.id = rowData.id;
+                upInfo.name = $('#productName').val();
+//                upInfo.amount = $('#productPrice').val();
+                upInfo.image = $('#productPicture').val();
+                upInfo.categoryD1Id = $('select#level1').val();
+                upInfo.categoryD2Id = $('select#level2').val();
+                upInfo.categoryD3Id = $('select#level3').val();
+                // upInfo.tag = $('#tag').val();
+                modifyProduct();
+            });
+            $('.submitDiv .cancelBtn').on('click',function(){
+                $('.fixedContainer').html('');
+                $('.fixedLayer').css('display','none');
+                upInfo = {};
+            });
+            setPanelSize();
+            $('.fixedLayer').css('display','block');
+        }
+        changeEditCategoryD2(1);
+        function changeEditCategoryD2(index){
+          console.log(index,typeof(index));
+          if (index == 1) {
+            $.ajax({
+              url:'/api/oam/product/categroy1_list',
+              type:'GET',
+              datatype:'json',
+              data:{
+
+              },
+              success:function(data){
+                var data = JSON.parse(data);
+                console.log(data);
+                var oitem = '';
+                $.each(data.firstlist,function(index,item){
+                  oitem += '<option value="'+item.id+'" selected="selected">'+item.name+'</option>'
+                });
+                $("#category2 select").append(oitem);
+              },
+              error:function(error){
+                alert("一级分类获取失败");
+              }
+            })
+          }
+          if (index == 2) {
+            var id = $("#category2 select").val();
+            $.ajax({
+              url:'/api/oam/product/categroy2_list',
+              type:'GET',
+              datatype:'json',
+              data:{
+                'id':id
+              },
+              success:function(data){
+                var data = JSON.parse(data);
+                console.log(data);
+                var oitem = '';
+                $.each(data.secondlist,function(index,item){
+                  oitem += '<option value="'+item.id+'" selected="selected">'+item.name+'</option>'
+                });
+                $("#category3 select").html(oitem);
+              },
+              error:function(error){
+                alert("获取二级分类失败");
+              }
+            })
+          }
+          if (index == 3) {
+            var id = $("#category3 select").val();
+            console.log(id);
+            $.ajax({
+              url:'/api/oam/product/categroy3_list',
+              type:'GET',
+              datatype:'json',
+              data:{
+                'id':id
+              },
+              success:function(data){
+                var data = JSON.parse(data);
+                console.log(data);
+                var oitem = '';
+                $.each(data.thirdlist,function(index,item){
+                  oitem += '<option value="'+item.id+'" selected="selected">'+item.name+'</option>'
+                });
+                $("#category4 select").html(oitem);
+              },
+              error:function(error){
+                alert("获取三级分类失败");
+              }
+            })
+          }
+        }
+        function setDefaultEditValue(data){
+            $('#productName').val(data.name);
+//            $('#productPrice').val(data.amount);
+            $('#productPicture').val(data.image);
+            // $('#tag').val(data.tag);
+            getCategoryInfo(0,1,function(){
+                // $('#level0 option[value="'+data.subStationId+'"]').prop('selected',true);
+                changeCategoryD2(function(){
+                    $('#level1 option[value="'+data.category_d1__id+'"]').prop('selected',true);
+                },function(){
+                    $('#level2 option[value="'+data.category_d2__id+'"]').prop('selected',true);
+                },function(){
+                    $('#level3 option[value="'+data.category_d3__id+'"]').prop('selected',true);
+                });
+            });
+            upInfo.image = data.image;
+        }
+
+        function modifyAmount(){
+            // ajaxAction(
+            //     'PUT',
+            //     apiPath('/api/product/price/update'),
+            //     upInfo,
+            //     true,
+            //     function (data,textStatus){
+            //         modifyProduct();
+            //     },
+            //     function (errno,errmsg){
+            //         alert(errmsg);
+            // });
+        }
+
+        function modifyProduct(){
+            $.ajax({
+              url:'/api/oam/product/set',
+              type:'POST',
+              datatype:'json',
+              data:{
+                'id':upInfo.id,
+                'name':upInfo.name,
+                'image':upInfo.image,
+                'first_id':upInfo.categoryD1Id,
+                'second_id':upInfo.categoryD2Id,
+                'third_id':upInfo.categoryD3Id
+              },
+              success:function(data){
+                alert('修改成功');
+                $('.submitDiv .cancelBtn').click();
+                getProtectList(true);
+              },
+              error:function(error){
+                alert("修改失败");
+              }
+            })
+            // ajaxAction(
+            //     'PUT',
+            //     apiPath('/api/product/update'),
+            //     upInfo,
+            //     true,
+            //     function (data,textStatus){
+            //         alert('修改成功');
+            //         $('.submitDiv .cancelBtn').click();
+            //         getProtectList(true);
+
+            //     },
+            //     function (errno,errmsg){
+            //         alert(errmsg);
+            // });
+        }
+
+        function submitFiles(element,editId){
+            $('#'+element).form({
+                url:'/api/file/upload',
+                success:function(data){
+                    data = $.evalJSON(data);
+                    if(data.errno == 0){
+                        upInfo.image = data.id;
+//                        modifyAmount();
+                        modifyProduct();
+                    }
+                },
+                error:function(error,errmsg){
+                    alert(errmsg);
+                    console.log(errmsg);
+                }
+            });
+        }
+
+
+        // //编辑状态下第二个下拉框的值变化时发生的变化
+        function changeCategoryD2(callback0,callback1,callback2){
+            $('.level:gt(0)').html("");
+            console.log("分类");
+            getCategoryInfo($('#level0 option:selected').val(),1,function(){
+              console.log("分类一级");
+                if(callback0) callback0();
+                getCategoryInfo($('#level1 option:selected').val(),2,function(){
+                  console.log("分类二级");
+                    if(callback1) callback1();
+                    getCategoryInfo($('#level2 option:selected').val(),3,function(){
+                      console.log("分类三级");
+                        if(callback2) callback2();
+                    });
+                });
+            });
+        }
+        // //编辑状态下第三个下拉框的值变化时发生的变化
+        // function changeCategoryD3(callback1,callback2){
+        //     $('.level:gt(1)').html("");
+        //     getCategoryInfo($('#level1 option:selected').val(),2,function(){
+        //         if(callback1) callback1();
+        //         getCategoryInfo($('#level2 option:selected').val(),3,function(){
+        //             if(callback2) callback2();
+        //         });
+        //     });
+        // }
+
+        //搜索关键字
+        function searchOrder(target){
+          console.log(dt);
+            // dt.ajax.url('/api/oam/product/list').load();
+            var searchCond={};
+            searchCond.keyword = $(target).parent().prev().find('input').val();
+            var selectList= $('.category');
+            var i,selectLen = selectList.length;
+            for(i=1;i<selectLen;i++){
+                var val = $($(selectList)[i]).val();
+                if(val!=-1)  searchCond.categoryId = val;
+            }
+            var V1 = $($(selectList)[0]).val();
+            var V2 = $($(selectList)[1]).val();
+            if(V1>0&&V2==-1){
+                searchCond.subStationId = V1;
+            }
+            getProtectList(false,searchCond);
+        }
+
+        //重置
+        function resetOrder(){
+            // getEditCategoryInfo(0,1);
+            // $('#otherCondition input').val('');
+            // getProtectList(false);
+            window.location.reload();
+        }
+        function loadDefaultInfo(){
+            $('#updateCache').off('click').on('click',function(){
+                updateCache();
+            });
+        }
+        //更新缓存
+        function updateCache(){
+            if(!myConfirm('确定更新缓存？')) return;
+            // ajaxAction(
+            //         'POST',
+            //         apiPath('/api/category/update/memcache'),
+            //         {},
+            //         true,
+            //         function (data,textStatus){
+            //             alert('缓存更新成功！');
+            //             getProtectList(false);
+            //         },
+            //         function (errno,errmsg){
+            //             alert(errmsg);
+            //         });
+        }
+    </script>
+{% endblock %}

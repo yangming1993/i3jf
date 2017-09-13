@@ -1,0 +1,869 @@
+{% extends "i3jf/admin/template.html" %}
+
+  {% block css %}
+    <link rel="stylesheet" href="{{static_url}}admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/skin-blue.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/dataTables.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/pindao.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/myModify.css">
+    <style>
+      #col1{
+        position:relative;
+      }
+      #col2{
+        position:absolute;
+        top:50px;
+        left:230px;
+      }
+    </style>
+
+    {% endblock %}
+          {% block content %}
+          <ul class="sidebar-menu">
+            <li class="header">菜单</li>
+            <li id="dataMenage" class="treeview">
+              <a href="/api/oam/data_analysis/"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i> <span>数据分析</span></a>
+
+            </li>
+            <li id="userMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> <span>用户管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu active">
+                <li id="1" class="active"><a href="/api/oam/user/lists">用户列表</a></li>
+              </ul>
+            </li>
+            <li id="orderMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-hamburger"></i> <span>订单管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/order/lists">订单列表</a></li>
+                <!-- <li id="2"><a href="/static/i3jf/admin/special.html">异常订单</a></li> -->
+                <li id="3"><a href="/api/oam/returned/history">退货历史</a></li>
+              </ul>
+            </li>
+            <li id="contentMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-signal"></i> <span>数据管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/price/set">价格管理</a></li>
+                <li id="2"><a href="/api/oam/product/lists">产品列表</a></li><!--
+                <li id="4"><a href="/static/i3jf/admin/bind.html">分类管理</a></li> -->
+              </ul>
+            </li>
+            <li id="marketMenage" class="treeview active">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-film"></i> <span>推广管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/banner/ads/list">首页轮播管理</a></li>
+                <li id="2" class="active"><a href="/api/oam/channel/product/lists">首页频道管理</a></li>
+                <!-- <li id="3"><a href="/static/i3jf/admin/pull.html">精品推荐管理</a></li> -->
+              </ul>
+            </li>
+            <li id="productList" class="treeview">
+              <a href="/api/oam/get/product/detail"><i class="glyphicon glyphicon-volume-down"></i>
+              <span>获取产品信息</span> </a>
+
+            </li>
+            <li class="treeview">
+              <a href="/api/oam/get/area/detail"><i class="glyphicon glyphicon-th-large"></i> <span>地区管理</span> </a>
+            </li>
+          </ul>
+        </section>
+      </aside>
+      <div class="content-wrapper" style="min-height: 897px;">
+        <section class="content-header">
+          <h1>
+            推广管理            <small>首页频道管理</small>
+          </h1>
+        </section>
+
+        <section class="content">
+
+          <div class="box box-default color-palette-box">
+    <div class="box-body">
+        <div class="data-control">
+            <select name="secondPage" id="selectPage">
+                <option value="secP1" data-categoryd1id="0" selected="selected">首页</option>
+            </select>
+                <button class="btn btn-primary pull-right" id="addChannel">添加频道</button>
+                <!-- <button class="btn btn-primary pull-right" id="onlineBtn">批量上线</button> -->
+        </div>
+        <div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+          <div class="row">
+             <div class="col-sm-6"></div>
+             <div class="col-sm-6"></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <table id="dataTable" class="table table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="dataTable_info">
+
+              </table>
+                <div id="dataTable_processing" class="dataTables_processing" style="display: none;">处理中...</div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+        </section>
+      </div>
+      <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
+    </div>
+    <div class="fixedLayer">
+    <div class="fixedContainer">
+    </div>
+</div>
+
+    <img id="basePicInfo" src="" style="display:none;">
+
+
+    {% endblock %}
+
+    {% block js %}
+    <script src="{{static_url}}admin/js/jQuery-2.1.4.min.js"></script>
+    <script src="{{static_url}}admin/js/bootstrap.min.js"></script>
+    <script src="{{static_url}}admin/js/dataTables.min.js"></script>
+    <script src="{{static_url}}admin/js/checkAction.js"></script>
+    <script src="{{static_url}}admin/js/public.js"></script>
+    <script src="{{static_url}}admin/js/base.js"></script>
+
+    <script type="text/javascript">
+    $(function () {
+        // initMenu('market', 2);
+        // getCategoryName();
+        setDefault();
+        // showTypeList();
+        // loadSecondPage();
+        var checkLogin = new checkLogin();//判断登录
+        if (checkLogin.flag) {
+
+        }else{
+          window.location.href = "/api/oam/admin/login";
+        }
+
+        //判断登录
+        function checkLogin(){
+            var loginName = '';
+            var loginList = '';
+            var topOrderN = '';
+            //获取session 判断登录
+            var Login = sessionStorage.getItem("adminLogin");
+            console.log(Login);
+            // var Login = getSessionstronge("login");
+            if (Login == null) {  //没有登录
+                console.log("没登录");
+                this.flag = false;
+            }else{  //登录
+                console.log("已经登陆");
+                this.flag = true;
+                $(".info p").eq(0).text(Login);
+                $(".hidden-xs").text(Login);
+            }
+        }
+    });
+
+    var datas;
+    var allValue;
+    var fullDatas='';
+    var typeStatus=false;
+    var isCompleted = false;
+    var addJson = {};
+    var updateJson = {};
+    //获取类型字典
+    function showTypeList(){
+        // return ajaxAction(
+        //         'GET',
+        //         apiPath('/api/dict/key/6'),
+        //         '',
+        //         true,
+        //         function(data,textStatus){
+        //             typeStatus = true;
+        //             allValue = data.valueList;
+        //         },
+        //         function(errno,errmsg){
+        //             alert(errmsg);
+        //         });
+    }
+    getChannelList(false);
+    function getChannelList(keepFlag) {
+        $('#dataTable').dataTable({
+                paging: true,//分页
+                ordering: true,//是否启用排序
+                searching: true,//搜索
+                processing:true,//loading
+                "language": {
+                  lengthMenu: '<select class="form-control input-xsmall">' + '<option value="1">1</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="30">30</option>' + '<option value="40">40</option>' + '<option value="50">50</option>' + '</select>条记录',//左上角的分页大小显示。
+                  search: '<span>关键字搜索：</span>',
+                  paginate: {//分页的样式内容。
+                    previous: "上一页",
+                    next: "下一页",
+                    first: "第一页",
+                    last: "最后"
+                  },
+                  processing : "载入中...<img src='/static/i3jf/admin/images/loading.gif' style='width:100px;height:100px;' />",
+                  zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
+                  //下面三者构成了总体的左下角的内容。
+                  info: "总共_PAGES_ 页，显示第_START_ 到第 _END_ ，筛选之后得到 _TOTAL_ 条，初始_MAX_ 条 ",//左下角的信息显示，大写的词为关键字。
+                  infoEmpty: "0条记录",//筛选为空时左下角的显示。
+                  infoFiltered: ""//筛选之后的左下角筛选提示，
+                },
+            "ajax": {
+                "url": "/api/oam/main/channel/list",
+                // "type": "GET",
+                // "data":
+                // function (paramet) {
+                //     var requestJson = {};
+                //     requestJson.categoryD1Id = $('#selectPage option:selected').attr("data-categoryD1Id");
+                //     return requestJson;
+                // },
+                "dataSrc": "mainlist"
+            },
+            "columns": [
+              {
+                "title": '<input type="checkbox" class="global-checkbox">',
+                "class": 'th-center td-center'
+              },
+              {
+                "data": "id",
+                "title": '编号',
+                "class": 'th-center td-center'
+              },
+              {
+                "data": "name",
+                "title": '频道名称',
+                "class": 'th-center td-center'
+              },
+              {
+                "data": "categtoy_id",
+                "title": '所属分类名称',
+                "class": 'th-center td-center'
+              },
+              {
+                "data": "image",
+                "title": '频道图标',
+                "class": 'th-center td-center'
+              },
+              // {
+              //   "title": '活动展示类型',
+              //   "class": 'th-center td-center'
+              // },
+              // {
+              //   "title": '热销展示类型',
+              //   "class": 'th-center td-center'
+              // },
+              // {
+              //   "title": '活动展示类型',
+              //   "class": 'th-center td-center'
+              // },
+              // {
+              //   "title": '热销展示类型',
+              //   "class": 'th-center td-center'
+              // },
+              {
+                "data": "priority",
+                "title": '排序号',
+                "class": 'th-center td-center'
+              },
+              {
+                "title": '操作',
+                "class": 'th-center td-center'
+              }
+            ],
+            "columnDefs": [
+                {
+                    "render": function(data,type,row){
+                        var inputDiv = '<input type="checkbox" class="table-checkbox" name="showLists" data-name="'+row.name+'" data-id="'+row.id+'"/>';
+                        var $inputDiv = $(inputDiv);
+                        if(row.status)
+                            $inputDiv.attr('checked','checked');
+                        return $inputDiv[0].outerHTML;
+                    },
+                    "targets":0
+                },
+                // {
+                //     "render": function (data, type, row) {
+                //         var categoryName = '';
+                //         $.each(datas, function (index, value) {
+                //             if (data == value.id) {
+                //                 categoryName = value.name;
+                //                 return false;
+                //             }
+                //             ;
+                //         });
+                //         return categoryName;
+                //     },
+                //     "targets": 3
+                // },
+                {
+                    "render": function (data, type, row) {
+                        var odiv = '<div class="iconImg"><img src="' + row.image + '" /></div>'
+                        return odiv;
+                    },
+                    "targets": 4
+                },
+                // {
+                //     "render": function (data, type, row) {
+                //         var odiv = '';
+                //         $.each(allValue,function(index,content){
+                //             if(data==content.realValue){
+                //                 odiv=content.showValue;
+                //                 return false;
+                //             }
+                //         })
+                //         return odiv;
+                //     },
+                //     "targets": 5
+                // },
+                // {
+                //     "render": function (data, type, row) {
+                //         var odiv = '';
+                //         $.each(allValue,function(index,content){
+                //             if(data==content.realValue){
+                //                 odiv=content.showValue;
+                //                 return false;
+                //             }
+                //         })
+                //         return odiv;
+                //     },
+                //     "targets": 6
+                // },
+                {
+                    "render": function (data, type, row) {
+                        var detailUrl = '/api/oam/channel/detail?watchId=' + row.id + '';
+                        var editD = '<a class="btn btn-sm editInfo">编辑</a><br/>' +
+                                '<a href="' + detailUrl + '" class="btn btn-sm ckeckInfo">查看</a><br/>'+
+                                '<a href="javascript:void(0);" class="btn btn-sm submitOnline">上线</a><br/>'+
+                                '<a href="javascript:void(0);" class="btn btn-sm submitOffline">下线</a><br/>'+
+                                '<a class="btn btn-sm delInfo">删除</a>';
+                        return editD;
+                    },
+                    "targets": 6
+                }],
+            "createdRow": function (row, data, index) {
+                $('td', row).eq(6).on('click', '.editInfo', function () {
+                    showAddLevel(data);
+                });
+                $('td', row).eq(6).on('click', '.delInfo', function () {
+                    if (!myConfirm('是否删除该信息？')) return;
+                    deleteChannel(data.id);
+                });
+                $('td', row).eq(6).on('click', '.submitOnline', function () {
+                    if(!myConfirm('确定上线该频道？')) return;
+                    channelOnline(data,1);
+                });
+                $('td', row).eq(6).on('click', '.submitOffline', function () {
+                    if(!myConfirm('确定下线该频道？')) return;
+                    channelOnline(data,0);
+                });
+
+            },
+            // "language": {
+            //     url: dataTable_zh
+            // }
+        });
+    }
+    function showAddLevel(rowData) {
+      // console.log(rowData);
+        var editPanel = '<div class="editPanel panel panel-primary" style="height:316px">'
+                + '<div class="panel-heading">编辑</div>'
+                + '<div class="panel-body">'
+                // + '<form class="form-horizontal">'
+                + '<div class="row">'
+                + '<div class="col-sm-6">'
+                + '<label class="col-sm-4 control-label">频道名称</label>'
+                + '<div class="col-sm-8" id="col">'
+                + '<input id="channelName" class="form-control" />'
+                + '</div>'
+                + '</div>'
+                + '<div class="col-sm-6">'
+                + '<label class="col-sm-4 control-label">所属分类</label>'
+                + '<div class="col-sm-8">'
+                + '<select id="categoryD2" class="form-control">'
+                + '<option data-categoryD2Id="">数码频道</option>'
+                + '</select>'
+                + '</div>'
+                + '</div>'
+                + '</div>'
+                // + '<div class="row">'
+                // + '<div class="col-sm-6">'
+                // + '<label class="col-sm-4 control-label">Web热卖商品展示类型</label>'
+                // + '<div class="col-sm-8">'
+                // + '<select id="sellingShowType" class="form-control selectType">'
+                // + '<option data-sellingShowType="">1</option>'
+                // + '</select>'
+                // + '</div>'
+                // + '</div>'
+                // + '<div class="col-sm-6">'
+                // + '<label class="col-sm-4 control-label">App热卖商品展示类型</label>'
+                // + '<div class="col-sm-8">'
+                // + '<select id="appSellingShowType" class="form-control selectType">'
+                // + '<option data-appSellingShowType="">1</option>'
+                // + '</select>'
+                // + '</div>'
+                // + '</div>'
+                // + '</div>'
+                // + '<div class="row">'
+                // + '<div class="col-sm-6">'
+                // + '<label class="col-sm-4 control-label">Web热门活动展示类型</label>'
+                // + '<div class="col-sm-8">'
+                // + '<select id="activityShowType" class="form-control selectType">'
+                // + '<option data-activityShowType="">1</option>'
+                // + '</select>'
+                // + '</div>'
+                // + '</div>'
+                // + '<div class="col-sm-6">'
+                // + '<label class="col-sm-4 control-label">App热门活动展示类型</label>'
+                // + '<div class="col-sm-8">'
+                // + '<select id="appActivityShowType" class="form-control selectType">'
+                // + '<option data-appActivityShowType="">1</option>'
+                // + '</select>'
+                // + '</div>'
+                // + '</div>'
+                // + '</div>'
+                // + '<div class="row">'
+                // + '<div class="col-sm-6">'
+                // + '<label class="col-sm-4 control-label">Web猜你喜欢展示类型</label>'
+                // + '<div class="col-sm-8">'
+                // + '<select id="webGuessShowType" class="form-control selectType">'
+                // + '<option data-webGuessShowType="">1</option>'
+                // + '</select>'
+                // + '</div>'
+                // + '</div>'
+                // + '<div class="col-sm-6">'
+                // + '<label class="col-sm-4 control-label">App猜你喜欢展示类型</label>'
+                // + '<div class="col-sm-8">'
+                // + '<select id="appGuessShowType" class="form-control selectType">'
+                // + '<option data-appGuessShowType="">1</option>'
+                // + '</select>'
+                // + '</div>'
+                // + '</div>'
+                // + '</div>'
+                // + '</form>'
+                + '<div class="row">'
+                + '<div class="col-sm-6">'
+                + '<label class="col-sm-4 control-label">排序号</label>'
+                + '<div class="col-sm-8">'
+                + '<input type="text" class="form-control" id="rankNum"/>'
+                + '</div>'
+                + '</div>'
+                + '<div class="col-sm-6">'
+                // + '<form class="" id="submitForm" method="POST" enctype="multipart/form-data">'
+                + '<div class="form-group">'
+                + '<label class="col-sm-4 control-label" >频道图标</label>'
+                + '<div class="col-sm-8 upload-container">'
+                + '<input type="text" class="form-control" id="imageIpt"/>'
+                // + '<input type="file" name="file" class="upload-input" onchange="showFileNameandPreview(this);"/>'
+                +'<div class="tips">图片比例不受限制</div>'
+                +'<div class="upload-simulate">'
+                // +'<input type="text" class="file-name form-control" readonly="readOnly" title="" />'
+                // +'<div class="btn btn-default upload-btn">浏览</div>'
+                // +'<div class="nailDiv">'
+                // +'</div>'
+                +'</div>'
+                + '</div>'
+                + '</div>'
+                // + '</form>'
+                + '</div>'
+                + '</div>'
+                + '<div class="row">'
+                + '<div class="col-sm-6">'
+                + '<label class="col-sm-4 control-label">是否显示</label>'
+                + '<div class="col-sm-8">'
+                + '<select id="isDefault"><option value="false">否</option><option value="true">是</option></select>'
+                + '</div>'
+                + '</div>'
+                + '<div class="submitDiv form-group" id="col1">'
+                + '<label class="col-sm-4 control-label" ></label>'
+                + '<div class="col-sm-8" id="col2">'
+                + '<input type="button" class="btn btn-primary saveBtn" value="保存"/>'
+                + '<input type="button" class="btn btn-default cancelBtn" value="取消"/>'
+                + '</div>'
+                + '</div>'
+                + '</div>'
+                + '</div>';
+        $('.fixedContainer').html(editPanel);
+        showAllCategory(rowData);
+        showAllType();
+        if (rowData) {
+            setDefaultEditValue(rowData);
+            submitFiles('submitForm', rowData.id);
+        } else {
+            submitFiles('submitForm', '');
+        }
+        setPanelSize();
+        $('.fixedLayer').css('display', 'block');
+        $('.submitDiv .saveBtn').on('click', function () {
+
+            var categoryD1Id = $('#selectedPage option:selected').attr('data-categoryD1Id');
+            var categoryD2Id = $('#categoryD2 option:selected').val();
+            var channelName = $('#channelName').val();
+            var rankNum = $('#rankNum').val();
+            var sellingShowType = $('#sellingShowType option:selected').attr('data-sellingShowType');
+            var activityShowType = $('#activityShowType option:selected').attr('data-activityShowType');
+            var appSellingShowType = $('#appSellingShowType option:selected').attr('data-appSellingShowType');
+            var appActivityShowType = $('#appActivityShowType option:selected').attr('data-appActivityShowType');
+            if (!checkNull(categoryD2Id, "请选择频道分类！")) return;
+            if (!checkNull(channelName, "请填写频道名称！")) return;
+            if (!checkNull(rankNum, "请填写排序号！")) return;
+            if (!checkNum(rankNum, "排序号只能为数字！")) return;
+            addJson.categoryD2Id = categoryD2Id;
+            addJson.name = channelName;
+            addJson.orderIndex = rankNum;
+            addJson.sellingShowType = sellingShowType;
+            addJson.activityShowType = activityShowType;
+            addJson.sellingShowAppType = appSellingShowType;
+            addJson.activityShowAppType = appActivityShowType;
+            if (!rowData) {
+                // console.log("添加")
+                // if (!checkNull($('#submitForm input[type="file"]').val(), '请上传图片！')) return;
+                addChannel();
+                changeBind(this,true);
+                $('#submitForm').submit();
+
+            } else {
+                $('#submitForm').submit();
+                changeBind(this,true);
+                var upTimer = setInterval(function () {
+                    var inputV1 = $('#submitForm input[type="file"]').val();
+                    if (inputV1!=''&&isCompleted) {
+                        // console.log("修改编辑");
+                        updateChannel(rowData);
+                        isCompleted = false;
+                        clearInterval(upTimer);
+                    }else if(!inputV1){
+                        updateChannel(rowData);
+                        clearInterval(upTimer);
+                    }
+                }, 500);
+            }
+
+        });
+        $('.submitDiv .cancelBtn').on('click', function () {
+            $('.fixedContainer').html('');
+            $('.fixedLayer').css('display', 'none');
+            changeBind($('.submitDiv .saveBtn')[0],false);
+        });
+    }
+    function getCategoryName() {
+        // ajaxAction(
+        //         'GET',
+        //         apiPath('/api/category/main/list'),
+        //         {},
+        //         true,
+        //         function (data, textStatus) {
+        //             datas = data.channelList;
+        //             var typeTimer = setInterval(function(){
+        //                 if(typeStatus&&fullDatas){
+        //                     getChannelList(false);
+        //                     typeStatus = false;
+        //                     clearInterval(typeTimer);
+        //                 };
+        //             },500);
+        //         },
+        //         function (errno, errmsg) {
+        //             alert(errmsg);
+        //         });
+    }
+    function setPanelSize() {
+        var orgWidth = $('.editPanel').width() + 'px';
+        var orgHeight = $('.editPanel').height() + 'px';
+        $('.fixedContainer').removeAttr('style');
+        $('.fixedContainer').css('width', orgWidth).css('height', orgHeight);
+    }
+    //判断文本框内的值是否为数字
+    function checkNum(value, msg) {
+        if ((/\D/ig).test(value)) {
+            alert(msg);
+            return false;
+        } else {
+            return true;
+        }
+    }
+    //设置编辑状态下的默认值
+    function setDefaultEditValue(data) {
+      // console.log(data);
+        var categoryD2Id = data.categtoy_id;
+        // var categoryD2Id = String(categoryD2Id);
+        // $('#categoryD2 option[value="'+categoryD2Id+'"]').attr('selected',true);
+
+        var name = data.name;
+        var orderIndex = data.priority;
+        // var activityShowType = data.activityShowType;
+        // var sellingShowType = data.sellingShowType;
+        // var appActivityShowType = data.activityShowAppType;
+        // var appSellingShowType = data.sellingShowAppType;
+        var webIconUrl = data.image;
+        $('#channelName').val(name);
+        $('#rankNum').val(orderIndex);
+        $('#imageIpt').val(webIconUrl);
+        // $('#sellingShowType option[data-sellingShowType="'+sellingShowType+'"]').attr('selected',true);
+        // $('#activityShowType option[data-activityShowType="'+activityShowType+'"]').attr('selected',true);
+        // $('#appActivityShowType option[data-appActivityShowType="'+appActivityShowType+'"]').attr('selected',true);
+        // $('#appSellingShowType option[data-appSellingShowType="'+appSellingShowType+'"]').attr('selected',true);
+        // setImgDefaultStatus(webIconUrl,$('#submitForm .file-name'),$('#submitForm .nailDiv'));
+        updateJson.id = data.id;
+        updateJson.categoryD2Id = categoryD2Id;
+        updateJson.name = data.name;
+        updateJson.orderIndex = orderIndex;
+        // updateJson.sellingShowType = sellingShowType;
+        // updateJson.activityShowType = activityShowType;
+        // updateJson.sellingShowAppType = appSellingShowType;
+        // updateJson.activityShowAppType = appActivityShowType;
+    }
+    // 获取限制预览的参数
+    function setParameters(uploadConst,formId){
+        var parameters;
+        var appConst = {
+            "checkFormatErrMsg":"图片格式错误！",
+            "scaleValue":''
+        };
+        $.extend(uploadConst,appConst);
+        parameters = uploadConst;
+        return parameters;
+    }
+    //展示所有频道分类
+    function showAllCategory(rowData){
+      // console.log("渲染下拉");
+      // console.log(rowData);
+        var option ='';
+        $.ajax({
+          url:'/api/oam/product/categroy1_list',
+          type:'GET',
+          datatype:'json',
+          data:{
+
+          },
+          success:function(data){
+            var data = JSON.parse(data);
+            $.each(data.firstlist,function(index,content){
+                option += '<option value='+content.id+'>'+content.name+'</option>';
+            });
+
+            $('#categoryD2').html(option);
+            if (rowData == undefined) {
+              // console.log("添加下拉渲染");
+            }else{
+              // console.log("编辑下拉菜单");
+              $('#categoryD2 option[value="'+rowData.categtoy_id+'"]').attr('selected',true);
+            }
+          },
+          error:function(data){
+
+          }
+        })
+
+    }
+    //展示所有布局类型
+    function showAllType(){
+        // var option1 ='',option2 ='',option3 ='',option4 ='';
+        // $.each(allValue,function(index,content){
+        //     option1 += '<option data-sellingShowType="'+content.realValue+'">'+content.showValue+'</option>';
+        //     option2 += '<option data-activityShowType="'+content.realValue+'">'+content.showValue+'</option>';
+        //     option3 += '<option data-appSellingShowType="'+content.realValue+'">'+content.showValue+'</option>';
+        //     option4 += '<option data-appActivityShowType="'+content.realValue+'">'+content.showValue+'</option>';
+        // });
+        // $('#sellingShowType').html(option1);
+        // $('#activityShowType').html(option2);
+        // $('#appSellingShowType').html(option3);
+        // $('#appActivityShowType').html(option4);
+    }
+    //上传文件
+    function submitFiles(element, editId) {
+        // $('#' + element).form({
+        //     url: '/api/file/upload',
+        //     success: function (data) {
+        //         data = $.evalJSON(data);
+        //         console.log(data);
+        //         if (data.errno == 0) {
+        //             addJson.webIconId = data.id;
+        //             if (!editId) addChannel();
+        //             else isCompleted = true;
+        //         }
+        //     },
+        //     error: function (error, errmsg) {
+        //         console.log(errmsg);
+        //     }
+        // });
+    }
+    //添加频道
+    function addChannel() {
+      // console.log("添加频道");
+      var name = $("#channelName").val();
+      var image = $("#imageIpt").val();
+      var rankNum = $("#rankNum").val();
+      var categoryD2 = $("#categoryD2").val();
+      var isDefault = $("#isDefault").val();
+      // console.log(name,image,rankNum,categoryD2,isDefault);
+      $.ajax({
+        url:'/api/oam/main/channel/add',
+        type:'POST',
+        datatype:'json',
+        data:{
+          'name':name,
+          'image':image,
+          'priority':rankNum,
+          'is_default': isDefault,
+          'first_id':categoryD2
+        },
+        success:function(data){
+          alert("添加成功！");
+          $('.fixedContainer').html('');
+          $('.fixedLayer').css('display', 'none');
+          addJson={};
+          window.location.reload();
+          // getChannelList(false);
+        },
+        error:function(error){
+          changeBind($('.submitDiv .saveBtn')[0],false);
+          alert("添加失败！");
+        }
+      })
+    }
+    //更新频道
+    function updateChannel(data) {
+        // console.log(data);
+        // console.log(updateJson);
+        var categoryD2Id = $('#categoryD2 option:selected').attr('value');
+        var channelName = $('#channelName').val();
+        var rankNum = $('#rankNum').val();
+        var images = $('#imageIpt').val();
+        var isDefault = $('#isDefault').val();
+        // console.log(categoryD2Id,channelName,rankNum,images);
+        $.ajax({
+          url:'/api/oam/main/channel/set',
+          type:'POST',
+          datatype:'json',
+          data:{
+            'id':data.id,
+            'name':channelName,
+            'image':images,
+            'priority':rankNum,
+            'first_id':categoryD2Id,
+            'is_default':isDefault
+          },
+          success:function(data){
+            alert("编辑成功！");
+            $('.fixedContainer').html('');
+            $('.fixedLayer').css('display', 'none');
+            updateJson={};
+            window.location.reload();
+            // getChannelList(true);
+          },
+          error:function(error){
+            changeBind($('.submitDiv .saveBtn')[0],false);
+          }
+        })
+        // if(addJson)   updateJson = $.extend(updateJson,addJson);
+    }
+    function setDefault() {
+        $('#addChannel').on('click', function () {
+            showAddLevel();
+        });
+        $('#dataTable').off('click','.global-checkbox').on('click','.global-checkbox',function(){
+            toggleSelect();
+        });
+        $('#dataTable').off('click','.table-checkbox').on('click','.table-checkbox',function(){
+            interSelect();
+        });
+        $('#onlineBtn').off('click').on('click',function(){
+            if(!myConfirm('确定批量上线所选频道？')) return;
+            channelOnline();
+        })
+    }
+    function deleteChannel(dataId) {
+        $.ajax({
+          url:'/api/oam/main/channel/delete',
+          type:'POST',
+          datatype:'json',
+          data:{
+            'id':dataId
+          },
+          success:function(data){
+            alert("删除成功！");
+            window.location.reload();
+            // getChannelList(true);
+          },
+          error:function(error){
+            alert("删除失败！");
+          }
+        })
+    }
+    // 加载二级页面数据
+    function loadSecondPage(){
+        // ajaxAction(
+        //         'GET',
+        //         apiPath('/api/category/search?parentId=0'),
+        //         '',
+        //         true,
+        //         function(data,textStatus){
+        //             fullDatas = data.rows;
+        //             var option='<option value="secP1" data-categoryD1Id="0">首页</option>';
+        //             $.each(fullDatas,function(index,content){
+        //                 option += '<option value="secP'+(content.index+2)+'" data-categoryD1Id="'+content.id+'">'+content.name+'</option>';
+        //             });
+        //             $('#selectPage').html(option);
+        //         },
+        //         function(errno,errmsg){
+        //             alert(errmsg);
+        //         });
+    }
+
+    //上线/下线频道
+    function channelOnline(data,status){
+        // console.log(data,status);
+        // console.log(data.id);
+        var Url;
+        if (status == 1) {
+          Url = '/api/oam/main/channel/up'
+        }
+        if (status == 0) {
+          Url = '/api/oam/main/channel/down'
+        }
+
+        $.ajax({
+          url:Url,
+          type:'POST',
+          datatype:'json',
+          data:{
+            'id':data.id
+          },
+          success:function(data){
+            if (status == 1) {
+              alert("上线成功！")
+            }
+            if (status == 0) {
+              alert("下线成功！")
+            }
+          }
+        })
+        var channelList=[];
+        if(data){
+            var item = {};
+            item.id = data.id;
+            if(status){
+                item.status= 1;
+            }else{
+                item.status = 0;
+            }
+            channelList.push(item);
+        }else{
+            channelList = getOnlineStatus();
+        }
+        // ajaxAction(
+        //         'PUT',
+        //         apiPath('/api/channel/status'),
+        //         {channelList:channelList},
+        //         true,
+        //         function(data,textStatus){
+        //             if(status==1){
+        //                 alert("上线成功！")
+        //             }else if(status==0){
+        //                 alert("下线成功！")
+        //             }else{
+        //                 alert('批量上线成功！');
+        //             }
+        //             getChannelList(true);
+        //         },
+        //         function(errno,errmsg){
+        //             alert(errmsg);
+        //         });
+    }
+</script>
+{% endblock %}

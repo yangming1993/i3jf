@@ -1,0 +1,36 @@
+
+        .control-panel{
+            padding:10px;
+        }
+        #order-status,
+        #order-timeline,
+        #control-btns{
+            display:inline-block;
+            margin-left:15px;
+        }
+        #order-status *,
+        #order-timeline *,
+        #control-btns *{
+            vertical-align:middle;
+        }
+        #order-status #status-select{
+            display:inline-block;
+            width:auto;
+        }
+        #order-timeline #timeline{
+            display:inline-block;
+            width:270px;
+            background-color:#fff;
+            cursor:pointer;
+        }
+      .logo{
+        font-size:26px;
+        font-weight:bold;
+      }
+      .logo span{
+
+      }
+      .tips{
+        font-size: 10px;
+        color:darkgray;
+      }

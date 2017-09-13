@@ -1,0 +1,481 @@
+{% extends "i3jf/admin/template.html" %}
+
+    {% block css %}
+    <link rel="stylesheet" href="{{static_url}}admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/skin-blue.min.css">
+
+
+
+    <style type="text/css">
+      .editPanel{
+          width: 360px;
+          height: 200px;
+      }
+      #dataTable{
+          width:auto;
+      }
+      .logo{
+        font-size:26px;
+        font-weight:bold;
+      }
+      .logo span{
+
+      }
+      .tips{
+        font-size: 10px;
+        color:darkgray;
+      }
+      .fr{
+        float: right;
+      }
+      .sidebar-menu li.active>a>.fa-angle-left {
+          -webkit-transform: rotate(-90deg);
+          -ms-transform: rotate(-90deg);
+          -o-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+      }
+    </style>
+    <link rel="stylesheet" href="{{static_url}}admin/css/myModify.css">
+    {% endblock %}
+    {% block content %}
+                    <ul class="sidebar-menu">
+            <li class="header">菜单</li>
+            <li id="dataMenage" class="treeview">
+              <a href="/api/oam/data_analysis/"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i> <span>数据分析</span></a>
+
+            </li>
+            <li id="userMenage" class="treeview active">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> <span>用户管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu active">
+                <li id="1" class="active"><a href="/api/oam/user/lists">用户列表</a></li>
+              </ul>
+            </li>
+            <li id="orderMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-hamburger"></i> <span>订单管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/order/lists">订单列表</a></li>
+                <!-- <li id="2"><a href="/static/i3jf/admin/special.html">异常订单</a></li> -->
+                <li id="3"><a href="/api/oam/returned/history">退货历史</a></li>
+              </ul>
+            </li>
+            <li id="contentMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-signal"></i> <span>数据管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/price/set">价格管理</a></li>
+                <li id="2"><a href="/api/oam/product/lists">产品列表</a></li><!--
+                <li id="4"><a href="/static/i3jf/admin/bind.html">分类管理</a></li> -->
+              </ul>
+            </li>
+            <li id="marketMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-film"></i> <span>推广管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/banner/ads/list">首页轮播管理</a></li>
+                <li id="2"><a href="/api/oam/channel/product/lists">首页频道管理</a></li>
+                <!-- <li id="3"><a href="/static/i3jf/admin/pull.html">精品推荐管理</a></li> -->
+              </ul>
+            </li>
+            <li id="productList" class="treeview">
+              <a href="/api/oam/get/product/detail"><i class="glyphicon glyphicon-volume-down"></i>
+              <span>获取产品信息</span> </a>
+
+            </li>
+            <li class="treeview">
+              <a href="/api/oam/get/area/detail"><i class="glyphicon glyphicon-th-large"></i> <span>地区管理</span> </a>
+            </li>
+          </ul>
+        </section>
+      </aside>
+      <div class="content-wrapper" style="min-height: 874px;">
+        <section class="content-header">
+          <h1>
+            用户管理
+            <small>用户列表</small>
+          </h1>
+        </section>
+        <section class="content">
+  <div class="box box-default color-palette-box">
+		<div class="box-body">
+			<div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <div class="row">
+          <div class="col-sm-6"></div>
+          <div class="col-sm-6"></div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <table id="dataTable" class="table table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+
+              </table>
+
+            </div>
+          </div>
+        </div>
+		</div>
+  </div>
+
+  </section>
+</div>
+  <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
+  </div>
+  <div class="fixedLayer">
+      <div class="fixedContainer">
+
+      </div>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+  <script src="{{static_url}}admin/js/jQuery-2.1.4.min.js"></script>
+  <script src="{{static_url}}admin/js/bootstrap.min.js"></script>
+  <script src="{{static_url}}admin/js/public.js"></script>
+  <script src="{{static_url}}admin/js/checkAction.js"></script>
+  <script src="{{static_url}}admin/js/base.js"></script>
+
+  <script src="{{static_url}}admin/js/dataTables.min.js"></script>
+  <script type="text/javascript">
+
+  var dictInfo = {};
+  $(document).ready(function() {
+      $('#dataTable').DataTable({
+        paging: true,//分页
+        ordering: true,//是否启用排序
+        searching: true,//搜索
+        processing:true,//loading
+        language: {
+            lengthMenu: '<select class="form-control input-xsmall">' + '<option value="1">1</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="30">30</option>' + '<option value="40">40</option>' + '<option value="50">50</option>' + '</select>条记录',//左上角的分页大小显示。
+            search: "<span>关键字搜索：</span>",//右上角的搜索文本，可以写html标签
+
+            paginate: {//分页的样式内容。
+                previous: "上一页",
+                next: "下一页",
+                first: "第一页",
+                last: "最后"
+            },
+            processing : "载入中...<img src='./images/loading.gif' style='width:100px;height:100px;' />",
+            zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
+            //下面三者构成了总体的左下角的内容。
+            info: "总共_PAGES_ 页，显示第_START_ 到第 _END_ ，筛选之后得到 _TOTAL_ 条，初始_MAX_ 条 ",//左下角的信息显示，大写的词为关键字。
+            infoEmpty: "0条记录",//筛选为空时左下角的显示。
+            infoFiltered: ""//筛选之后的左下角筛选提示，
+        },
+        paging: true,
+        pagingType: "full_numbers",//分页样式的类型
+        "ajax":{
+              "url":"/api/oam/user/list?rows=15&page=1",
+              "dataSrc":"userlist"
+          },
+        "columns": [
+                    {
+                      "title":'',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"nickname",
+                      "title":'真实姓名',
+                      "class":'th-center td-center',
+                      "width":'15%'
+                    },
+                    {
+                      "data":"gender",
+                      "title":'性别',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"phone",
+                      "title":'手机号',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"email",
+                      "title":'邮箱',
+                      "class":'th-center td-center',
+                      "width":'15%'
+                    },
+                    {
+                      "data":"credit_remaining",
+                      "title":'可用积分',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"state",
+                      "title":'状态',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "title":'操作',
+                      "class":'th-center td-center'
+                    }
+                ],
+        "columnDefs": [
+                  {
+                      "render": function(data,type,row){
+                          var inputDiv = '<input type="checkbox" class="table-checkbox" name="showLists" data-name="'+row.name+'" data-id="'+row.sku+'"/>';
+                          return inputDiv;
+                      },
+                      "targets":0
+                  },
+                  {
+                      "render": function(data,type,row,meta){
+                          return sexInfo[data];
+                      },
+                      "targets":2
+                  },
+                  {
+                      "render": function(data,type,row,meta){
+                          var state = ''
+                          switch(row.state)
+                          {
+                            case true:
+                              state='正常';
+                              // return state;
+                              break;
+                            case false:
+                              state='禁用';
+                              // return state;
+                              break;
+                          }
+                          return state;
+                      },
+                      "targets":6
+                  },
+                  {
+                      "render": function(data,type,row){
+                          //var detailUrl = 'path("oam_user_detail",{"userId":row.id})';
+
+                          var html =
+                          // '<a target="_blank" href="/static/i3jf/admin/orderDetail.html?orderId='+row.id+'" class="btn btn-sm checkInfo">查看详情</a><br />' +
+                                  '<a  href="javascript:void(0);" class="btn btn-sm rechargeBtn">充值积分</a><br />';
+                          var a = '<a class="btn btn-sm user-disabled" status="true">启用账号</a>';
+                          var b = '<a class="btn btn-sm user-disabled" status="false">禁用账号</a>';
+                          if(row.state){
+                              html+= b;
+                          }else{
+                              html+= a;
+                          }
+                          return html;
+                      },
+                      "targets":7
+                  }
+                ],
+                "createdRow":function(row,data,index){
+                    $('td',row).eq(7).find('.user-disabled').bind('click',function(){
+                        var target = this;
+                        var disabledStatus = $(target).attr('status');
+                        userDisabled(data.id,disabledStatus);
+                    });
+                    $('td',row).eq(7).find('.rechargeBtn').on('click',function(){
+                        showEditLevel(data.id);
+                    });
+                },
+
+      });
+    });
+
+    $('#dataTable').removeClass( 'display' ).addClass('table table-striped table-bordered');
+
+
+    var checkLogin = new checkLogin();//判断登录
+    if (checkLogin.flag) {
+
+    }else{
+      window.location.href = "/api/oam/admin/login";
+    }
+
+    //判断登录
+    function checkLogin(){
+        var loginName = '';
+        var loginList = '';
+        var topOrderN = '';
+        //获取session 判断登录
+        var Login = sessionStorage.getItem("adminLogin");
+        console.log(Login);
+        // var Login = getSessionstronge("login");
+        if (Login == null) {  //没有登录
+            console.log("没登录");
+            this.flag = false;
+        }else{  //登录
+            console.log("已经登陆");
+            this.flag = true;
+            $(".info p").eq(0).text(Login);
+            $(".hidden-xs").text(Login);
+        }
+    }
+
+
+
+    // userList({
+    //   'rows':10,
+    //   'page':1
+    // });
+    function userList(json){
+      $.ajax({
+        url:'/api/oam/user/list',
+        type:'GET',
+        datatype:'json',
+        data:{
+          'rows':json.rows,
+          'page':json.page
+        },
+        success:function(data){
+          var data = JSON.parse(data);
+          console.log(data);
+          var list = data.userlist;
+          var user = '';
+          var gender = '';
+          var state = '';
+          var disabled = '';
+          dictInfo.userStatus = list;
+          var amount = data.amount;
+        },
+        error:function(error){
+          alert("获取失败");
+        }
+      })
+    }
+
+    function ifGender(item,gender){
+      switch(item.gender)
+      {
+        case 0:
+          gender='男';
+          return gender;
+          break;
+        case 1:
+          gender='女';
+          return gender;
+          break;
+        case 2:
+          gender='保密';
+          return gender;
+          break;
+      }
+    }
+
+    function ifState(item,state){
+      switch(item.state)
+      {
+        case true:
+          state='正常';
+          return state;
+          break;
+        case false:
+          state='禁用';
+          return state;
+          break;
+      }
+    }
+
+    function ifDisabled(item,state){
+      switch(item.state)
+      {
+        case true:
+          state='<a class="btn btn-sm user-disabled" status="true" data-id="'+item.id+'" data-state="false" onclick="userDisabled(this)">禁用账号</a>';
+          return state;
+          break;
+        case false:
+          state='<a class="btn btn-sm user-disabled" status="true" data-id="'+item.id+'" data-state="true" onclick="userDisabled(this)">启用账号</a>';
+          return state;
+          break;
+      }
+    }
+    var editJson={};
+    //编辑充值积分
+    function showEditLevel(dataId){
+        $(".fixedLayer").show();
+        var userId = dataId;
+        console.log(userId);
+        var editPanel = '<div class="editPanel panel panel-primary">'
+                +'<div class="panel-heading">编辑</div>'
+                +'<div class="panel-body">'
+                +'<form class="form-horizontal">'
+                +'<div class="form-group">'
+                +'<label class="col-sm-3 control-label">充值积分</label>'
+                +'<div class="col-sm-9">'
+                +'<input type="text" class="form-control" id="rechargeNum" />'
+                +'</div>'
+                +'</div>'
+                +'</form>'
+                +'<div class="submitDiv form-group">'
+                +'<label class="col-sm-3 control-label" ></label>'
+                +'<div class="col-sm-9">'
+                +'<input type="button" class="btn btn-primary saveBtn" data-id="'+userId+'" value="保存"/>'
+                +'<input type="button" class="btn btn-default cancelBtn" value="取消"/>'
+                +'</div>'
+                +'</div>'
+                +'</div>'
+                +'</div>';
+        $('.fixedContainer').html(editPanel);
+        setPanelSize();
+        $('.submitDiv .saveBtn').off('click').on('click',function(){
+            var btnTarget = this;
+            if(!checkNull($('#rechargeNum').val(),"请填写充值积分！")) return;
+            changeBind(btnTarget,true);
+            editJson.userId = userId;
+            editJson.amount = $('#rechargeNum').val();
+            rechargePoint(btnTarget);
+        });
+        $('.submitDiv .cancelBtn').on('click',function(){
+            $('.fixedContainer').html('');
+            $('.fixedLayer').css('display','none');
+            editJson={};
+            changeBind($('.submitDiv .saveBtn')[0],true);
+        });
+
+    }
+
+    function rechargePoint(target){
+      var id = $(target).attr("data-id");
+      var amount = $("#rechargeNum").val();
+      $.ajax({
+        url:'/api/oam/user/recharge',
+        type:'POST',
+        datatype:'json',
+        data:{
+          'Id':id,
+          'Amount':amount
+        },
+        success:function(data){
+            alert('积分充值成功！');
+            $('.fixedContainer').html('');
+            $('.fixedLayer').css('display','none');
+
+            userList({
+              'rows':10,
+              'page':1
+            });
+        },
+        error:function(error){
+          alert("充值积分失败");
+        }
+      })
+    }
+
+    function userDisabled(dataId,state){
+      console.log(dataId,typeof(dataId),state,typeof(state));
+      var id = dataId;
+      var state = state;
+      var a = state.substr(0, 1).toUpperCase();
+      var b = state.substr(1);
+      var states = a+b;
+      $.ajax({
+        url:'/api/oam/user/disable_enable_user',
+        type:'POST',
+        datatype:'json',
+        data:{
+          'Id':id,
+          'State':states
+        },
+        success:function(data){
+          userList({
+            'rows':10,
+            'page':1
+          });
+        },
+        error:function(error){
+          alert("用户禁用失败");
+        }
+      })
+    }
+  </script>
+{% endblock %}

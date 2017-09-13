@@ -1,0 +1,133 @@
+	body{
+		background-color: #fafafa;
+	}
+	.login{
+		width: 70%;
+		height: 340px;
+		margin: 151px auto 250px;
+		background-color: white;
+		position: relative;
+	}
+	.login_pic{
+	    width: 49%;
+	    height: 100%;
+	    zoom:1;
+	}
+	.login_log{
+	    width: 51%;
+	    height: 100%;
+	    position: absolute;
+	    top: 0;
+	    right: 0;
+	    border-top: 1px solid #f5f5f5;
+	    border-right: 1px solid #f5f5f5;
+	    border-bottom: 1px solid #f5f5f5;
+	}
+	.login_success{
+	    width: 51%;
+	    height: 100%;
+	    position: absolute;
+	    top: 0;
+	    right: 0;
+	    border-top: 1px solid #f5f5f5;
+	    border-right: 1px solid #f5f5f5;
+	    border-bottom: 1px solid #f5f5f5;
+	    display: none;
+	}
+	.login_success_tit{
+		width: 100%;
+		line-height: 200px;
+		color: green;
+		text-align: center;
+	}
+	.login_success_cont a{
+		color: #005ea7;
+		font-size: 16px;
+	}
+	.login button{
+	    width: 300px;
+	    height: 40px;
+	    background-color: #cc0a2a;
+	    border: 1px solid #cc0a2a;
+	    color: white;
+	    font-size: 16px;
+	    font-weight: bold;
+	}
+	.login button:hover{
+	    cursor: pointer;
+	}
+	.login_title{
+	    font-size: 20px;
+	    font-weight: bold;
+	    text-align: center;
+	    margin: 20px 0 0;
+	}
+	.login_title_xia{
+	    width: 300px;
+	    height: 20px;
+	    line-height: 20px;
+	    color: #cc0a2a;
+	    font-size: 12px;
+	    margin: 10px auto 0;
+	}
+	.login_name,.login_password{
+	    margin: 15px auto 0;
+	    width: 300px;
+	    position: relative;
+	}
+	.img{
+		width:39px;
+		height:40px;
+	    position:absolute; 
+	    top:0; 
+	    left:0;
+	}
+	.text{
+		outline:none;
+		border:1px solid #ccc;
+	    width: 247px;
+	    height: 38px;
+	    margin-left: 39px;
+	    padding-left: 10px;
+	}
+	.checkbox{
+	    margin: 10px auto 20px;
+	    width: 300px;
+	    font-size: 14px;
+	}
+	.automatic_login:hover{
+	    cursor: pointer;
+	}
+	.automatic_login.active i{
+		background:url("../images/isChecked.png") no-repeat center center;
+	}
+	.automatic_login i{
+		display:inline-block;
+		background:url("../images/notCheck.png") no-repeat center center;
+		width:18px;
+		height:18px;
+		margin-right:9px;
+		margin-bottom:-4px;
+	}
+	.forget_password{
+	    float: right;
+	}
+	.login_log button{
+	    display: block;
+	    margin: 0 auto 20px;
+	}
+	.login_register{
+	    width: 300px;
+	    margin: 0 auto;
+	}
+	.login_register img{
+	    padding-right: 10px;
+	    display: none;
+	}
+	.register{
+	    float: right;
+	    font-size: 14px;
+	}
+	.login a:hover{
+	    cursor: pointer;
+	}

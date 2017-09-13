@@ -1,0 +1,132 @@
+.webPic{
+        height: 30px;
+        width: 40px;
+    }
+    .editPanel{
+        width: 380px;
+        height: 350px;
+    }
+    .control-panel{
+        padding:20px 10px 10px;
+        margin-bottom: -10px;
+    }
+    .control-line{
+        margin-right: -30px;
+        margin-bottom:10px;
+    }
+    .selectLabel{
+        width: 80px;
+    }
+    .control-btns{
+        display: inline-block;
+    }
+    .sureGoto{
+        display:inline-block !important;
+        margin-right: 10px;
+    }
+    .cancelGoto{
+        display:inline-block !important;
+        margin-right: 0px;
+        margin-top:0px !important;
+    }
+    #gotoListsDiv{
+        position:static !important;
+        width: 1076px !important;
+        height: 460px;
+        overflow-y: auto;
+        overflow-x:hidden ;
+    }
+    .searchBtn{
+        width:60px;
+        margin-right: 10px;
+    }
+    .selectDirection{
+        width: 40%;
+        height: 34px;
+    }
+    .custom-item{
+        display:inline-block;
+        height:34px;
+        line-height:34px;
+        vertical-align:middle;
+        width: 330px;
+        margin-right:30px;
+    }
+    .custom-item .form-control{
+        display: inline-block;
+        width: auto;
+    }
+    #selectCity{
+        width:auto;
+        max-width: 350px;
+        margin-right: 0px;
+        height: 54px;
+    }
+    .pic{
+        height:30px;
+        width: 40px;
+    }
+    .form-control{
+        display: inline-block;
+    }
+    #floatPercent{
+        width: 52%;
+    }
+    #floatAmount{
+        width: 60%;
+    }
+    .selectedZone{
+        display: inline-block;
+    }
+    .fixedLayer .custom-item .form-control{
+        width: 240px;
+    }
+    .pad10{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .box-body #otherCondition,#searchProductName{
+        width: 270px;
+        padding-right: 0px;
+        margin-right: 0px;
+        height: 54px;
+    }
+    .box-body #otherCondition{
+        width: 235px;
+    }
+    .box-body #otherCondition input,
+    .box-body #searchProductName input{
+        width: 180px;
+    }
+    div.container.search{
+        width: 100%;
+        padding-right:0px;
+        padding-left:0px;
+    }
+    #dataTable{
+        width: auto !important;
+    }
+    #searchBtns{
+        width: 152px;
+        padding-right: 0px;
+    }
+    .btns{
+        width:220px;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+    #doReset,#searchOnsale{
+        margin-right: 10px;
+    }
+    .logo{
+        font-size:26px;
+        font-weight:bold;
+        /* color:#222d32; */
+      }
+    .logo span{
+
+      }
+      .tips{
+        font-size: 10px;
+        color:darkgray;
+      }

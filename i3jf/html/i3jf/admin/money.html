@@ -1,0 +1,903 @@
+{% extends "i3jf/admin/template.html" %}
+    {% block css %}
+    <link rel="stylesheet" href="{{static_url}}admin/css/bootstrap.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/AdminLTE.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/skin-blue.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/dataTables.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/money.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/myModify.css">
+    {% endblock %}
+
+    {% block content %}
+                    <ul class="sidebar-menu">
+            <li class="header">菜单</li>
+            <li id="dataMenage" class="treeview">
+              <a href="/api/oam/data_analysis/"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i> <span>数据分析</span></a>
+
+            </li>
+            <li id="userMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> <span>用户管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu active">
+                <li id="1" class="active"><a href="/api/oam/user/lists">用户列表</a></li>
+              </ul>
+            </li>
+            <li id="orderMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-hamburger"></i> <span>订单管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/order/lists">订单列表</a></li>
+                <!-- <li id="2"><a href="/static/i3jf/admin/special.html">异常订单</a></li> -->
+                <li id="3"><a href="/api/oam/returned/history">退货历史</a></li>
+              </ul>
+            </li>
+            <li id="contentMenage" class="treeview active">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-signal"></i> <span>数据管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1" class="active"><a href="/api/oam/price/set">价格管理</a></li>
+                <li id="2"><a href="/api/oam/product/lists">产品列表</a></li><!--
+                <li id="4"><a href="/static/i3jf/admin/bind.html">分类管理</a></li> -->
+              </ul>
+            </li>
+            <li id="marketMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-film"></i> <span>推广管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/banner/ads/list">首页轮播管理</a></li>
+                <li id="2"><a href="/api/oam/channel/product/lists">首页频道管理</a></li>
+                <!-- <li id="3"><a href="/static/i3jf/admin/pull.html">精品推荐管理</a></li> -->
+              </ul>
+            </li>
+            <li id="productList" class="treeview">
+              <a href="/api/oam/get/product/detail"><i class="glyphicon glyphicon-volume-down"></i>
+              <span>获取产品信息</span> </a>
+
+            </li>
+            <li class="treeview">
+              <a href="/api/oam/get/area/detail"><i class="glyphicon glyphicon-th-large"></i> <span>地区管理</span> </a>
+            </li>
+          </ul>
+        </section>
+      </aside>
+      <div class="content-wrapper" style="min-height: 897px;">
+        <section class="content-header">
+          <h1> 数据管理<small>价格管理</small></h1>
+        </section>
+        <section class="content">
+          	<div class="box box-default color-palette-box">
+		<div class="box-body">
+            <div class="container search">
+                <!-- <div class="control-panel row">
+
+                    <div id="otherCondition" class="custom-item col-md-2 pad10">sku：
+                        <input class="form-control" type="text">
+                    </div>
+                    <div id="searchProductName" class="custom-item col-md-2 pad10">产品名称：
+                        <input class="form-control" type="text">
+                    </div>
+                    <div class="col-md-4 btns pad10">
+                        <button class="btn btn-primary pull-right" id="topAddBtn">添加商品</button>
+                        <button id="doReset" class="status-item btn btn-warning pull-right">重置</button>
+                        <button class="btn btn-primary pull-right" id="searchOnsale">搜索</button>
+                    </div>
+
+                </div> -->
+            </div>
+			<div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <div class="row">
+            <div class="col-sm-6"></div>
+            <div class="col-sm-6"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="dataTable" class="table table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="dataTable_info" style="width: 1640px;">
+
+                </table>
+                <div id="dataTable_processing" class="dataTables_processing" style="display: none;">处理中...</div>
+            </div>
+          </div>
+      </div>
+ </div>
+ </div>
+
+        </section>
+      </div>
+      <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
+    </div>
+    <div class="fixedLayer">
+    <div class="fixedContainer">
+    </div>
+</div>
+
+
+    <img id="basePicInfo" src="" style="display:none;">
+
+    {% endblock %}
+
+    {% block js %}
+    <script src="{{static_url}}admin/js/jQuery-2.1.4.min.js"></script>
+    <script src="{{static_url}}admin/js/bootstrap.min.js"></script>
+
+    <script src="{{static_url}}admin/js/checkAction.js"></script>
+    <script src="{{static_url}}admin/js/public.js"></script>
+    <script src="{{static_url}}admin/js/base.js"></script>
+    <script src="{{static_url}}admin/js/dataTables.min.js"></script>
+
+   <script type="text/javascript">
+    	$(function(){
+          var checkLogin = new checkLogin();//判断登录
+          if (checkLogin.flag) {
+
+          }else{
+            window.location.href = "/api/oam/admin/login";
+          }
+
+          //判断登录
+          function checkLogin(){
+              var loginName = '';
+              var loginList = '';
+              var topOrderN = '';
+              //获取session 判断登录
+              var Login = sessionStorage.getItem("adminLogin");
+              console.log(Login);
+              // var Login = getSessionstronge("login");
+              if (Login == null) {  //没有登录
+                  console.log("没登录");
+                  this.flag = false;
+              }else{  //登录
+                  console.log("已经登陆");
+                  this.flag = true;
+                  $(".info p").eq(0).text(Login);
+                  $(".hidden-xs").text(Login);
+              }
+          }
+          // initMenu('content',1);
+          loadDefaultDOM();
+          getProductList();
+          // getProvince(function(){
+          //   getProductList(false);
+          // });
+        });
+        var addJson={};
+        var updateJson={};
+        function loadDefaultDOM(){
+            changeBind($('#searchOnsale')[0],true);
+            changeBind($('#doReset')[0],true);
+            $('#topAddBtn').on('click',function(){
+                showEditLevel();
+            });
+
+            $('.fixedLayer').off('click','#gotoProduct').on('click','#gotoProduct',function(){
+
+                var aSpan = $('#gotoProduct').prev().text();
+                if(!aSpan)  selectGoto('');
+                else selectGoto(aSpan);
+            });
+            $('#dataTable').off('click','.global-checkbox').on('click','.global-checkbox',function(){
+                toggleSelect();
+            });
+            $('#dataTable').off('click','.table-checkbox').on('click','.table-checkbox',function(){
+                interSelect();
+            });
+            $('#onlineBtn').off('click').on('click',function(){
+                channelOnline();
+            });
+            $('.fixedLayer ').off('click','.sureGoto').on('click','.sureGoto',function(){
+                saveSelectedGoto();
+            });
+            $('.fixedLayer').off('click','.cancelGoto').on('click','.cancelGoto',function(){
+                cancelSelectedGoto();
+            });
+            $('.fixedLayer').off('click','.searchBtn').on('click','.searchBtn',function(){
+                var searchCond={};
+                searchCond.keyword = $(this).parent().prev().find('input').val();
+                var selectList= $('.category');
+                var i,selectLen = selectList.length;
+                for(i=1;i<selectLen;i++){
+                    var val = $($(selectList)[i]).val();
+                    if(val!=-1)  searchCond.categoryId = val;
+                }
+                var V1 = $($(selectList)[0]).val();
+                var V2 = $($(selectList)[1]).val();
+                if(V1>0&&V2==-1){
+                    searchCond.subStationId = V1;
+                }
+                loadProductLists('',searchCond);
+            });
+            $('#searchOnsale').off('click').on('click',function(){
+                searchList();
+            });
+            $('#doReset').off('click').on('click',function(){
+                resetList();
+            });
+        };
+        function getProductList(){
+              bt = $('#dataTable').dataTable({
+                paging: true,//分页
+                ordering: true,//是否启用排序
+                searching: true,//搜索
+                "processing":true, //加载开启
+                language: {
+                    lengthMenu: '<select class="form-control input-xsmall">' + '<option value="1">1</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="30">30</option>' + '<option value="40">40</option>' + '<option value="50">50</option>' + '</select>条记录',//左上角的分页大小显示。
+                    search: '<span>关键字搜索：</span>',//右上角的搜索文本，可以写html标签
+
+                    paginate: {//分页的样式内容。
+                        previous: "上一页",
+                        next: "下一页",
+                        first: "第一页",
+                        last: "最后"
+                    },
+                    processing : "载入中...<img src='/static/i3jf/admin/images/loading.gif' style='width:100px;height:100px;' />",
+                    zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
+                    //下面三者构成了总体的左下角的内容。
+                    info: "总共_PAGES_ 页，显示第_START_ 到第 _END_ ，筛选之后得到 _TOTAL_ 条，初始_MAX_ 条 ",//左下角的信息显示，大写的词为关键字。
+                    infoEmpty: "0条记录",//筛选为空时左下角的显示。
+                    infoFiltered: ""//筛选之后的左下角筛选提示，
+                },
+                pagingType: "full_numbers",//分页样式的类型
+                // "stateSave":keepFlag,
+                "ajax": {
+                    "url":"/api/oam/product/price/list",
+//                     "type":"GET",
+//                     "data":function(paramet) {
+//                         var json = '';
+//                         var start = paramet.start;
+//                         var rows = paramet.length;
+//                         json+= 'rows=' + rows;
+//                         json+= '&page=' + (parseInt(start/rows)+1);
+//                         json+= '&cityId=' + cityId;
+// //                        json+= '&cityId=' + '010';
+//                         if(searchCondition){
+//                             var sku = searchCondition.sku;
+//                             var pName = searchCondition.productName;
+//                             json+= $.trim(sku)?'&sku='+sku:'';
+//                             json+= $.trim(pName)?'&name='+pName:'';
+//                         };
+//                         return json;
+//                     },
+                    "dataSrc":"productlist"
+                    // function(data){
+                    //     changeBind($('#searchOnsale')[0],false);
+                    //     changeBind($('#doReset')[0],false);
+                    //     return data.rows;
+                    // }
+                },
+                "columns": [
+                    {
+                      "data":"sku",
+                      "title":'产品sku',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"name",
+                      "title":'产品名称',
+                      "class":'th-center td-center',
+                      "width":'12%'
+                    },
+                    {
+                      "data":"image",
+                      "title":'产品图片',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"credit_amount",
+                      "title":'积分价格',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"close_price",
+                      "title":'结算价格',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"online_price",
+                      "title":'上线价格',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"float_price",
+                      "title":'浮动价格',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"discount",
+                      "title":'浮动百分比',
+                      "class":'th-center td-center'
+                    },
+                    // {
+                    //   "data":"adminId",
+                    //   "title":'最后修改管理员id',
+                    //   "class":'th-center td-center'
+                    // },
+                    // {
+                    //   "data":"adminName",
+                    //   "title":'管理员姓名',
+                    //   "class":'th-center td-center'
+                    // },
+                    {
+                      "data":"last_change",
+                      "title":'最后修改时间',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "title":'操作',
+                      "class":'th-center td-center'
+                    }
+                ],
+                "columnDefs": [{
+                    "render": function(data,type,row){
+                        var imgDiv = '<img class="webPic" src="'+data+'"/>';
+                        return imgDiv;
+                    },
+                    "targets":2
+                },
+                {
+                    "render": function(data,type,row){
+                        return parseFloat(data)+'%';
+                    },
+                    "targets":7
+                },
+                {
+                    "render": function(data,type,row){
+                        return parseFloat(data).toFixed(2);
+                    },
+                    "targets":6
+                },
+                {
+                    "render": function(data,type,row){
+                        var editD = '<a class="btn btn-sm editInfo">编辑</a><br/><a class="btn btn-sm delInfo">删除</a>';
+                        return editD;
+                    },
+                    "targets":9
+                }],
+                "createdRow":function(row,data,index){
+                    function showOrgImg(url){
+                        var oImg = $('<img style="max-height:600px;max-width:800px;">');
+                        oImg.load(function() {
+                            var oWidth = $(oImg)[0].width+'px';
+                            var oHeight = $(oImg)[0].height+'px';
+                            $('.fixedContainer').html('<div class="image-prev"></div>')
+                            $('.fixedContainer .image-prev').html(oImg);
+                            $('.fixedContainer').css({
+                                'width':oWidth,
+                                'height':'286px',
+                                'max-width':'800px',
+                                'max-height':'600px',
+                                'box-shadow':'0px 0px 10px rgba(0,0,0,0)',
+                                'background-color':'rgba(0,0,0,0)'
+                            });
+                            $('.fixedContainer img').after('<div class="closeBtn"><img src="{{static_url}}admin/images/close.png" alt=""/></div>');
+                            $('.closeBtn').css('right','-30px');
+                            $('.fixedLayer').css('display','block');
+                            $('.closeBtn').css('display','block');
+                        });
+                        oImg.attr('src',url);
+                    }
+                    $('.fixedContainer').on('click','.closeBtn',function(){
+                        $('.fixedLayer').css('display','none');
+                        $('.fixedContainer').html('');
+                    });
+                    $('td',row).eq(2).on('click',function(){
+                        showOrgImg(data.image);
+                    });
+                    $('td',row).eq(9).on('click','.editInfo',function(){
+                        showEditLevel(data);
+                    });
+                    $('td',row).eq(9).on('click','.delInfo',function(){
+                        if(!myConfirm('是否删除该信息？')) return;
+                        deleteProduct(data.id);
+                    });
+                },
+                // "language":{
+                //     url:dataTable_zh
+                // }
+            });
+        }
+
+        //编辑 浮层
+        function showEditLevel(rowData){
+            var editPanel = '<div class="editPanel panel panel-primary" style="height:286px">'
+                    +'<div class="panel-heading">编辑</div>'
+                    +'<div class="panel-body">'
+                    +'<form class="form-horizontal">'
+                    +'<div class="form-group">'
+                    +'<label class="col-sm-3 control-label">产品sku</label>'
+                    +'<div class="col-sm-9">'
+                    +'<span id="sku"></span>'
+                    +'<span class="btn btn-default" id="gotoProduct">点击选择产品</span>'
+                    +'</div>'
+                    +'</div>'
+                    +'<div class="form-group">'
+                    +'<label class="col-sm-3 control-label">积分价格</label>'
+                    +'<div class="col-sm-9">'
+                    +'<span id="pointValue"></span>'
+                    +'</div>'
+                    +'</div>'
+                    +'<div class="form-group">'
+                    +'<label class="col-sm-3 control-label">浮动比例</label>'
+                    +'<div class="col-sm-9">'
+                    +'<select class="selectDirection form-control">'
+                    +'<option class="" value="up">上调</option>'
+                    +'<option class="" value="down">下调</option>'
+                    +'</select>'
+                    +'<input type="text" class="form-control" id="floatPercent" onkeyup="checkDecimal(this);"/>&nbsp;%'
+                    +'</div>'
+                    +'</div>'
+                    // +'<div class="form-group">'
+                    // +'<label class="col-sm-3 control-label">浮动价格</label>'
+                    // +'<div class="col-sm-9">'
+                    // +'<select class="selectDirection form-control">'
+                    // +'<option class="" value="0">上调</option>'
+                    // +'<option class="" value="1">下调</option>'
+                    // +'</select>'
+                    // +'<input type="text" class="form-control" id="floatAmount" onkeyup="checkDecimal(this);"/>'
+                    // +'</div>'
+                    // +'</div>'
+                    +'</form>'
+                    +'<div class="submitDiv form-group">'
+                    +'<label class="col-sm-3 control-label" ></label>'
+                    +'<div class="col-sm-9">'
+                    +'<input type="button" class="btn btn-primary saveBtn" value="保存"/>'
+                    +'<input type="button" class="btn btn-default cancelBtn" value="取消"/>'
+                    +'</div>'
+                    +'</div>'
+                    +'<div class="imgPreviewDiv"><img id="imgPreview" /></div>'
+                    +'</div>'
+                    +'</div>';
+            $('.fixedContainer').html(editPanel);
+            setPanelSize();
+            console.log(rowData);
+            if(rowData){  //编辑状态
+                setDefaultEditValue(rowData);
+            }
+            $('.submitDiv .saveBtn').off('click').on('click',function(){
+                var sku = $('#sku').text();
+                var floatPercent = combineSign($('#floatPercent').prev().val(),$('#floatPercent').val());
+                // var floatAmount = combineSign($('#floatAmount').prev().val(),$('#floatAmount').val());
+                if(!checkNull(sku,"请选择产品！")) return;
+                if(!checkNull(floatPercent,"请填写浮动比例！")) return;
+                // if(!checkNull(floatAmount,"请填写浮动价格！")) return;
+                addJson.sku = $('#sku').text();
+                addJson.floatPercent = floatPercent;
+                // addJson.floatAmount = floatAmount;
+
+                if(rowData){
+                    console.log("编辑");
+                    modifyProductPrice();
+                }else{
+                    console.log("不编辑");
+                    addProductPrice();
+                }
+            });
+            $('.submitDiv .cancelBtn').on('click',function(){
+                $('.fixedContainer').html('');
+                $('.fixedLayer').css('display','none');
+                if(rowData) updateJson={};
+                else addJson={};
+                changeBind($('.submitDiv .saveBtn')[0],true);
+            });
+        }
+        function setDefaultEditValue(data){
+            var sku = data.sku;
+            var pointValue = data.credit_amount;
+            var floatAmount=data.float_price;
+            var floatPercent = data.discount;
+            $('#sku').text(sku).css({
+                                        'marginRight':'20px',
+                                        'lineHeight':'34px'
+                                    });
+            $('#gotoProduct').css('display','none');
+            $('#pointValue').text(pointValue);
+            var floatAmountJson = handleFloat(floatAmount);
+            var floatPercentJson = handleFloat(floatPercent);
+            $('#floatAmount').val(floatAmountJson.value);
+            $('#floatPercent').val(floatPercentJson.value);
+            $('#floatAmount').prev().find('option[value='+floatAmountJson.sign+']')
+                             .prop('selected',true);
+            $('#floatPercent').prev()
+                             .find('option[value='+floatPercentJson.sign+']')
+                             .prop('selected',true);
+            updateJson.id=data.id;
+            updateJson.sku=sku;
+            updateJson.floatAmount=floatAmount;
+            // updateJson.floatPercent=floatPercent;
+        }
+        function setPanelSize(){
+            var orgWidth = $('.editPanel').width()+'px' ;
+            var orgHeight = $('.editPanel').height()+'px';
+            $('.fixedContainer').removeAttr('style');
+            $('.fixedContainer').css('width',orgWidth).css('height',orgHeight);
+            $('.fixedLayer').css('display','block');
+        }
+        //添加跳转层
+        function selectGoto(aSpan){
+            var searchItem = '<div class="control-panel" id="searchPanel">'
+                    +'<div class="control-line">'
+                    +'<div id="category1" class="custom-item ">'
+                    +'<label for="category1" class="selectLabel">子站：</label>'
+                    +'<select class="form-control category" onchange="changeEditCategoryD2(1);">'
+                    +'</select>'
+                    +'</div>'
+                    +'<div id="category2" class="custom-item">'
+                    +'<label for="category2" class="selectLabel">一级分类：</label>'
+                    +'<select class="form-control category" onchange="changeEditCategoryD2(2);">'
+                    +'</select>'
+                    +'</div>'
+                    +'<div id="category3" class="custom-item">'
+                    +'<label for="category3" class="selectLabel">二级分类：</label>'
+                    +'<select class="form-control category" onchange="changeEditCategoryD2(3);">'
+                    +'</select>'
+                    +'</div>'
+                    +'</div>'
+                    +'<div class="control-line">'
+                    +'<div id="category4" class="custom-item">'
+                    +'<label for="category4" class="selectLabel">三级分类：</label>'
+                    +'<select class="form-control category">'
+                    +'</select>'
+                    +'</div>'
+                    +'<div id="otherCondition" class="custom-item">'
+                    +'<label for="otherCondition" class="selectLabel">关键字：</label>'
+                    +'<input type="text" class="form-control">'
+                    +'</div>'
+                    +'<div class="control-btns">'
+                    +'<button class="btn btn-primary searchBtn" >搜索</button>'
+                    +'<button class="btn btn-primary sureGoto" >提交</button>'
+                    +'<button class="btn btn-warning cancelGoto" >取消</button>'
+                    +'</div>'
+                    +'</div>'
+                    +'</div>';
+            var datatables2 = '<div id="gotoListsDiv">'
+                    +'<table id="gotoListsTable" class="table table-bordered table-hover"></table>'
+                    +'</div>';
+            $('.fixedContainer').append(searchItem+datatables2);
+            $('.fixedContainer').css('width','1100px').css('height','600px');
+            $('.editPanel').css('display','none');
+            $('#gotoListsTable').css('display','block');
+            getEditCategoryInfo(0,1);
+            loadProductLists(aSpan);
+        }
+        //保存所选的产品
+        function saveSelectedGoto(){
+            //数据层
+            var gotoSku = $('.goto-radio:checked').attr('data-sku');
+            var gotoId = $('.goto-radio:checked').attr('data-id');
+            var gotoAmount = $('.goto-radio:checked').attr('data-amount');
+            if(gotoSku){
+                addJson.sku = gotoSku;
+                $('#sku').html(gotoSku).css('margin-right','20px');
+                $('#pointValue').text(gotoAmount);
+                //表现层
+                $('#gotoProduct').html("重新选择产品");
+            }
+            hideGotoLayer();
+        }
+        function hideGotoLayer(){
+            $('#gotoListsDiv').remove();
+            $('#searchPanel').remove();
+            setPanelSize();
+            $('.editPanel').css('display','block');
+        }
+        //取消所选的跳转id
+        function cancelSelectedGoto(){
+            $('#gotoProduct').html("点击选择产品");
+            hideGotoLayer();
+        }
+        function loadProductLists(aSpan,searchCondition){
+            $('#gotoListsTable').dataTable({
+                "destroy":true,
+                "processing":true,
+                "serverSide":true,
+                "lengthChange":false,
+                "filter":false,
+                "displayLength":12,
+                "ordering":false,
+                "paginationType":"simple_numbers",
+                "autoWidth":true,
+                "ajax": {
+                    "url":apiPath('/api/product/oam/search'),
+                    "type":"GET",
+                    "data":function(paramet) {
+                        var start = paramet.start;
+                        var rows = paramet.length;
+                        var requestJson = '';
+                        requestJson+= 'rows=' + rows;
+                        requestJson+= '&page=' + (parseInt(start/rows)+1);
+                        if(searchCondition){
+                            var keyword = searchCondition.keyword;
+                            var categoryId = searchCondition.categoryId;
+                            var subStationId = searchCondition.subStationId;
+                            requestJson+=$.trim(keyword)?'&keyword='+keyword:'';
+                            requestJson+=categoryId?'&categoryId=' + categoryId:'';
+                            requestJson+=subStationId?'&subStationId=' + subStationId:'';
+                        }
+                        return requestJson;
+                    },
+                    "dataSrc":"rows"
+                },
+                "initComplete":function(settings,json){
+                    if(!aSpan){
+                        $('.goto-radio:first').prop('checked',true);
+                    }else{
+                        $('.goto-radio[data-sku="'+aSpan+'"]').prop('checked',true);
+                    }
+                },
+                "columns": [
+                    { "title":'',"class":'th-center td-center'},
+                    { "data":"sku","title":'sku',"class":'th-center td-center'},
+                    { "data":"name","title":'产品名称',"class":'th-center td-center',"width":'240'},
+                    { "data":"image","title":'图片url',"class":'th-center td-center',"width":""},
+                    { "data":"amount","title":'积分价格',"class":'th-center td-center',"width":""},
+                    { "data":"categoryD1Name","title":'所属一级分类名称',"class":'th-center td-center',"width":""},
+                    { "data":"categoryD2Name","title":'所属二级分类名称',"class":'th-center td-center',"width":""},
+                    { "data":"categoryD3Name","title":'所属三级分类名称',"class":'th-center td-center',"width":""},
+                ],
+                "columnDefs": [
+                    {
+                        "render": function(data,type,row){
+                            var inputDiv = '<input type="radio" class="goto-radio" name="gotoLists" data-sku="'+row.sku+'" data-id="'+row.id+'" data-amount="'+row.amount+'"/>';
+                            return inputDiv;
+                        },
+                        "targets":0
+                    },
+                    {
+                        "render": function(data,type,row){
+                            var imgDiv = '<img class="pic" src="'+data+'"/>';
+                            return imgDiv;
+
+                        },
+                        "targets":3
+                    }],
+                "createdRow":function(row,data,index){
+
+                },
+                "language":{
+                    url:dataTable_zh
+                }
+            });
+        }
+        //获取编辑状态下的分类信息
+        function getEditCategoryInfo(parentId,target,callback){
+            if(parentId!=-1){
+                if(target!=1) $('.category:gt('+(target-2)+')').html("");
+                else $('.category').html("<option value='-1'>全部分类</option>");
+                ajaxAction(
+                        'GET',
+                        apiPath('/api/category/search?parentId='+parentId),
+                        {},
+                        true,
+                        function (data,textStatus){
+                            $('#category'+target+' select').html('');
+                            $('#category'+target+' select').prepend("<option value='-1'>全部分类</option>");
+                            $.each(data.rows,function(index,content){
+                                $('#category'+target+' select').append('<option value="'+content.id+'">'+content.name+'</option>');
+                            });
+                            if(callback) callback();
+                        },
+                        function (errno,errmsg){
+
+                        });
+            }
+            else{
+                $('.category:gt('+(target-2)+')').html("<option value='-1'>全部分类</option>");
+            }
+        }
+        //编辑状态下第二个下拉框的值变化时发生的变化
+        function changeEditCategoryD2(index){
+            var selectNum = $('.control-panel select').length;
+            recursion(index);
+            function recursion(index){
+                var curValue = $('#category'+index+' select option:selected').val();
+                if(curValue!=-1){
+                    getEditCategoryInfo(curValue,index+1,function(){
+                        $($('#category'+(index+1)+' select option')[1]).prop('selected',true);
+                        if((index+1)<selectNum)
+                            recursion(index+1);
+                    });
+                }else{
+                    getEditCategoryInfo(-1,index+1);
+                }
+            }
+        }
+        //处理浮动数的正负
+        function handleFloat(valueString){
+            var patt = new RegExp("^-");
+            var valueString = valueString+'';
+            var flag = patt.test(valueString);
+            var loc = patt.lastIndex;
+            var okJson={};
+            if(flag){
+                okJson.sign = 1;  //负
+                okJson.value = valueString.substring(loc+1);
+            }else{
+                okJson.sign = 0;
+                okJson.value = valueString;
+            }
+            return okJson;
+        }
+        //整合浮动数
+        function combineSign(sign,value){
+            var okString='';
+            if(parseInt(sign)){
+                okString='-'+value;
+            }else{
+                okString = value;
+            }
+            return okString;
+        }
+
+
+        //提交添加
+        function addProductPrice(){
+            ajaxAction(
+                    'POST',
+                    apiPath('/api/transaction/price/create'),
+                    addJson,
+                    true,
+                    function(data,textStatus){
+                        alert("添加成功！");
+                        $('.fixedContainer').html('');
+                        $('.fixedLayer').css('display','none');
+                        addJson={};
+                        var cityId = $('#city').find('option:selected').attr('data-code');
+                        getProductList(false,cityId);
+                    },
+                    function(errno,errmsg){
+                        alert(errmsg);
+                    });
+        }
+        //提交修改
+        function modifyProductPrice(){
+            $.extend(updateJson,addJson);
+            console.log(updateJson);
+            console.log(addJson);
+            var state = $(".selectDirection").val();
+            console.log(state,typeof(state));
+            $.ajax({
+              url:'/api/oam/product/price/set',
+              type:'POST',
+              datatype:'json',
+              data:{
+                'id':updateJson.id,
+                'state':state,
+                'discount':updateJson.floatPercent
+              },
+              success:function(data){
+                alert("编辑成功！");
+                $('.fixedContainer').html('');
+                $('.fixedLayer').css('display','none');
+                addJson={};
+                updateJson={};
+                var cityId = $('#city').find('option:selected').attr('data-code');
+                window.location.reload();
+
+              },
+              error:function(error){
+                alert("编辑失败");
+              }
+            })
+            // ajaxAction(
+            //         'PUT',
+            //         apiPath('/api/transaction/price/update'),
+            //         updateJson,
+            //         true,
+            //         function(data,textStatus){
+            //             alert("编辑成功！");
+            //             $('.fixedContainer').html('');
+            //             $('.fixedLayer').css('display','none');
+            //             addJson={};
+            //             updateJson={};
+            //             var cityId = $('#city').find('option:selected').attr('data-code');
+            //             getProductList(true,cityId);
+            //         },
+            //         function(errno,errmsg){
+            //             alert(errmsg);
+            //         });
+        }
+        //删除产品
+        function deleteProduct(dataId){
+            $.ajax({
+              url:'/api/oam/product/price/delete',
+              type:'POST',
+              datatype:'json',
+              data:{
+                'id':dataId
+              },
+              success:function(data){
+                alert("删除成功！");
+                var cityId = $('#city').find('option:selected').attr('data-code');
+                // getProductList(true,cityId);
+                window.location.reload();
+              },
+              error:function(error){
+                alert("删除失败！");
+              }
+            })
+        }
+        // //请求省
+        // function getProvince(callback){
+        //     $('#city').html('');
+        //     ajaxAction(
+        //         'GET',
+        //         apiPath('/api/province'),
+        //         '',
+        //         true,
+        //         function(data,textStatus){
+        //             var option='',datas;
+        //             if(data.isSuccess){
+        //                 datas = data.province;
+        //                 $.each(datas,function(index,content){
+        //                     option += '<option data-code="'+content.code+'">'+content.name+'</option>';
+        //                 });
+        //                 $('#province').html(option);
+        //                 if(callback) callback();
+        //             }else{
+        //                 alert("地区获取失败，请稍后再试！");
+        //             }
+        //         },
+        //         function(errno,errmsg){
+        //             alert(errmsg);
+        //         });
+        // }
+        // //请求市
+        // function getCity(provinceId,callback){
+        //     ajaxAction(
+        //         'GET',
+        //         apiPath('/api/city?provinceId='+provinceId),
+        //         {},
+        //         true,
+        //         function(data,textStatus){
+        //             var option='',datas;
+        //             if(data.isSuccess){
+        //                 datas = data.city;
+        //                 $.each(datas,function(index,content){
+        //                     option += '<option data-code="'+content.code+'">'+content.name+'</option>';
+        //                 });
+        //                 $('#city').html(option);
+        //                 if(callback) callback();
+        //             }else{
+        //                 alert("该地区暂不参与活动！");
+        //                 getProvince(function(){
+        //                     getCity($('#province option:selected').attr("data-code"),function(){
+        //                         getProductList(false,$('#city option:selected').attr("data-code"));
+        //                     });
+        //                 });
+        //             }
+        //         },
+        //         function(errno,errmsg){
+        //             alert(errmsg);
+        //         });
+        // }
+        function changeProvince(target){
+            var provinceId = $(target).find('option:selected').attr('data-code');
+            $('#city').html('');
+            getCity(provinceId);
+        }
+        function changeCity(target){
+            var cityId = $(target).find('option:selected').attr('data-code');
+            getProductList(false,cityId);
+        }
+        function searchList(){
+            var searchInfo = {};
+            var skuValue = $('#otherCondition input').val();
+            searchInfo.sku = skuValue ;
+            searchInfo.productName = $('#searchProductName input').val();
+            var cityId = $('#city').find('option:selected').attr('data-code');
+            changeBind($('#searchOnsale')[0],true);
+            changeBind($('#doReset')[0],true);
+            getProductList(false,cityId,searchInfo);
+        }
+
+        function resetList(){
+            var searchInfo = {};
+            $('#otherCondition input').val('');
+            $('#searchProductName input').val('');
+            changeBind($('#doSearch')[0],true);
+            changeBind($('#doReset')[0],true);
+            getProvince(function(){
+                getCity($('#province option:selected').attr("data-code"),function(){
+                    var cityId = $('#city').find('option:selected').attr('data-code');
+                    getProductList(false,cityId,searchInfo);
+                });
+            });
+
+        }
+
+    </script>
+{% endblock %}

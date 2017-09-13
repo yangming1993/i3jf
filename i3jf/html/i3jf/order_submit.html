@@ -1,0 +1,189 @@
+{% extends "i3jf/base.html" %}
+        {% block css %}
+
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/order.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/cart.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/scrollbar.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/orderList.css">
+		<style type="text/css">
+		    .confirm-order-content .panel-order-submit .order-submit-fir {
+		        text-align:right;
+		    }
+		    .panel-order-submit .order-submit-fir, .panel-order-submit .order-submit-sec, .panel-order-submit .order-submit-thir, .panel-order-submit .order-submit-four{
+		        text-align:right;
+		    }
+		    .alert-text {
+		        margin-left: 10px;
+		        color: #cc0a2a;
+		    }
+		</style>
+		{% endblock %}
+
+		{% block content %}
+		<div id="pageHead">
+			<div class="pageheadContent">
+				<div class="leftHead">
+					<div class="mainTittle left">
+						<a href="/static/i3jf/index.html"><img src="{{static_url}}images/logo.png" alt=""></a>
+					</div>
+					<div class="separateD" style="border-right: 4px solid rgb(102, 102, 102);"></div>
+					<div class="subTittle left" style="display: inline-block;">
+						<span class="subWord">确认订单</span>
+					</div>
+				</div>
+				<div class="searchOverall">
+					<div class="order-bar">
+					    <ul>
+					        <li class="tag-done"><span class="tag-circle-done">1</span><span class="tag-content">我的购物车</span></li>
+					        <li><img src="{{static_url}}images/menu-arrow-black.png"></li>
+					        <li class="tag-done"><span class="tag-circle-done">2</span><span class="tag-content">确认订单</span></li>
+					        <li><img src="{{static_url}}images/menu-arrow-grey.png"></li>
+					        <li class="tag-not"><span class="tag-circle-not">3</span><span class="tag-content">付款</span></li>
+					        <li><img src="{{static_url}}images/menu-arrow-white.png"></li>
+					        <li class="tag-not"><span class="tag-circle-not">4</span><span class="tag-content">支付成功</span></li>
+					    </ul>
+					</div>
+					<input type="text" placeholder="请输入搜索内容" class="left searchInput">
+					<span class="left searchBtn">搜&nbsp;&nbsp;索</span>
+				</div>
+			</div>
+		</div>
+		<div id="containerBox">
+			<div id="container" class="">
+				<div class="confirm-order-body" id="submitSucc">
+			    <div class="submit-order-content">
+			        <div class="submit-order-fir">
+			            <img src="{{static_url}}images/Ok.png">
+			            <p>订单提交成功</p>
+			        </div>
+			        <div class="submit-order-sec">
+			            <div class="order-info">
+			                <p>订单号：<span id="orderNO" class="orderNumb"></span></p>
+			                <p>共<span class="totalNum"></span>件商品</p>
+			                <p>在线支付：<span class="orderPrice"></span>分</p>
+			            </div>
+			            <div class="btn-submit">
+			                <button onclick="toPay();">立即支付</button>
+			            </div>
+			        </div>
+			        <div class="submit-order-thir">
+			            <div class="tip-left">温馨提示：</div>
+			            <p>1.为保证购物顺利，我们尽快通过电话和邮件方式与您确认送货、安装时间，请留意送货人员的短信或电话；</p>
+			            <p>2.因为天气、交通、促销活动高峰期导致送货时间的延迟，还请耐心等待。</p>
+			        </div>
+			    </div>
+			</div>
+			</div>
+		</div>
+
+	{% endblock %}
+
+	{% block js %}
+		<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+		<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+		<script type="text/javascript">
+
+			var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+                logged_in(); //已登陆
+            }else{
+                not_logged_in(); //未登录
+                window.location.href = '/api/user/login/';
+            }
+            //未登录可以执行的方法
+            function not_logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+            };
+            //已登录执行的方法
+            function logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+                cartAmount();//购物车数量
+            };
+
+		    function showOrderDetail() {
+		        var data = JSON.parse(getLocalStroge('orderDetails'));
+		        $('#submitSucc .order-info span.orderNumb').html(data.orderNumber);
+		        $('#submitSucc .order-info span.totalNum').html(data.total);
+		        $('#submitSucc .order-info span.orderPrice').html(data.price);
+		    }
+		    payinfo();
+		    //支付信息
+		    function payinfo(){
+		    	var Lcreate = localStorage.getItem('gCreate');
+		    	var createdata = JSON.parse(Lcreate);
+		    	$("#orderNO").text(createdata.orderId);
+		    	$(".totalNum").text(createdata.num);
+		    	$(".orderPrice").text(createdata.amount);
+		    }
+
+		    //立即支付
+		    function toPay(){
+		    	// console.log("获取用户支付密码信息接口进入");
+		    	$.ajax({
+		    		url:'/api/user/retrieve',
+		    		type:'GET',
+		    		datatype:'json',
+		    		data:{
+
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			// console.log(data);
+		    			var errno = data.errno;
+		    			var pay_password_status = data.pay_password_status;
+		    			if (errno == 0) {
+		    				// console.log("获取用户支付密码信息接口回调成功--"+data);
+
+		    				if (!pay_password_status) {
+		    					var mainMsg = '您尚未设置支付密码，请先设置支付密码后购买商品!';
+		    					$(".tooltip").show();
+		    					$(".toolback").show();
+		    					$(".tooltip .delBox strong").text(mainMsg);
+		    					$(".confirm").text("设置支付");
+		    					$(".abolish").text("取消");
+		    					$(".confirm").click(function(){
+		    						window.location.href = urlPath('/api/user/pay/password/set')
+		    					});
+		    					$(".abolish").click(function(){
+		    						$(".toolback").hide();
+		    						$(".tooltip").hide();
+		    					})
+		                        // var msgInfo = {
+		                        //     'mainMsg': mainMsg,
+		                        //     'alertType': true,
+		                        //     'sureFun': function() {
+		                        //         location.href = apiPath('/payment_modification/index.html');
+		                        //     }
+		                        // };
+		                        // diyAlert(msgInfo,true);
+		                        return;
+		    				}else{
+		    					window.location.href = urlPath('/api/order/pay');
+		    				}
+
+		    			}else{
+		    				// console.log("获取用户支付密码信息接口回调异常--"+data);
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("获取用户支付密码信息失败,请刷新...");
+		    			var mainMsg = errmsg;
+		                var msgInfo = {
+		                    'mainMsg': mainMsg,
+		                    'alertType': true
+		                };
+		                diyAlert(msgInfo,true);
+		    		}
+		    	})
+		        // matchLogin(function(){
+		        //     var productNo = $('#orderNO').text();
+		        //     location.href = apiPath('/super/orderList/pay?nb='+productNo);
+		        // });
+		    }
+
+		</script>
+		{% endblock %}

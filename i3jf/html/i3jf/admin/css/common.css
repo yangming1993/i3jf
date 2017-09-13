@@ -1,0 +1,741 @@
+ //公用的样式
+
+    .tips{
+        margin-top: 34px;
+    }
+ .logo{
+       font-size:26px;
+       font-weight:bold;
+      }
+      .logo span{
+
+      }
+      .tips{
+        font-size: 10px;
+        color:darkgray;
+      }
+
+      .control-panel{
+         padding:10px;
+        }
+
+    .data-control{
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .control-line{
+        margin-right: -30px;
+        margin-bottom:10px;
+    }
+    .custom-item{
+        display:inline-block;
+        height:34px;
+        line-height:34px;
+        vertical-align:middle;
+        width: 330px;
+        margin-right:30px;
+    }
+    .selectLabel{
+        width: 80px;
+    }
+//登陆的样式
+       .login-box, .register-box{
+            padding: 15px 0px;
+            border: 2px solid rgba(0,0,0,0.5);
+            box-shadow: 4px 4px 10px 2px;
+          }
+       #showError{
+            display: block;
+            margin-bottom: 10px;
+            color: red;
+          }
+      #captcha {
+            border-radius: 2px;
+            cursor: pointer;
+            position: absolute;
+            z-index: 3;
+            right: 0;
+            top: 0;
+            width: 100px;
+            height: 34px;
+       }
+//用户列表的样式
+.editPanel{
+          width: 360px;
+          height: 200px;
+      }
+      #dataTable{
+          width:auto;
+      }
+      .fr{
+        position:absolute;
+        top: 10px;
+        right:0;
+      }
+      .sidebar-menu li.active>a>.fa-angle-left {
+          -webkit-transform: rotate(-90deg);
+          -ms-transform: rotate(-90deg);
+          -o-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+      }
+//订单列表的样式
+        // .control-panel{
+        //     padding:10px;
+        // }
+        #order-status,
+        #order-timeline,
+        #control-btns{
+            display:inline-block;
+            margin-left:15px;
+        }
+        #order-status *,
+        #order-timeline *,
+        #control-btns *{
+            vertical-align:middle;
+        }
+        #order-status #status-select{
+            display:inline-block;
+            width:auto;
+        }
+        #order-timeline #timeline{
+            display:inline-block;
+            width:270px;
+            background-color:#fff;
+            cursor:pointer;
+        }
+//订单详情的样式
+    .item{
+        display: inline-block;
+        width: 130px;
+    }
+    body{
+        min-width:1300px;
+        background:#f9f9f9;
+    }
+    a{
+        text-decoration: none;
+    }
+    img{
+        border:none;
+    }
+    input{
+        outline:none;
+    }
+    body{
+        background:#fff;
+    }
+    .clearFix:after{
+        content:'';
+        clear:both;
+        display:block;
+    }
+    .clearFix{
+        zoom:1;
+    }
+
+    .searchOverall{
+        display:none;
+    }
+
+    .mainCont{
+        width:1200px;
+        margin:35px 0 100px;
+    }
+
+    .guestInformation{
+        width:1200px;
+    }
+    .guestInformation h3{
+        font-size:18px;
+        margin-bottom:20px;
+    }
+    .receiveDetails{
+        width:1178px;
+        border:1px solid #f5f5f5;
+        padding:20px 0 3px 20px;
+        margin-bottom:30px;
+    }
+    .receiveInform{
+        margin-bottom:18px;
+        width:1178px;
+        font-size:14px;
+    }
+    .receiveInform span:nth-child(1){
+        width:74px;
+    }
+    .c999{
+        color:#999;
+    }
+    .receiveInform span:nth-child(2){
+        width:1084px;
+        white-space:nowrap;
+        overflow: hidden;
+        text-overflow:ellipsis;
+    }
+    .logisticsInfor{
+        width:1084px;
+    }
+    .logisticsInfor li{
+        width:1084px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        margin-bottom:10px;
+    }
+    .gsDetails{
+        width:1120px;
+    }
+    .gsTit{
+        width:100%;
+        height:48px;
+        border:1px solid #f5f5f5;
+        display:table;
+    }
+    .gsTit span,.gsTit div{
+        text-align:center;
+        display:table-cell;
+        vertical-align: middle;
+        margin-bottom:6px;
+    }
+    .gsTit-item{
+        margin-top: -1px;
+    }
+    .w440{
+        width:30%;
+    }
+    .w440 p{
+        margin: 0;
+    }
+    .w260{
+        width:15%;
+    }
+    .w224{
+        width:20%;
+    }
+    .w274{
+        width:20%;
+    }
+    .w1200{
+        width:100%;
+    }
+    .shopName{
+        width:1180px;
+        padding-left:20px;
+        height:48px;
+        font-size:14px;
+        line-height:48px;
+    }
+    .wholeInfor{
+        background: #fff;
+    }
+    .WholeDetails{
+        width:1198px;
+        margin-top:-1px;
+        border:1px solid #f5f5f5;
+        display:table;
+    }
+    .WholeDetails li{
+        height:78px;
+        display:table-cell;
+        vertical-align:middle;
+        font-size:14px;
+        text-align:center;
+    }
+    .WholeDetails li p{
+        margin:0px;
+        text-align:left;
+    }
+    .payInfor{
+        width:1180px;
+        border:1px solid #f5f5f5;
+        margin-top:-1px;
+        text-align:right;
+        padding:30px 18px 0 0;
+    }
+    .pay{
+        margin-bottom:20px;
+        height:18px;
+        line-height:18px;
+        font-size:14px;
+    }
+    .pay strong{
+        color:#cc082c;
+        font-size:18px;
+    }
+    .acceptAdd{
+        display:inline-block;
+    }
+    #order-panel{
+        padding:10px 20px;
+        width:100%;
+    }
+    #order-panel *{
+        max-width:1000px;
+    }
+//异常订单的样式
+
+    // .control-panel{
+    //         padding:10px;
+    // }
+
+    #order-timeline,
+    #control-btns{
+            display:inline-block;
+            margin-left:15px;
+    }
+
+    #order-timeline *,
+    #control-btns *{
+            vertical-align:middle;
+    }
+    #order-timeline #timeline{
+            display:inline-block;
+            width:270px;
+            background-color:#fff;
+            cursor:pointer;
+        }
+//退货历史的样式
+// .control-panel{
+//             padding:10px;
+//         }
+        #order-status,
+        #order-timeline,
+        #control-btns{
+            display:inline-block;
+            margin-left:15px;
+        }
+        #order-status *,
+        #order-timeline *,
+        #control-btns *{
+            vertical-align:middle;
+        }
+        #order-status #status-select{
+            display:inline-block;
+            width:auto;
+        }
+        #order-timeline #timeline{
+            display:inline-block;
+            width:270px;
+            background-color:#fff;
+            cursor:pointer;
+        }
+//价格管理的样式
+.webPic{
+        height: 30px;
+        width: 40px;
+    }
+    .editPanel{
+        width: 380px;
+        height: 350px;
+    }
+    #alter1{
+        padding:20px 10px 10px;
+        margin-bottom: -10px;
+    }
+    .control-btns{
+        display: inline-block;
+    }
+    .sureGoto{
+        display:inline-block !important;
+        margin-right: 10px;
+    }
+    .cancelGoto{
+        display:inline-block !important;
+        margin-right: 0px;
+        margin-top:0px !important;
+    }
+    #gotoListsDiv{
+        position:static !important;
+        width: 1076px !important;
+        height: 460px;
+        overflow-y: auto;
+        overflow-x:hidden ;
+    }
+    .searchBtn{
+        width:60px;
+        margin-right: 10px;
+    }
+    .selectDirection{
+        width: 40%;
+        height: 34px;
+    }
+    .custom-item .form-control{
+        display: inline-block;
+        width: auto;
+    }
+    #selectCity{
+        width:auto;
+        max-width: 350px;
+        margin-right: 0px;
+        height: 54px;
+    }
+    .pic{
+        height:30px;
+        width: 40px;
+    }
+    .form-control{
+        display: inline-block;
+    }
+    #floatPercent{
+        width: 52%;
+    }
+    #floatAmount{
+        width: 60%;
+    }
+    .selectedZone{
+        display: inline-block;
+    }
+    .fixedLayer .custom-item .form-control{
+        width: 240px;
+    }
+    .pad10{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .box-body #otherCondition,#searchProductName{
+        width: 270px;
+        padding-right: 0px;
+        margin-right: 0px;
+        height: 54px;
+    }
+    .box-body #otherCondition{
+        width: 235px;
+    }
+    .box-body #otherCondition input,
+    .box-body #searchProductName input{
+        width: 180px;
+    }
+    div.container.search{
+        width: 100%;
+        padding-right:0px;
+        padding-left:0px;
+    }
+    #dataTable{
+        width: auto !important;
+    }
+    #searchBtns{
+        width: 152px;
+        padding-right: 0px;
+    }
+    .btns{
+        width:220px;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+    #doReset,#searchOnsale{
+        margin-right: 10px;
+    }
+//产品列表的样式
+    .custom-item .form-control{
+        display: inline-block;
+        width: 240px;
+    }
+    #control-btns{
+        display: inline-block;
+    }
+    .pic{
+        height:30px;
+        width: 40px;
+    }
+    #dataTable_wrapper #dataTable th,
+    #dataTable_wrapper #dataTable td{
+        font-size:12px;
+    }
+    select.level{
+        display:block;
+        margin-bottom:5px;
+        min-width:150px;
+        width: auto;
+        max-width: 266px;
+    }
+    .margin-negative{
+        margin-bottom:-10px;
+    }
+    .form-group{
+        margin-bottom: 10px;
+    }
+    .tips{
+        font-size: 10px;
+        color:darkgray;
+    }
+    .submitDiv{
+        margin-top: 20px;
+    }
+    #control-btns{
+        width: 325px;
+    }
+//分类列表的样式
+.select{
+        display:inline-block;
+        width: 150px;
+        margin-bottom: 30px;
+    }
+    #category-nav .active{
+        font-weight:bold;
+        color:#3c8dbc;
+    }
+    .editPanel{
+        width:380px;
+        height:430px;
+        background-color: #fff;
+    }
+    .fileDiv{
+        height:34px;
+    }
+    .fileDiv div{
+        padding-top:7px;
+    }
+    .submitDiv{
+        margin-top:40px;
+    }
+    .submitDiv input{
+        width:80px;
+        margin-right:20px;
+    }
+    .form-horizontal{
+        margin-top:10px;
+    }
+    .fixedContainer{
+        background-color: #fff;
+    }
+    select.level{
+        display:block;
+        width:auto;
+        min-width: 150px;
+        max-width: 266px;
+        margin-bottom:10px;
+    }
+    .margin-negative{
+        margin-bottom:-10px;
+    }
+    .webPic{
+        width: 40px;
+        height: 30px;
+    }
+    .imgPreviewDiv{
+        position:absolute;
+        right: -428px;
+        top:0px;
+        width: 428px;
+        height: 428px;
+        line-height: 428px;
+        text-align: left;
+        font-size: 0px;
+        display: none;
+    }
+    .file-name{
+        width:165px;
+    }
+//首页轮播的样式
+  #selectPage{
+        width: 220px;
+        padding-left: 10px;
+        height: 30px;
+    }
+    .webPic,.appPic,.backgroundPic{
+        height:30px;
+        width: 40px;
+    }
+    .editPanel{
+        width:400px;
+        height:480px;
+    }
+    .imgPreviewDiv{
+        position:absolute;
+        right: -428px;
+        top:0px;
+        width: 428px;
+        height: 428px;
+        line-height: 428px;
+        text-align: left;
+        font-size: 0px;
+        display:none;
+    }
+    .file-name{
+        width:180px;
+    }
+    #gotoListsDiv{
+        width: 780px;
+        height: 540px;
+    }
+//频道管理的样式  body{
+        overflow-x:auto;
+    }
+    .iconImg, .iconImg img {
+        max-width: 20px;
+        max-height: 20px;
+    }
+    .iconImg {
+        background-color: rgba(0, 0, 0, 0.8);
+        text-align: center;
+        margin: 0 auto;
+    }
+    .editPanel {
+        width: 700px;
+        height: 380px;
+    }
+    .selectType{
+        margin-top:7px;
+    }
+    .panel-body .submitDiv {
+        margin-top: 30px;
+    }
+    #selectPage {
+        width: 220px;
+        padding-left: 10px;
+        height: 30px;
+    }
+    #onlineBtn{
+        margin-right: 20px;
+    }
+    .row .control-label{
+        padding-top: 7px;
+        margin-bottom: 0;
+        text-align: right;
+    }
+    .nailDiv{
+        background-color: #000;
+    }
+    .file-name{
+        width:90px;
+    }
+    #submitForm .form-group{
+        height: 34px;
+    }
+//精品推荐样式
+    #selectPage{
+        width: 220px;
+        padding-left: 10px;
+        height: 30px;
+    }
+    .webPic,.appPic{
+        height:30px;
+        width: 40px;
+    }
+    .editPanel{
+        width:400px;
+        height:430px;
+    }
+
+    .setShowTypeDiv{
+        display: inline-block;
+        margin-left:30px;
+    }
+    .setAppTypeDiv{
+        margin-right: 30px;
+    }
+    .inlineBlock{
+        display:inline-block;
+    }
+    #corShowType,#selectShowType,#selectAppType{
+        margin-left:10px;
+        margin-right:15px;
+    }
+    #selectShowType,#selectAppType{
+        width:auto;
+    }
+    .modifyItem{
+        display:none;
+    }
+    table#size-introduce{
+        width:100%;
+    }
+    table#size-introduce *{
+        text-align:center;
+    }
+    table#size-introduce td{
+        padding:8px 0px;
+    }
+    p.help-title{
+        padding:10px 8px;
+        font-weight:bold;
+    }
+    #onlineBtn{
+        margin-right: 20px;
+    }
+    .imgPreviewDiv{
+        position:absolute;
+        right: -428px;
+        top:0px;
+        width: 428px;
+        height: 428px;
+        line-height: 428px;
+        text-align: left;
+        font-size: 0px;
+        display: none;
+    }
+    .file-name{
+        width:165px;
+    }
+    #gotoListsDiv{
+        width: 780px;
+        height: 540px;
+    }
+    .sureTypeDiv{
+        display:none;
+    }
+    .modifyTypeDiv{
+        display: inline-block;
+    }
+    .pic{
+        height:40px;
+        width: 40px;
+    }
+    .control-line{
+        margin-right: -60px;
+        margin-bottom:10px;
+    }
+    .custom-item{
+        display:inline-block;
+        height:34px;
+        line-height:34px;
+        vertical-align:middle;
+        width: 330px;
+        margin-right:60px;
+    }
+    .custom-item .form-control{
+        display: inline-block;
+        width: 240px;
+    }
+    .selectLabel{
+        width: 80px;
+    }
+    .control-btns{
+        display: inline-block;
+    }
+    .selectProduct,.searchBtn{
+        display:inline-block !important;
+        margin-right: 10px;
+    }
+    .cancelProduct{
+        display:inline-block !important;
+        margin-right: 0px;
+        margin-top:0px !important;
+    }
+    #searchPanel{
+        padding:20px 30px 10px;
+        margin-bottom: -10px;
+    }
+    #productListsDiv{
+        margin: 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        width: 780px;
+        height: 400px;
+    }
+    .upload-input{
+        width:110px !important;
+        left:15px;
+        right:auto !important;
+    }
+    .file-name{
+        display:none;
+    }
+    .upload-btn{
+        right:auto !important;
+        left:15px;
+    }
+
+    #previewNail1{
+        filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="");
+    }

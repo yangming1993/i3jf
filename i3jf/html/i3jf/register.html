@@ -1,0 +1,601 @@
+{% extends "i3jf/base.html" %}
+	{% block css %}
+
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/center.css">
+		<style type="text/css">
+			#container{
+				margin: 0;
+			}
+			.code{
+				padding-left: 0;
+			}
+		</style>
+
+	{% endblock %}
+
+	{% block content %}
+		<div id="pageHead">
+			<div class="pageheadContent">
+				<div class="leftHead">
+					<div class="mainTittle left">
+						<a href="/"><img src="{{static_url}}images/logo.png" alt=""></a>
+					</div>
+					<div class="separateD"></div>
+					<div class="subTittle left">
+						<span class="subWord">欢迎注册</span>
+					</div>
+				</div>
+				<div class="searchOverall">
+					<input type="text" placeholder="请输入搜索内容" class="left searchInput">
+					<span class="left searchBtn">搜&nbsp;&nbsp;索</span>
+				</div>
+			</div>
+		</div>
+		<div id="containerBox">
+			<div id="container" class="">
+				<div class="register">
+				    <div class="title title_phone_">
+				    	<p class="title_phone">手机注册</p>
+				    </div>
+				    <div style="clear:both;"></div>
+
+
+				    <!-- 手机注册 -->
+				    <div class="phone_register">
+				    	<div class="input">
+						    <input id="phone" class="long" type="text" maxlength="11" placeholder="请输入手机号码">
+						    <span>手机号：</span>
+						</div>
+						<div class="input_ ">
+						    <div class="agree" id="errmsg_phone">&nbsp;</div>
+						</div>
+						<div class="input msgcode">
+						    <!-- <button class="message_imgs">获取图片验证码</button> -->
+						    <div class="code" onclick="getCaptcha('#code_img');">
+						    	<img id="code_img" src="" style="width: 128px; height: 38px;">
+						    </div>
+						    <input id="message_imgs" class="short" type="text" placeholder="图形验证码">
+						    <span>图形验证码：</span>
+						</div>
+						<div class="input_ ">
+						    <div class="agree" id="errmsg_imgs">&nbsp;</div>
+						</div>
+						<div class="input msgcode">
+						    <button class="message_cade">获取短信验证码</button>
+						    <input id="message_code" class="short" type="text" placeholder="短信验证码">
+						    <span>验证码：</span>
+						</div>
+						<div class="input_ ">
+						    <div class="agree" id="errmsg_code">&nbsp;</div>
+						</div>
+				        <div class="input">
+						    <input id="password" class="long" type="password" placeholder="6-20位字母和数字组成">
+						    <span>设置密码：</span>
+						</div>
+						<div class="input_ ">
+						    <div class="agree" id="errmsg_password">&nbsp;</div>
+						</div>
+						<div class="input">
+						    <input id="password_again" class="long" type="password" placeholder="请再次输入密码">
+						    <span>确认密码：</span>
+						</div>
+						<div class="input_ ">
+						    <div class="agree" id="errmsg_again">&nbsp;</div>
+						</div>
+						<!-- 不同的角色类型 -->
+						<!--<div class="input_ roleType1 clearFix">
+							<div class="role1 left"><input type="radio" name="roleType1" checked="checked" data-roleType='0'>&nbsp;普通用户</div>
+							<div class="role2 left"><input type="radio" name="roleType1" data-roleType='1'>&nbsp;商业用户</div>
+						</div>-->
+						<div class="input_">
+						    点击注册，表示您已阅读并同意
+							<a target="_blank" href="/static/i3jf/help.html?main=4&sub=2">《隐私条款》</a>
+						</div>
+						<button class="register_button" onclick="register(this);">立即注册</button>
+						<div class="input_ ">
+						    <div class="agree" id="errmsg_pReg">&nbsp;</div>
+						</div>
+				    </div>
+
+				</div>
+
+				<!-- 注册成功 -->
+				<div class="register_success">
+					<img src="{{static_url}}images/register_ok.png">
+					<p>恭喜您，
+					    <span class="phone_span"></span>&nbsp;&nbsp;
+					    <span class="email_span"></span>
+					    账号注册成功!
+				    </p>
+					<a href="/static/i3jf/index.html">
+					    <button>去逛逛</button>
+					</a>
+				</div>
+			</div>
+		</div>
+		{% endblock %}
+
+		{% block js%}
+		<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+		<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+		<script type="text/javascript">
+
+			// var checkLogin = new checkLogin();//判断登录
+   //          if (checkLogin.flag) {
+   //              logged_in(); //已登陆
+   //          }else{
+   //              not_logged_in(); //未登录
+   //              window.location.href = '/static/i3jf/login.html';
+   //          };
+   //          //未登录可以执行的方法
+   //          function not_logged_in(){
+   //              getCategoryList();//获取分类导航
+   //              setSortListHover();//分类导航hover
+   //          };
+   //          //已登录执行的方法
+   //          function logged_in(){
+   //              getCategoryList();//获取分类导航
+   //              setSortListHover();//分类导航hover
+   //              cartAmount();//购物车数量
+   //          };
+
+
+
+			var isMobile = /^1[3-5|7-8]\d{9}$/;
+			var emailPatten = new RegExp(/^(\w)+(\.\w+)*@(.)+((\.\w+)+)$/);
+			var isPassword = /^(?=.*[a-zA-Z])(?=.*[0-7])[a-zA-Z0-9]{6,20}$/;   //数字和字母
+
+			$(function(){
+			    getCaptcha('#code_img');
+			    $('.message_cade').bind('click', checkMessage);    //发送手机验证码  手机号注册
+
+			})
+
+			/*----图片验证码----*/
+			function getCaptcha(id){
+				// // console.log("图片获取接口进入-----"+id)
+				$.ajax({
+					url:'/api/user/get_captcha',
+					type:'GET',
+					datatype:'json',
+					success:function(data){
+						// var data = JSON.parse(data);
+
+						var errno = data.errno;
+
+						var dataurl = data.captcha_url;
+						if (errno == 0) {
+							$(id).attr('src',dataurl);
+						}else{
+			    			// alert("图片验证码请求成功但数据异常")
+			    			$("#errmsg_imgs").text("获取验证码失败");
+			    		}
+					},
+					error:function(error){
+						// alert("验证码获取失败！")
+						$("#errmsg_imgs").text("获取验证码失败");
+					}
+				})
+				// $(id).attr('src','/api/user/get_captcha'+Math.random());
+				$(id).css({
+					width: '128px',
+					height: '38px'
+				});
+			}
+
+		    /*----验证图片验证码----*/
+			function captcha(obj,err){
+				// // console.log("图片验证接口进入---"+obj)
+			    var code=$(obj).val();
+			    $.ajax({
+			    	url:'/api/user/check_captcha',
+			    	type:'GET',
+			    	datatype:'json',
+			    	data:{
+			    		captcha:code
+			    	},
+			    	success:function(data){
+
+			    		var data = JSON.parse(data);
+			    		var errno = data.errno;
+
+			    		if (errno == 0) {
+			    			// $(err).text('验证码验证成功');
+		            		$(obj).attr('img-msg','&nbsp;');
+			    		}
+			    	},
+			    	error:function(error){
+			    		// alert("验证码验证失败！"+error)
+			    		$(err).text("验证不正确");
+		                // $(obj).attr('img-msg',errmsg);
+		                stage=false;
+		            	stage2=false;
+			    	}
+			    })
+			}
+
+		    /*-----手机号是否存在验证-----*/
+		    function checkPhone(callback){
+		    	// // console.log(callback);
+		        var check;
+		        var checkPhone;
+		        var currentPhone;
+		        var phone=$("#phone").val();
+		        var hasPhone = false;
+
+		        //手机注册 判断手机val是否为空
+		        if (phone.length>0) {
+		        	currentPhone=$("#phone");
+		        	check=$('#errmsg_phone');
+		        	checkPhone= phone;     //赋值 val
+		        	hasPhone=true;
+		        }
+
+		        if(!hasPhone) return;
+		        // console.log("手机验证接口进入");
+		        $.ajax({
+		        	url:'/api/user/check_mobile',
+		        	type:'GET',
+		        	data:{
+		        		'mobile':checkPhone
+		        	},
+		        	datatype:'json',
+		        	success:function(data){
+		        		console.log(data);
+		        		var data = JSON.parse(data);
+		        		var errno = data.errno;
+		        		if (errno == 0) {
+		        			// alert("手机验证成功"+data)
+		        			check.html('&nbsp;');
+			            	currentPhone.attr('phone-msg','&nbsp;');
+			            	if(callback) callback();
+			            	sendMessage();
+		        		}else{
+		        			$("#errmsg_phone").text("该手机号已经注册过");
+		        		}
+		        	},
+		        	error:function(error){
+		        		$("#errmsg_phone").text("手机号失败");
+		        		// alert("手机验证失败"+error);
+		        		// check.text(errmsg);
+		            	// currentPhone.attr('phone-msg',errmsg);
+		            	stage=false;
+		            	stage2=false;
+		        	}
+		        })
+		    }
+
+
+		    /*-----验证图形验证码格式是否正确-----*/
+		    $("#message_imgs").blur(function() {
+		    	var message_code = $("#message_imgs").val();
+		        var imgNum=$("#message_imgs").attr('img-number');
+		        var imgMsg=$("#message_imgs").attr('img-msg');
+		       if($.trim(message_code).length != 4 ){
+		           $("#errmsg_imgs").text('请填写4位图形验证码！');
+		           return;
+		       }
+		       else{
+		           $("#errmsg_imgs").html('&nbsp;');
+		           if(imgNum)
+		        	{
+		        		if(imgNum==message_code)
+		        		{
+		        			$("#errmsg_imgs").html(imgMsg);
+		        			return;
+		        		}
+		        		else
+		        		{
+		        			$("#message_imgs").attr('img-number',message_code);
+		        		}
+		        	}
+		        	else
+		        	{
+		        		$("#message_imgs").attr('img-number',message_code);
+		        	}
+		           captcha($("#message_imgs"),$("#errmsg_imgs"));
+		           return;
+		       }
+			});
+
+
+
+
+		    /*-----验证短信验证码格式是否正确-----*/
+		    //手机  短信验证input
+		    $("#message_code").blur(function() {
+
+		    	var message_code = $("#message_code").val();
+
+		        // phoneCode();
+		       if($.trim(message_code).length != 6 ){
+		           $("#errmsg_code").text('请填写6位验证码！');
+		           return;
+		       }
+		       else{
+		           $("#errmsg_code").html('&nbsp;');
+		           return;
+		       }
+			});
+
+
+
+
+			/*--------------手机号注册----------------*/
+
+
+		    /*-----验证密码格式是否正确-----*/
+		    $("#password").blur(function() {
+		    	var password = $("#password").val();
+
+		        if ( password.length<=0 ) {
+		            $("#errmsg_password").html('请填写密码！');
+		            return;
+		        }else if( password.length<6 || password.length>20) {
+		            $("#errmsg_password").html('密码应该由6-20位字母和数字组成！');
+		            return;
+		        }else if(!isPassword.test(password)){
+		            $("#errmsg_password").html('密码应该由6-20位字母和数字组成！');
+		            return;
+		        }else{
+		            $("#errmsg_password").html('&nbsp;');
+		            return;
+		        }
+		    });
+
+
+			$("#password_again").blur(function() {
+		    	var password = $("#password").val();
+			    var password_again = $("#password_again").val();
+
+			    if ( password != password_again ) {
+		            $('#errmsg_again').html('两次输入的密码不一致！');
+		            return;
+		        }else{
+		            $('#errmsg_again').html('&nbsp;');
+		            return;
+		        }
+		    });
+
+			/*------发送手机验证码-----*/
+			var initTime = 60;
+		    var codeTime = initTime;
+		    var codeTimeout;
+
+			function checkMessage(){
+		        var cellphone = $("#phone").val();
+		        var codes=$("#message_imgs").val();
+		        if (cellphone.length<=0) {
+		            $('#errmsg_phone').html('请填写手机号码！');
+		            return;
+		        }
+		        if(!isMobile.test(cellphone)){
+		            // $('#errmsg_phone').html('手机号码格式不正确！');   /////////////////////////////////////////////////////////////////////////////////////要改回
+		            // return;
+		        }
+		        if (codes.length<=0) {
+		            $('#errmsg_imgs').html('请填写4位图形验证码！');
+		            return;
+		        }
+		        /*if($('#errmsg_phone').html()=='该手机号已经注册过'){
+		        	return;
+		        }*/
+		        // timeOutCode()
+		        // checkPhone();
+		        // sendMessage(); //手机验证码
+
+		        checkPhone();
+			}
+
+
+
+			function timeOutCode(){
+		        if(codeTime <= 1){
+		            codeTime = initTime;
+		            $('.message_cade').removeClass('timeOut');
+		            $('.message_cade').html('获取短信验证码');
+		            getCaptcha('#code_img');
+		            // disabledButton($(".get_code")[0],false);
+		            $(".message_cade").removeAttr("disabled","disabled");
+		        }else{
+		        	// disabledButton($(".get_code")[0],true);
+		        	$(".message_cade").attr("disabled");
+		            codeTime--;
+		            $('.message_cade').addClass('timeOut');
+		            $('.message_cade').html(codeTime+'s后重新发送');
+		            codeTimeout = setTimeout(timeOutCode,1000);
+		        }
+		    }
+		    //获取手机验证码
+		    function sendMessage(){
+		        var phone = $("#phone").val();
+		        var codes=$("#message_imgs").val();
+		        // // console.log(phone,codes)
+		        // disabledButton($(".get_code")[0],true);
+		        // console.log("获取手机验证码接口进入");
+		        $.ajax({
+		        	url:'/api/user/send_verification_code',
+		        	type:'GET',
+		        	datatype:'json',
+		        	data:{
+		        		telephone:phone
+		        	},
+		        	success:function(data){
+		        		var data = JSON.parse(data);
+		        		var errno = data.errno;
+		        		if (errno == 0) {
+		        			// alert("获取的验证码信息---成功"+data);
+			            	$('#errmsg_phone').html('&nbsp;');
+					        $('.message_cade').addClass('timeOut');
+					        $('.message_cade').html(codeTime+'s后重新发送');
+					        codeTimeout = setTimeout(timeOutCode,1000);
+		        		}else{
+			    			// alert("手机验证码获取成功但数据异常")
+			    			$('#errmsg_imgs').html("验证码发送失败");
+			    		}
+		        	},
+		        	error:function(error){
+
+		        		// alert("获取验证码失败信息"+error)
+		                $('#errmsg_imgs').html("验证码发送失败");
+		        	}
+		        })
+
+		    }
+
+
+		    $("#message_code").blur(function(){
+		    	var stage = true;
+		    	if ($("#message_code").val().length < 6) {
+		    		$('#errmsg_code').text("请输入6位验证码");
+		    	}else{
+		    		phoneCode(stage);
+		    	}
+		    	$('.register_button').attr("disabled",false);
+		    })
+		    /*----手机验证码校验----*/
+		    function phoneCode(stage){
+		        var phone = $("#phone").val();
+		        var code = $("#message_code").val();
+		        var password = $("#password").val();
+
+		        if (phone.length>0&&code.length>0) {
+		        	$('.register_button').attr("disabled",false);
+		        	// console.log("手机验证码校验接口进入");
+
+		        	$.ajax({
+		        		url:'/api/user/check_verification_code',
+		        		type:'GET',
+		        		datatype:'json',
+		        		data:{
+		        			telephone:phone,
+		        			code:code
+		        		},
+		        		success:function(data){
+		        			// // console.log(data);
+		        			var data = JSON.parse(data);
+		        			console.log(data);
+		        			console.log(phone,code);
+		        			var errno = data.errno;
+		        			if (errno == 0) {
+		        				// alert("验证码验证成功---"+data);
+						        if (stage==true) {
+						        	$('.register_button').attr("disabled",false);
+						        	setSessionstronge("Register",phone);
+						            // PhoneRegister(phone,password);  //手机注册
+						        }else{
+						            $('.register_button').attr("disabled",false);
+						        }
+		        			}else{
+				    			alert("手机验证码校验成功但数据异常")
+				    			$('#errmsg_code').text("请输入正确验证码");
+				    		}
+		        		},
+		        		error:function(error){
+		        			// alert("验证码验证失败---"+errno);
+			                $('#errmsg_code').text("验证码校验失败");
+			                $('.register_button').attr("disabled",false);
+		        		}
+		        	})
+		        };
+		    }
+
+		    function PhoneRegister(phone,password){
+		    	$('#errmsg_eReg').text('');
+		    	// console.log("用户注册接口进入");
+		    	$.ajax({
+		    		url:'/api/user/register_view/',
+		    		type:'POST',
+		    		datatype:'json',
+		    		data:{
+		    			'mobile':phone,
+		    			'password':password
+		    		},
+		    		success:function(data){
+		    			// alert("用户注册接口进入回调");
+		    			// // console.log(data);
+		    			var data = JSON.parse(data);
+		    			// // console.log(data);
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				// // console.log("用户注册接口进入回调成功---"+data);
+			                $(".register").css('display','none');
+			                $(".register_success").css('display','block');
+			                $(".phone_span").text(phone.substring(0,3)+"****"+phone.substring(7,11));
+			                $('li.userSetting span').text(phone);
+							$('li.loginStatus').css('display','block');
+							$('li.unloginStatus').css('display','none');
+							setSessionstronge('Register',phone);
+							window.location.href = "/api/user/login/";
+		    			}else{
+			    			// alert("注册请求成功但数据异常");
+			    			$('#errmsg_pReg').text("注册失败");
+			    		}
+		    		},
+		    		error:function(error){
+		    			// alert("注册失败"+error);
+		    			$('#errmsg_pReg').text("注册失败");
+		                stage=true;
+		                $('.register_button').attr("disabled",false);
+		    		}
+		    	})
+		    }
+
+
+
+
+			/*----验证注册信息----*/
+			function register(target){
+		        var stage=true;
+		        var phone = $("#phone").val();
+		        var message_code = $("#message_code").val();
+				var password = $("#password").val();
+				var password_again = $("#password_again").val();
+				var codes=$('#message_imgs').val();
+				if (phone.length<=0) {
+				    $('#errmsg_phone').text('请填写手机号码！');
+				    stage=false;
+				}else if(!isMobile.test(phone))
+				{
+					$('#errmsg_phone').text('手机号码格式不正确！');
+				    stage=false;
+				}
+
+				if (message_code.length<=0) {
+				    $('#errmsg_code').text('请填写手机验证码！');
+				    stage=false;
+				};
+				if (password.length<=0) {
+				    $('#errmsg_password').text('请填写设置密码！');
+				    stage=false;
+				}else if(!isPassword.test(password))
+				{
+					$('#errmsg_password').text('密码应该由6-20位字母和数字组成！');
+				    stage=false;
+				}
+				if (password_again.length<=0) {
+				    $('#errmsg_again').text('请填写确认密码！');
+				    stage=false;
+				};
+
+				//判断密码和确认密码是否相同
+				if(password!=password_again)
+				{
+					$('#errmsg_again').text('两次输入的密码不一致！');
+				    stage=false;
+				}
+				if($.trim(codes).length<=0)
+				{
+					$('#errmsg_imgs').text('请填写4位图形验证码！');
+				    stage=false;
+				}
+		        // phoneCode(stage);
+		        PhoneRegister(phone,password);
+
+		    }
+
+
+		</script>
+		{% endblock %}

@@ -1,0 +1,1484 @@
+{% extends "i3jf/admin/template.html" %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{{static_url}}admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/skin-blue.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/dataTables.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/watch.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/myModify.css">
+    <style>
+      .form{
+        position:relative;
+      }
+      .form-child{
+        position:absolute;
+        top:25px;
+        left:82px;
+      }
+    </style>
+
+    {% endblock %}
+      {% block content %}
+                    <ul class="sidebar-menu">
+            <li class="header">菜单</li>
+            <li id="dataMenage" class="treeview">
+              <a href="/api/oam/data_analysis/"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i> <span>数据分析</span></a>
+
+            </li>
+            <li id="userMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> <span>用户管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1" class="active"><a href="/api/oam/user/lists">用户列表</a></li>
+              </ul>
+            </li>
+            <li id="orderMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-hamburger"></i> <span>订单管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/order/lists">订单列表</a></li>
+                <!-- <li id="2"><a href="/static/i3jf/admin/special.html">异常订单</a></li> -->
+                <li id="3"><a href="/api/oam/returned/history">退货历史</a></li>
+              </ul>
+            </li>
+            <li id="contentMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-signal"></i> <span>数据管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/price/set">价格管理</a></li>
+                <li id="2"><a href="/api/oam/product/lists">产品列表</a></li><!--
+                <li id="4"><a href="/static/i3jf/admin/bind.html">分类管理</a></li> -->
+              </ul>
+            </li>
+            <li id="marketMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-film"></i> <span>推广管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/banner/ads/list">首页轮播管理</a></li>
+                <li id="2"><a href="/api/oam/channel/product/lists">首页频道管理</a></li>
+                <!-- <li id="3"><a href="/static/i3jf/admin/pull.html">精品推荐管理</a></li> -->
+              </ul>
+            </li>
+            <li id="productList" class="treeview">
+              <a href="/api/oam/get/product/detail"><i class="glyphicon glyphicon-volume-down"></i>
+              <span>获取产品信息</span> </a>
+
+            </li>
+            <li class="treeview">
+              <a href="/api/oam/get/area/detail"><i class="glyphicon glyphicon-th-large"></i> <span>地区管理</span> </a>
+            </li>
+          </ul>
+        </section>
+      </aside>
+      <div class="content-wrapper" style="min-height: 851px;">
+        <section class="content-header">
+          <h1>
+            推广管理            <small>手机影音频道</small>
+          </h1>
+        </section>
+        <section class="content">
+          <div class="box box-default color-palette-box">
+    <div class="box-body">
+        <div class="data-control">
+
+            <button class="btn btn-danger pull-right" id="deleteBtn">批量删除</button>
+
+            <button class="btn btn-primary pull-right topAddBtn">添加商品</button>
+
+        </div>
+        <div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <div class="row">
+                <div class="col-sm-6"></div>
+                    <div class="col-sm-6"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="dataTable" class="table table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="dataTable_info">
+
+                    </table>
+
+                    </div>
+
+              </div>
+    </div>
+</div>
+
+        </section>
+      </div>
+      <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
+    </div><!-- ./wrapper -->
+    <div class="fixedLayer">
+    <div class="fixedContainer">
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+    <script src="{{static_url}}admin/js/jQuery-2.1.4.min.js"></script>
+    <script src="{{static_url}}admin/js/bootstrap.min.js"></script>
+    <script src="{{static_url}}admin/js/checkAction.js"></script>
+    <script src="{{static_url}}admin/js/public.js"></script>
+    <script src="{{static_url}}admin/js/base.js."></script>
+    <script src="{{static_url}}admin/js/dataTables.min.js"></script>
+    <script>
+    $(function(){
+        initMenu('market',2);
+        setDefaultRedirectType();
+        // var typeTimer = setInterval(function(){
+        //     if(redirectDatas){
+        //         getChannelProductList(false);
+        //         clearInterval(typeTimer);
+        //     }
+        // },500);
+        var checkLogin = new checkLogin();//判断登录
+        if (checkLogin.flag) {
+
+        }else{
+          window.location.href = "/api/oam/admin/login";
+        }
+
+        //判断登录
+        function checkLogin(){
+            var loginName = '';
+            var loginList = '';
+            var topOrderN = '';
+            //获取session 判断登录
+            var Login = sessionStorage.getItem("adminLogin");
+            console.log(Login);
+            // var Login = getSessionstronge("login");
+            if (Login == null) {  //没有登录
+                console.log("没登录");
+                this.flag = false;
+            }else{  //登录
+                console.log("已经登陆");
+                this.flag = true;
+                $(".info p").eq(0).text(Login);
+                $(".hidden-xs").text(Login);
+            }
+        }
+        loadDefaultDOM();
+        showTypeList();
+        getChannelProductList(false,watchId);
+    });
+    var mainChannelId = '1';
+    var mainChannelName = '手机影音';
+    var typeStatus=false;
+    var uploadStatus = [0,0];       //两次文件上传时的状态
+    var addJson={};                 //添加时请求Json
+    var updateJson = {};            //更新时请求Json
+    var redirectDatas='';
+    var addidArray = [];            //存放添加商品ID
+    function getChannelProductList(keepFlag,watchId){
+          console.log('加载datatables');
+            $.fn.dataTable.ext.errMode = 'none';
+        // var switchUrl;
+        // if($('#selectPage option:selected').attr('data-categoryId')==0)
+        //     switchUrl = apiPath('/api/channel/main/activity/search?mainChannelId='+mainChannelId);
+        // else
+        //     switchUrl = apiPath('/api/channel/main/selling/search?mainChannelId='+mainChannelId);
+        dt = $('#dataTable').dataTable({
+            paging: true,//分页
+                ordering: true,//是否启用排序
+                searching: true,//搜索
+                processing:true,//loading
+                "language": {
+                  lengthMenu: '<select class="form-control input-xsmall">' + '<option value="1">1</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="30">30</option>' + '<option value="40">40</option>' + '<option value="50">50</option>' + '</select>条记录',//左上角的分页大小显示。
+                  search: '<span>关键字搜索：</span>',
+                  paginate: {//分页的样式内容。
+                    previous: "上一页",
+                    next: "下一页",
+                    first: "第一页",
+                    last: "最后"
+                  },
+                  processing : "载入中...<img src='./images/loading.gif' style='width:100px;height:100px;' />",
+                  zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
+                  //下面三者构成了总体的左下角的内容。
+                  info: "总共_PAGES_ 页，显示第_START_ 到第 _END_ ，筛选之后得到 _TOTAL_ 条，初始_MAX_ 条 ",//左下角的信息显示，大写的词为关键字。
+                  infoEmpty: "0条记录",//筛选为空时左下角的显示。
+                  infoFiltered: ""//筛选之后的左下角筛选提示，
+                },
+            "ajax": {
+                "url":"/api/oam/main/channel/watch?id="+watchId,
+                // "type":"GET",
+                "dataSrc":"productlist"
+                // function(json){
+                //     initShowType(json.showType);
+                //     initAppType(json.appType);
+                //     return json.rows;
+                // }
+            },
+
+            "columns": [
+              {
+                "title": '<input type="checkbox" class="global-checkbox">',
+                "class": 'th-center td-center'
+              },
+              {
+                "data":"id",
+                "title":'id',
+                "class":'th-center td-center'
+              },
+              {
+                "data":"sku",
+                "title":'sku',
+                "class":'th-center td-center'
+              },
+              {
+                "data":"name",
+                "title":"商品名称",
+                "class":'th-center td-center'
+              },
+              {
+                "data":"image",
+                "title":'web图片',
+                "class":'th-center td-center'
+              },
+              {
+                "data":"is_hot",
+                "title":"是否热卖",
+                "class":'th-center td-center'
+              },
+              {
+                "data":"is_big",
+                "title":"是否大图",
+                "class":'th-center td-center'
+              },
+              {
+                "title":'操作',
+                "class":'th-center td-center'
+              }
+            ],
+            "columnDefs": [
+              {
+                  "render": function(data,type,row){
+                      var inputDiv = '<input type="checkbox" class="table-checkbox" name="showLists" data-name="'+row.name+'" data-id="'+row.id+'"/>';
+                      var $inputDiv = $(inputDiv);
+                      if(row.status)
+                          $inputDiv.attr('checked','checked');
+                      return $inputDiv[0].outerHTML;
+                  },
+                  "targets":0
+              },
+              {
+                  "render": function(data,type,row){
+                      var imgDiv = '<img class="webPic" src="'+data+'"/>';
+                      return imgDiv;
+
+                  },
+                  "targets":4
+              },
+              {
+                  "render":function(data,type,row){
+                      var is_hot = '';
+                      switch(data){
+                        case true:
+                          is_hot = '是'
+                        break;
+                        case false:
+                          is_hot = '否'
+                        break;
+                      }
+                      return is_hot;
+                  },
+                  "targets":5
+              },
+              {
+                  "render":function(data,type,row){
+                      var is_big = '';
+                      switch(data){
+                        case true:
+                          is_big = '是'
+                        break;
+                        case false:
+                          is_big = '否'
+                        break;
+                      }
+                      return is_big;
+                  },
+                  "targets":6
+              },
+              // {
+              //     "render": function(data,type,row){
+              //         var imgDiv = '<img class="appPic" src="'+data+'"/>';
+              //         return imgDiv;
+              //     },
+              //     "targets":3
+              // },
+              // {
+              //     "render": function(data,type,row){
+              //         // var typeName = matchRedirectType(data);
+              //         // var typeSpan = '<span>'+typeName+'</span>';
+              //         // return typeSpan;
+              //     },
+              //     "targets":5
+              // },
+              {
+                  "render": function(data,type,row){
+                      var editD = '';
+
+                      if (row.is_hot == false && row.is_big == false) {
+                        var ifn = 1;
+                      }
+                      if (row.is_hot == true && row.is_big == true) {
+                        var ifn = 2;
+                      }
+                      if (row.is_hot ==false && row.is_big == true) {
+                        var ifn = 3;
+                      }
+                      if (row.is_hot == true && row.is_big == false) {
+                        var ifn = 4;
+                      }
+
+                      switch(ifn){
+                        case 1:
+                          editD = '<a class="btn btn-sm isHot" data-hot="true">设置热卖</a><br><a class="btn btn-sm isBig" data-big="true">设置大图</a><br><a class="btn btn-sm delInfo">删除</a>';
+                        break;
+                        case 2:
+                          editD = '<a class="btn btn-sm isHot" data-hot="false">取消热卖</a><br><a class="btn btn-sm isBig" data-big="false">取消大图</a><br><a class="btn btn-sm delInfo">删除</a>';
+                        break;
+                        case 3:
+                          editD = '<a class="btn btn-sm isHot" data-hot="true">设置热卖</a><br><a class="btn btn-sm isBig" data-big="false">取消大图</a><br><a class="btn btn-sm delInfo">删除</a>';
+                        break;
+                        case 4:
+                          editD = '<a class="btn btn-sm isHot" data-hot="false">取消热卖</a><br><a class="btn btn-sm isBig" data-big="true">设置大图</a><br><a class="btn btn-sm delInfo">删除</a>';
+                        break;
+                      }
+
+                      return editD;
+                  },
+                  "targets":7
+              }
+            ],
+
+            "createdRow":function(row,data,index){
+                function showOrgImg(url){
+                    var oImg = $('<img style="max-height:600px;max-width:800px;">');
+                    oImg.load(function() {
+                        var oWidth = $(oImg)[0].width+'px';
+                        var oHeight = $(oImg)[0].height+'px';
+                        $('.fixedContainer').html('<div class="image-prev"></div>')
+                        $('.fixedContainer .image-prev').html(oImg);
+                        $('.fixedContainer').css({
+                            'width':oWidth,
+                            'height':oHeight,
+                            'max-width':'800px',
+                            'max-height':'600px',
+                            'box-shadow':'0px 0px 10px rgba(0,0,0,0)',
+                            'background-color':'rgba(0,0,0,0)'
+                        });
+                        $('.fixedContainer img').after('<div class="closeBtn"><img src="/bundles/oam/images/close.png" alt=""/></div>');
+                        $('.closeBtn').css('right','-30px');
+                        $('.fixedLayer').css('display','block');
+                        $('.closeBtn').css('display','block');
+                    });
+                    oImg.attr('src',url);
+                }
+
+                $('.fixedContainer').on('click','.closeBtn',function(){
+                    $('.fixedLayer').css('display','none');
+                    $('.fixedContainer').html('');
+                });
+                $('td',row).eq(0).on('click',function(){
+                    // var checkFlag = $(this).find("input[type='checkbox']").is(":checked");
+                    // console.log(checkFlag);
+                    // if (checkFlag == true) {
+                    //   console.log(data);
+                    // }
+                });
+                $('td',row).eq(4).on('click',function(){
+                    showOrgImg(data.image);
+                });
+
+                // $('td',row).eq(3).on('click',function(){
+                //     showOrgImg(data.appPicUrl);
+                // });
+
+                // $('td',row).eq(8).on('click','.editInfo',function(){
+                //     showEditLevel(data);
+                // });
+                $('td',row).eq(7).on('click','.isHot',function(){
+                    var isHot = $(this).attr('data-hot');
+                    ifHot(data.id,isHot);
+                });
+                $('td',row).eq(7).on('click','.isBig',function(){
+                    var isBig = $(this).attr('data-big');
+                    console.log(data,watchId);
+                    ifBig(data.id,isBig);
+                });
+                $('td',row).eq(7).on('click','.delInfo',function(){
+                    if(!myConfirm('是否删除该信息？')) return;
+                    deleteProduct(data.id);
+                });
+                // $('td', row).eq(8).on('click', '.submitOnline', function () {
+                //     if(!myConfirm('确定上线该商品？')) return;
+                //     channelOnline(data,1);
+                // });
+                // $('td', row).eq(8).on('click', '.submitOffline', function () {
+                //     if(!myConfirm('确定下线该商品？')) return;
+                //     channelOnline(data,0);
+                // });
+            },
+        });
+    }
+    function showEditLevel(rowData){
+        var editPanel = '<div class="editPanel panel panel-primary" style="height:200px">'
+                +'<div class="panel-heading">编辑<div id="help"></div></div>'
+                +'<div class="panel-body">'
+                // +'<form class="form-horizontal">'
+                +'<div class="row">'
+                +'<div class="form-group">'
+                +'<label class="col-sm-3 control-label">跳转id</label>'
+                +'<div class="col-sm-9">'
+                +'<span id="redirectId"></span>'
+                +'<span class="btn btn-default" id="gotoBtn">点击选择跳转id</span>'
+                +'</div>'
+                +'</div>'
+                // +'<div class="form-group">'
+                // +'<label class="col-sm-3 control-label">跳转类型</label>'
+                // +'<div class="col-sm-9">'
+                // // +'<span id="redirectType" class="form-control"></span>'
+                // +'<select id="redirect"><option value="1">url</option><option value="0" selected="selected">关键字</option></select>'
+                // +'</div>'
+                // +'</div>'
+                // +'<div class="form-group">'
+                // +'<label class="col-sm-3 control-label">排序号</label>'
+                // +'<div class="col-sm-9">'
+                // +'<input type="text" class="form-control" id="rankNum"/>'
+                // +'</div>'
+                // +'</div>'
+                // +'</div>'
+                // +'</form>'
+//                 +'<form class="form-horizontal" id="submitForm1" method="POST" enctype="multipart/form-data">'
+//                 +'<div class="form-group ">'
+//                 +'<label class="col-sm-3 control-label" >app图片</label>'
+//                 +'<div class="col-sm-9 upload-container">'
+//                 +'<input type="file" class="upload-input" name="file" onchange="showFileNameandPreview(this);" />'
+//                 +'<div class="tips">图片比例为 1:1</div>'
+//                 +'<div class="upload-simulate">'
+//                 +'<input type="text" class="file-name form-control" readonly="readOnly" title="" />'
+//                 +'<div class="btn btn-default upload-btn">上传本地图片</div>'
+//                 +'<div class="btn btn-default snimg-btn" id="snimg-app">选择商品图片</div>'
+//                 +'<div class="nailDiv">'
+// //                                        +'<img id="previewNail1" class="nail" />'
+//                 +'</div>'
+//                 +'</div>'
+//                 +'</div>'
+//                 +'</div>'
+//                 +'</form>'
+//                 +'<form class="form-horizontal" id="submitForm2" method="POST" enctype="multipart/form-data">'
+//                 +'<div class="form-group ">'
+//                 +'<label class="col-sm-3 control-label" >web图片</label>'
+//                 +'<div class="col-sm-9 upload-container">'
+//                 +'<input type="file" class="upload-input" name="file" onchange="showFileNameandPreview(this);"　/>'
+//                 +'<div class="tips">图片比例为 1:1</div>'
+//                 +'<div class="upload-simulate">'
+//                 +'<input type="text" class="file-name form-control" readonly="readOnly" title="" />'
+//                 +'<div class="btn btn-default upload-btn">上传本地图片</div>'
+//                 +'<div class="btn btn-default snimg-btn" id="snimg-web">选择商品图片</div>'
+//                 +'<div class="nailDiv">'
+// //                                        +'<img id="previewNail2" class="nail" />'
+//                 +'</div>'
+//                 +'</div>'
+//                 +'</div>'
+//                 +'</div>'
+//                 +'</form>'
+                +'<div class="submitDiv form-group form">'
+                +'<label class="col-sm-3 control-label" ></label>'
+                +'<div class="col-sm-9 form-child">'
+                +'<input type="button" class="btn btn-primary saveBtn" value="保存"/>'
+                +'<input type="button" class="btn btn-default cancelBtn" value="取消"/>'
+                +'</div>'
+                +'</div>'
+                +'<div class="imgPreviewDiv"><img id="imgPreview" /></div>'
+                +'</div>'
+                +'</div>';
+        $('.fixedContainer').html(editPanel);
+        if(rowData){
+            setDefaultEditValue(rowData);
+            submitFiles('submitForm1',0,rowData.id);
+            submitFiles('submitForm2',1,rowData.id);
+        }else{
+            // submitFiles('submitForm1',0,'');
+            // submitFiles('submitForm2',1,'');
+        }
+        hideRightPreimg();
+        setPanelSize();
+//        $('.fixedContainer').attr('data-orgWidth',orgWidth).attr('data-orgHeight',orgHeight);
+        $('.fixedLayer').css('display','block');
+
+        $('.fixedLayer ').off('click','.sureGoto').on('click','.sureGoto',function(){
+            saveSelectedGoto();
+        });
+        $('.fixedLayer').off('click','.cancelGoto').on('click','.cancelGoto',function(){
+            cancelSelectedGoto();
+        });
+
+        $('#help').on('click',function(){
+            showHelpMsg();
+        });
+        $('.submitDiv .saveBtn').off('click').on('click',function(){
+            // if(!checkNull($('#redirectId').text(),"请选择跳转id！")) return;
+            // if(!checkNull($('#rankNum').val(),"请填写排序号！")) return;
+            // if(!checkNum($('#rankNum').val(),"排序号只能为数字！")) return;
+            addJson.orderIndex = $('#rankNum').val();
+            if(!rowData){
+                console.log("添加商品！");
+                addSpecialProduct();
+                // var appVal = $('#submitForm1 .nailDiv').data('data-imgSource');
+                // var webVal = $('#submitForm2 .nailDiv').data('data-imgSource');
+                // if(appVal=='sn'){
+                //     addJson.appPic = $('#submitForm1 img').attr('src');
+                //     uploadStatus[0]=1;
+                // }else{
+                //     // if(!checkNull($('#submitForm1 input[type="file"]').val(),'请上传app图片！')) return;
+                //     // $('#submitForm1').submit();
+                // }
+                // if(webVal=='sn'){
+                //     addJson.webPic = $('#submitForm2 img').attr('src');
+                //     uploadStatus[1]=1;
+                // }else{
+                //     // if(!checkNull(webVal||$('#submitForm2 input[type="file"]').val(),'请上传web图片！')) return;
+                //     // $('#submitForm2').submit();
+                // }
+                // if(appVal=='sn'&&webVal=='sn')
+                //     addCallback();
+                // changeBind(this,true);
+            }else{
+              console.log("编辑商品");
+                changeBind(this,true);
+                var fileNum = 0;
+                var statusNum = 0;
+                var inputV1 = $('#submitForm1 input[type="file"]').val();
+                var inputV2 = $('#submitForm2 input[type="file"]').val();
+                if(inputV1){
+                    $('#submitForm1').submit();
+                    fileNum+=1;
+                }
+                if(inputV2){
+                    $('#submitForm2').submit();
+                    fileNum+=1;
+                }
+                var timer = setInterval(function(){
+                    $.each(uploadStatus,function(ind,val){
+                        statusNum+=val;
+                        if(ind==1&&statusNum!=fileNum){
+                            statusNum=0;
+                        }
+                    })
+                    if(statusNum==fileNum){
+                        updateSpecialProduct();
+                        fileNum = 0;
+                        statusNum=0;
+                        clearInterval(timer);
+                    }else if(!inputV1&&!inputV2){
+                        updateSpecialProduct();
+                        clearInterval(timer);
+                    }
+                },500);
+            }
+        });
+        $('.submitDiv .cancelBtn').on('click',function(){
+            $('.fixedContainer').html('');
+            $('.fixedLayer').css('display','none');
+            updateJson={};
+            addJson={};
+            changeBind($('.submitDiv .saveBtn')[0],false);
+        });
+
+    }
+    //设置帮助提示信息
+    function showHelpMsg(){
+        var msg = '<p class="help-title">web端</p>'
+                + '<table id="size-introduce">'
+                    + '<thead><th>模版</th><th>图1</th><th>图2</th><th>图3</th><th>图4</th><th>图5</th><th>图6</th><th>图7</th></thead>'
+                    + '<tbody>'
+                        +'<tr>'
+                            +'<td>模版1</td><td>210*360</td><td>330*360</td><td>220*180</td><td>220*180</td><td>220*360</td><td>220*180</td><td>220*180</td>'
+                        +'</tr>'
+                        +'<tr>'
+                            +'<td>模版2</td><td>330*360</td><td>220*180</td><td>220*180</td><td>210*360</td><td>220*180</td><td>220*180</td><td>220*360</td>'
+                        +'</tr>'
+                        +'<tr>'
+                            +'<td>模版3</td><td>210*360</td><td>220*180</td><td>220*180</td><td>220*360</td><td>330*360</td><td>220*180</td><td>220*180</td>'
+                        +'</tr>'
+                    +'</tbody>'
+                + '</table>'
+                + '<p class="help-title">app端</p>'
+                + '<table id="size-introduce">'
+                    + '<thead><th>模版</th><th>图1</th><th>图2</th><th>图3</th><th>图4</th></thead>'
+                    + '<tbody>'
+                        +'<tr>'
+                            +'<td>模版1</td><td>302*374</td><td>448*188</td><td>224*186</td><td>224*186</td>'
+                        +'</tr>'
+                        +'<tr>'
+                            +'<td>模版2</td><td>374*374</td><td>376*188</td><td>188*186</td><td>188*186</td>'
+                        +'</tr>'
+                        +'<tr>'
+                            +'<td>模版3</td><td>207*374</td><td>366*374</td><td>207*374</td><td>——</td>'
+                        +'</tr>'
+                    +'</tbody>'
+                + '</table>';
+        $('#helpMsg').html(msg).toggle();
+    }
+    function deleteProduct(dataId){
+          var deletArr = [];
+          deletArr.push(dataId);
+          console.log(deletArr);
+          $.ajax({
+            url:'/api/oam/main/channel/delete_product',
+            type:'POST',
+            datatype:'json',
+            data:{
+              'cid':watchId,
+              'pid':deletArr
+            },
+            success:function(data){
+              alert("删除成功！");
+              window.location.reload();
+              // getChannelProductList(true);
+            },
+            error:function(error){
+              alert("删除失败！");
+            }
+          })
+    }
+    //设置热卖
+    function ifHot(data,flag){
+      if (flag == 'true') {
+        $.ajax({
+          url:'/api/oam/main/channel/set_product_hot',
+          type:'POST',
+          datatype:'json',
+          data:{
+            'id':data,
+            'state':true
+          },
+          success:function(data){
+            alert('设置成功');
+            window.location.reload();
+          },
+          error:function(error){
+            alert("设置失败");
+          }
+        })
+      }else{
+        $.ajax({
+          url:'/api/oam/main/channel/set_product_hot',
+          type:'POST',
+          datatype:'json',
+          data:{
+            'id':data,
+            'state':false
+          },
+          success:function(data){
+            alert('设置成功');
+            window.location.reload();
+          },
+          error:function(error){
+            alert("设置失败");
+          }
+        })
+      }
+
+    };
+    //设置大头
+    function ifBig(data){
+        $.ajax({
+          url:'/api/oam/main/channel/set_image_big',
+          type:'POST',
+          datatype:'json',
+          data:{
+            'cid':watchId,
+            'pid':data
+          },
+          success:function(data){
+            alert('设置大头成功');
+            window.location.reload();
+          },
+          error:function(error){
+            alert("设置大头失败");
+          }
+        })
+    };
+    //批量删除
+    $("#deleteBtn").on('click',function(){
+      var items = $('#dataTable tbody tr');
+        var idArray = [];
+        for (var i = 0; i < items.length; i++) {
+            var checkedItem = $(items[i]).find('input')[0].checked;
+            //如果被选中，就删除相应的行
+            console.log(checkedItem);
+            if (checkedItem) {
+                var itemId = $(items[i]).find('input').attr("data-id");
+                // $(items[i]).addClass('selectDel');
+                idArray.push(itemId);
+            }
+        }
+        console.log(idArray);
+        if (idArray.length <= 0) {
+          alert("请选择商品");
+        }else{
+          deletAll(idArray);
+        }
+    });
+    function deletAll(idArray){
+        $.ajax({
+            url:'/api/oam/main/channel/delete_product',
+            type:'POST',
+            datatype:'json',
+            data:{
+              'cid':watchId,
+              'pid':idArray
+            },
+            success:function(data){
+              alert("删除成功！");
+              window.location.reload();
+              // getChannelProductList(true);
+            },
+            error:function(error){
+              alert("删除失败！");
+            }
+        })
+    }
+    function setPanelSize(){
+        var orgWidth = $('.editPanel').width()+'px' ;
+        var orgHeight = $('.editPanel').height()+'px';
+        $('.fixedContainer').removeAttr('style');
+        $('.fixedContainer').css('width',orgWidth).css('height',orgHeight);
+    }
+    //判断文本框内的值是否为数字
+    function checkNum(value,msg){
+        if((/\D/ig).test(value)){
+            alert(msg);
+            return false;
+        }else{
+            return true;
+        }
+    }
+    //设置编辑状态下的默认值
+    function setDefaultEditValue(data){
+        var redirectId=data.redirectId;
+        var orderIndex = data.orderIndex;
+        var appPicId = data.appPicId;
+        var webPicId = data.webPicId;
+        var appPicUrl = data.appPicUrl;
+        var webPicUrl = data.webPicUrl;
+        $('#redirectId').text(redirectId).css('margin-right','20px');
+        $('#redirectType').html(matchRedirectType(data.redirectType));
+        $('#rankNum').val(orderIndex);
+        setImgDefaultStatus(appPicUrl,$('#submitForm1 .file-name'),$('#submitForm1 .nailDiv'));
+        setImgDefaultStatus(webPicUrl,$('#submitForm2 .file-name'),$('#submitForm2 .nailDiv'));
+        updateJson.redirectId=redirectId;
+        updateJson.id=data.id;
+        updateJson.orderIndex =orderIndex ;
+        updateJson.appPic=appPicId ;
+        updateJson.webPic=webPicId ;
+    }
+    // 获取限制预览的参数
+    function setParameters(uploadConst,formId){
+        var parameters;
+        var appConst = {
+            "checkFormatErrMsg":"app图片格式错误！",
+        };
+        var webConst = {
+            "checkFormatErrMsg":"web图片格式错误！",
+        };
+        var uploadConst1={};
+        var uploadConst2={};
+        $.extend(uploadConst1,uploadConst,appConst);
+        $.extend(uploadConst2,uploadConst,webConst);
+        if(formId=='submitForm1'){
+            parameters = uploadConst1;
+        }else{
+            parameters = uploadConst2;
+        };
+        return parameters;
+    }
+    //请求跳转类型的数据
+    function setDefaultRedirectType(){
+        // ajaxAction(
+        //         'GET',
+        //         apiPath('/api/redirect/search/type'),
+        //         '',
+        //         true,
+        //         function(data,textStatus){
+        //             redirectDatas= data.rows;
+        //         },
+        //         function(errno,errmsg){
+        //         });
+    }
+    //查找匹配的跳转类型
+    function matchRedirectType(redirectType){
+        var redirectTypeName='';
+        $.each(redirectDatas,function(index,content){
+            if(redirectType==content.id){
+                redirectTypeName = content.name;
+                return false;
+            };
+        });
+        return redirectTypeName;
+    }
+    function selectGoto(aSpan){
+        var gotoPanel='<div class="actPart" id="actPanel">'
+                +'<input type="button" class="btn btn-default cancelGoto pull-right" value="取消" />'
+                +'<input type="button" class="btn btn-primary sureGoto pull-right" value="确定" />'
+                +'</div>';
+        var datatables2 = '<div id="gotoListsDiv">'
+                +'<table id="gotoListsTable" class="table table-bordered table-hover"></table>'
+                +'</div>';
+        $('.fixedContainer').append(gotoPanel+datatables2);
+        $('.fixedContainer').css('width','800px').css('height','600px');
+        $('.editPanel').css('display','none');
+        $('#gotoListsTable').css('display','block');
+        showGotoLists(aSpan);
+    }
+
+    //保存所选的跳转id
+    function saveSelectedGoto(){
+        //数据层
+        // var gotoName = $('.goto-radio:checked').attr('data-name');    //跳转类型
+        // var gotoId = $('.goto-radio:checked').attr('data-id');    //跳转id
+
+        addidArray = [];
+        var items = $('#gotoListsTable tbody tr');
+
+        for (var i = 0; i < items.length; i++) {
+            var checkedItem = $(items[i]).find('input')[0].checked;
+            //如果被选中，就删除相应的行
+            console.log(checkedItem);
+            if (checkedItem) {
+                var itemId = $(items[i]).find('input').attr("data-id");
+                // $(items[i]).addClass('selectDel');
+                addidArray.push(itemId);
+            }
+        }
+        console.log(addidArray);
+        if (addidArray.length <= 0) {
+          alert("请选择商品");
+          return;
+        }
+
+
+        // if(gotoId){
+        //     addJson.redirectId = gotoId;
+        //     $('#redirectId').html(gotoId).css('margin-right','20px');
+        //     $('#redirectType').html(gotoName);
+        //     //表现层
+        //     $('#gotoBtn').html("重新选择跳转id");
+        // }
+
+
+        hideGotoLayer();
+    }
+    function hideGotoLayer(){
+        $('#gotoListsDiv').remove();
+        $('#actPanel').remove();
+        setPanelSize();
+        $('.editPanel').css('display','block');
+    }
+    //取消所选的跳转id
+    function cancelSelectedGoto(){
+        $('#gotoBtn').html("点击选择跳转id");
+        hideGotoLayer();
+    }
+
+    function showGotoLists(aSpan){
+        $('#gotoListsTable').dataTable({
+          "paging": true,//分页
+          "ordering": true,//是否启用排序
+          "searching": true,//搜索
+          "processing":true, //加载开启
+          "language": {
+            "processing" : "载入中...<img src='/static/i3jf/admin/images/loading.gif' style='width:100px;height:100px;' />",
+            "lengthMenu": "每页显示 _MENU_ 条记录",
+            "zeroRecords": "抱歉， 没有找到",
+            "info": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+            "infoEmpty": "没有数据",
+            "infoFiltered": "(从 _MAX_ 条数据中检索)",
+            "zeroRecords": "没有检索到数据",
+            "search": "关键字搜索：",
+            "paginate": {
+                "first": "首页",
+                "previous": "前一页",
+                "next": "后一页",
+                "last": "尾页"
+            },
+          },
+            "ajax": {
+                "url":'/api/oam/product/list',
+                // "type":"GET",
+                // "data":function(paramet) {
+                //     var start = paramet.start;
+                //     var rows = paramet.length;
+                //     var requestJson = {};
+                //     requestJson.rows = rows;
+                //     requestJson.page = (start/rows)+1;
+                //     return requestJson;
+                // },
+                "dataSrc":"productlist"
+                // function(json){
+                //     return json.rows;
+                // }
+            },
+            "initComplete":function(settings,json){
+                if(!aSpan){
+                    $('.goto-radio:first').prop('checked',true);
+                }else{
+                    $('.goto-radio[data-id="'+aSpan+'"]').prop('checked',true);
+                }
+            },
+
+            "columns": [
+                {
+                  "title":'',
+                  "class":'th-center td-center',
+                  "width":'50'
+                },
+                {
+                  "data":"id",
+                  "title":'编号',
+                  "class":'th-center td-center',
+                  "width":'50'
+                },
+                {
+                  "data":"name",
+                  "title":'跳转类型',
+                  "class":'th-center td-center',
+                  "width":'100'
+                },
+                {
+                  "data":"sku",
+                  "title":'跳转目标sku',
+                  "class":'th-center td-center',
+                  "width":'100'
+                },
+                {
+                  "data":"image",
+                  "title":"产品图片",
+                  "class":'th-center td-center'
+                }
+            ],
+            "columnDefs": [
+                {
+                    "render": function(data,type,row){
+                        // var inputDiv = '<input type="radio" class="goto-radio" name="gotoLists" data-name="'+row.name+'" data-id="'+row.id+'"/>';
+                        var inputDiv = '<input type="checkbox" class="table-checkbox" name="showLists" data-name="'+row.name+'" data-id="'+row.id+'"/>';
+                        return inputDiv;
+                    },
+                    "targets":0
+                },
+                {
+                    "render": function (data, type, row) {
+                        var odiv = '<img class="webPic" src="' + row.image + '" />'
+                        return odiv;
+                    },
+                    "targets": 4
+                }
+              ],
+
+            "createdRow":function(row,data,index){
+
+            }
+        });
+    }
+
+    function loadDefaultDOM(){
+        $('.content-header h1 small').html(mainChannelName+'频道');
+        $('.topAddBtn').on('click',function(){
+            showEditLevel();
+        });
+        $('.sureTypeDiv').css('display','none');
+        $('#modifyBtn').on('click',function(){
+            if(!myConfirm('修改展示类型会改变已有图片的展示尺寸，确定修改？')) return;
+            modifyShowType();
+        });
+        $('#sureBtn').on('click',function(){
+            saveShowType();
+        });
+        $('#cancelBtn').on('click',function(){
+            cancelShowType();
+        });
+        $('.fixedLayer').off('click','#gotoBtn').on('click','#gotoBtn',function(){
+            var aSpan = $('#gotoBtn').prev().text();
+            console.log("跳转类型");
+            if(!aSpan)  selectGoto('');
+            else selectGoto(aSpan);
+        });
+        $('#dataTable').off('click','.global-checkbox').on('click','.global-checkbox',function(){
+            toggleSelect();
+        });
+        $('#dataTable').off('click','.table-checkbox').on('click','.table-checkbox',function(){
+            interSelect();
+        });
+        $('#onlineBtn').off('click').on('click',function(){
+            if(!myConfirm('确定批量上线所选商品？')) return;
+            channelOnline();
+        });
+        $('.fixedLayer').off('click','#snimg-app').on('click','#snimg-app',function(){
+            var aspan = $('#snimg-app').next().find('img').attr("src");
+            selectSnImg('app',aspan);
+        });
+        $('.fixedLayer').off('click','#snimg-web').on('click','#snimg-web',function(){
+            var aspan = $('#snimg-web').next().find('img').attr("src");
+            selectSnImg('web',aspan);
+        });
+        $('.fixedLayer').off('click','.searchBtn').on('click','.searchBtn',function(){
+            var searchCond={};
+            searchCond.keyword = $(this).parent().prev().find('input').val();
+            var selectList= $('.category');
+            var i,selectLen = selectList.length;
+            for(i=1;i<selectLen;i++){
+                var val = $($(selectList)[i]).val();
+                if(val!=-1)  searchCond.categoryId = val;
+            }
+            var V1 = $($(selectList)[0]).val();
+            var V2 = $($(selectList)[1]).val();
+            if(V1>0&&V2==-1){
+                searchCond.subStationId = V1;
+            }
+            showProductLists('',searchCond);
+        });
+        $('.fixedLayer ').off('click','.selectProduct').on('click','.selectProduct',function(){
+            saveSelectedProduct();
+        });
+        $('.fixedLayer').off('click','.cancelProduct').on('click','.cancelProduct',function(){
+            cancelSelectedProduct();
+        });
+    };
+    //选择苏宁商品图片层
+    function selectSnImg(flag,aspan){
+        var searchItem = '<div class="control-panel" id="searchPanel">'
+                +'<div class="control-line">'
+                +'<div id="category1" class="custom-item ">'
+                +'<label for="category1" class="selectLabel">子站：</label>'
+                +'<select class="form-control category" onchange="changeEditCategoryD2(1);">'
+                +'</select>'
+                +'</div>'
+                +'<div id="category2" class="custom-item">'
+                +'<label for="category2" class="selectLabel">一级分类：</label>'
+                +'<select class="form-control category" onchange="changeEditCategoryD2(2);">'
+                +'</select>'
+                +'</div>'
+                +'</div>'
+                +'<div class="control-line">'
+                +'<div id="category3" class="custom-item">'
+                +'<label for="category3" class="selectLabel">二级分类：</label>'
+                +'<select class="form-control category" onchange="changeEditCategoryD2(3);">'
+                +'</select>'
+                +'</div>'
+                +'<div id="category4" class="custom-item">'
+                +'<label for="category4" class="selectLabel">三级分类：</label>'
+                +'<select class="form-control category">'
+                +'</select>'
+                +'</div>'
+                +'</div>'
+                +'<div class="control-line">'
+                +'<div id="otherCondition" class="custom-item">'
+                +'<label for="otherCondition" class="selectLabel">关键字：</label>'
+                +'<input type="text" class="form-control">'
+                +'</div>'
+                +'<div class="control-btns">'
+                +'<button class="btn btn-primary searchBtn" >搜索</button>'
+                +'<button class="btn btn-primary selectProduct" >提交</button>'
+                +'<button class="btn btn-warning cancelProduct" >取消</button>'
+                +'</div>'
+                +'</div>'
+                +'</div>';
+        var datatables3 = '<div id="productListsDiv">'
+                +'<table id="productListsTable" class="table table-bordered table-hover"></table>'
+                +'</div>';
+        $('.fixedContainer').append(searchItem+datatables3);
+        $('.fixedContainer').css('width','800px').css('height','600px');
+        $('.editPanel').css('display','none');
+        $('#productListsTable').css('display','block');
+        getEditCategoryInfo(0,1);
+        showProductLists(aspan,'',flag);
+    }
+
+    //编辑状态下第二个下拉框的值变化时发生的变化
+    function changeEditCategoryD2(index){
+        var selectNum = $('.control-panel select').length;
+        recursion(index);
+        function recursion(index){
+            var curValue = $('#category'+index+' select option:selected').val();
+            if(curValue!=-1){
+                getEditCategoryInfo(curValue,index+1,function(){
+                    $($('#category'+(index+1)+' select option')[1]).prop('selected',true);
+                    if((index+1)<selectNum)
+                        recursion(index+1);
+                });
+            }else{
+                getEditCategoryInfo(-1,index+1);
+            }
+        }
+    }
+    //获取编辑状态下的分类信息
+    function getEditCategoryInfo(parentId,target,callback){
+        if(parentId!=-1){
+            if(target!=1) $('.category:gt('+(target-2)+')').html("");
+            else $('.category').html("<option value='-1'>全部分类</option>");
+            // ajaxAction(
+            //         'GET',
+            //         apiPath('/api/category/search?parentId='+parentId),
+            //         {},
+            //         true,
+            //         function (data,textStatus){
+            //             $('#category'+target+' select').html('');
+            //             $('#category'+target+' select').prepend("<option value='-1'>全部分类</option>");
+            //             $.each(data.rows,function(index,content){
+            //                 $('#category'+target+' select').append('<option value="'+content.id+'">'+content.name+'</option>');
+            //             });
+            //             if(callback) callback();
+            //         },
+            //         function (errno,errmsg){
+
+            //         });
+        }
+        else{
+            $('.category:gt('+(target-2)+')').html("<option value='-1'>全部分类</option>");
+        }
+    }
+
+    //显示产品列表
+    function showProductLists(aSpan,searchCondition,flag){
+        $('#productListsTable').dataTable({
+            "destroy":true,
+            "processing":true,
+            "serverSide":true,
+            "lengthChange":false,
+            "filter":false,
+            "displayLength":12,
+            "ordering":false,
+            "paginationType":"simple_numbers",
+            "autoWidth":true,
+            "ajax": {
+                "url":'/api/product/oam/search',
+                "type":"GET",
+                "data":function(paramet) {
+                    var start = paramet.start;
+                    var rows = paramet.length;
+                    var requestJson = {};
+                    requestJson.rows = rows;
+                    requestJson.page = (start/rows)+1;
+                    if(searchCondition){
+                        var keyword = searchCondition.keyword;
+                        var categoryId = searchCondition.categoryId;
+                        var subStationId = searchCondition.subStationId;
+                        requestJson+=$.trim(keyword)?'&keyword='+keyword:'';
+                        requestJson+=categoryId?'&categoryId=' + categoryId:'';
+                        requestJson+=subStationId?'&subStationId=' + subStationId:'';
+                    }
+                    return requestJson;
+                },
+                "dataSrc":function(json){
+                    return json.rows;
+                }
+            },
+            "initComplete":function(settings,json){
+                $('#productListsDiv').data('type',flag);
+                if(!aSpan){
+                    $('.goto-radio:first').prop('checked',true);
+                }else{
+                    $('.goto-radio[data-url="'+aSpan+'"]').prop('checked',true);
+                }
+            },
+            "columns": [
+                { "title":'',"class":'th-center td-center',"width":'80'},
+                { "data":"sku","title":'sku',"class":'th-center td-center',"width":'100'},
+                { "data":"name","title":'产品名称',"class":'th-center td-center',"width":'450'},
+                { "data":"image","title":'图片url',"class":'th-center td-center',"width":'150'}],
+            "columnDefs": [
+                {
+                    "render": function(data,type,row){
+                        var inputDiv = '<input type="radio" class="goto-radio" name="gotoLists" data-name="'+row.name+'" data-id="'+row.id+'" data-url="'+row.image+'"/>';
+                        return inputDiv;
+                    },
+                    "targets":0
+                },{
+                    "render": function(data,type,row){
+                        var imgDiv = '<img class="pic" src="'+data+'"/>';
+                        return imgDiv;
+                    },
+                    "targets":3
+                }],
+
+            "createdRow":function(row,data,index){
+
+            },
+            "language":{
+                url:dataTable_zh
+            }
+        });
+    }
+    //保存选择的商品图片
+    function saveSelectedProduct(){
+        var url = $('.goto-radio:checked').attr('data-url');
+        var type = $('#productListsDiv').data('type');
+
+        if(type=='app'){
+            setImgDefaultStatus(url,$('#submitForm1 .file-name'),$('#submitForm1 .nailDiv'));
+            addJson.appPic=url ;
+            $('#submitForm1 .nailDiv').data('data-imgSource','sn');
+        }
+        else{
+            setImgDefaultStatus(url,$('#submitForm2 .file-name'),$('#submitForm2 .nailDiv'));
+            addJson.webPic=url ;
+            $('#submitForm2 .nailDiv').data('data-imgSource','sn');
+        }
+        hideProductLayer();
+    }
+    //取消选择的商品
+    function cancelSelectedProduct(){
+        hideProductLayer();
+    }
+    //隐藏跳转浮层
+    function hideProductLayer(){
+        $('#productListsDiv').remove();
+        $('#searchPanel').remove();
+        setPanelSize();
+        $('.editPanel').css('display','block');
+    }
+
+    function initShowType(initValue){
+        $('.sureTypeDiv').css('display','none');
+        $('.modifyTypeDiv').css('display','inline-block');
+        $('#corShowType').attr('data-original',initValue);
+        var timer = setInterval(function(){
+            if(typeStatus){
+                var $obj1=$('#selectShowType option[data-type="'+initValue+'"]');
+                $obj1.attr('selected',true);
+                $('#corShowType').html($obj1.text());
+                clearInterval(timer);
+            };
+        },500);
+    }
+    function initAppType(initValue){
+        var $obj1=$('#selectShowType option[data-type="'+initValue+'"]');
+        $('#corShowAppType').html($obj1.text());
+        $('#corShowType').attr('data-original',initValue);
+    }
+    function modifyShowType(){
+        $('.sureTypeDiv').css('display','inline-block');
+        $('.modifyTypeDiv').css('display','none');
+    }
+    function saveShowType(){
+        var selectedValue =  $('#selectShowType option:selected').attr('data-type');
+        var selectMode = $('#selectPage option:selected').attr('data-categoryid');
+        if(parseInt(selectMode)){
+            // ajaxAction(
+            //         'PUT',
+            //         apiPath('/api/special/selling/type'),
+            //         {showType:selectedValue},
+            //         true,
+            //         function(data,textStatus){
+            //             alert("精品推荐的热卖商品展示类型修改成功！");
+            //         },
+            //         function(errno,errmsg){
+            //             alert(errmsg);
+            //         });
+        }else{
+            // ajaxAction(
+            //         'PUT',
+            //         apiPath('/api/special/activity/type'),
+            //         {showType:selectedValue},
+            //         true,
+            //         function(data,textStatus){
+            //             alert("精品推荐的热门活动展示类型修改成功！");
+            //         },
+            //         function(errno,errmsg){
+            //             alert(errmsg);
+            //         });
+        };
+        getChannelProductList(false);
+    }
+    function cancelShowType(){
+        $('.sureTypeDiv').css('display','none');
+        $('.modifyTypeDiv').css('display','inline-block');
+        var orgType = $('#corShowType').attr('data-original');
+        $('#corShowType').html(orgType);
+    }
+
+    function showTypeList(){
+        // return ajaxAction(
+        //         'GET',
+        //         apiPath('/api/dict/key/6'),
+        //         '',
+        //         true,
+        //         function(data,textStatus){
+        //             typeStatus = true;
+        //             var datas = data.valueList;
+        //             $.each(datas,function(index,content){
+        //                 var optionSrc = '<option value="showT'+index+'" data-type="'+content.realValue+'">'+content.showValue+'</option>';
+        //                 $('#selectShowType').append(optionSrc);
+        //             });
+        //         },
+        //         function(errno,errmsg){
+        //             alert(errmsg);
+        //         });
+    }
+    function submitFiles(element,index,editId){
+        $('#'+element).form({
+            url:'/api/file/upload',
+            success:function(data){
+                data = $.evalJSON(data);
+                if(data.errno == 0){
+                    if(index==0) addJson.appPic=data.url;
+                    else addJson.webPic = data.url;
+                    uploadStatus[index]=1;
+                    if(!editId) addCallback();
+
+                }
+            },
+            error:function(error,errmsg){
+                console.log(errmsg);
+            }
+        });
+    }
+
+    //新增状态下，文件上传成功的回调函数
+    function addCallback(){
+        var fileNum = 0;
+        $.each(uploadStatus,function(ind,val){
+            fileNum+=val;
+        });
+        if(fileNum==$('.editPanel input[type="file"]').length){
+            console.log("flie");
+            addSpecialProduct();
+            uploadStatus=[0,0];
+            fileNum = 0;
+        }
+    }
+
+    //编辑状态下，文件上传成功的回调函数
+    function editCallback(){
+
+    }
+
+    // 为精品推荐添加产品
+    function addSpecialProduct(){
+
+        console.log("添加商品"+addidArray);
+        $.ajax({
+          url:'/api/oam/main/channel/add_product',
+          type:'POST',
+          datatype:'json',
+          data:{
+            'cid':watchId,
+            'pid':addidArray
+          },
+          success:function(data){
+            alert('商品添加成功！');
+            $('.fixedContainer').html('');
+            $('.fixedLayer').css('display','none');
+            getChannelProductList(false);
+            addJson={};
+            updateJson={};
+            uploadStatus=[0,0];
+            window.location.reload();
+          },
+          error:function(error){
+            alert('添加失败！');
+          }
+        })
+
+
+        addJson.mainChannelId = mainChannelId;
+        var switchUrl;
+        var selectedPage = $('#selectPage option:selected').attr('data-categoryId');
+        if(selectedPage==0)
+            switchUrl = apiPath('/api/channel/main/activity/create');
+        else
+            switchUrl = apiPath('/api/channel/main/selling/create');
+        // return ajaxAction(
+        //         'POST',
+        //         switchUrl,
+        //         addJson,
+        //         true,
+        //         function(data,textStatus){
+        //             if(selectedPage==0)  alert('热门活动添加成功！');
+        //             else alert('热卖商品添加成功！');
+        //             $('.fixedContainer').html('');
+        //             $('.fixedLayer').css('display','none');
+        //             getChannelProductList(false);
+        //             addJson={};
+        //             updateJson={};
+        //             uploadStatus=[0,0];
+        //         },
+        //         function(errno,errmsg){
+        //             changeBind($('.submitDiv .saveBtn')[0],false);
+        //             alert(errmsg);
+        //         });
+    }
+
+    //更新精品推荐商品
+    function updateSpecialProduct() {
+        updateJson.mainChannelId = mainChannelId;
+        var switchUrl;
+        var selectedPage = $('#selectPage option:selected').attr('data-categoryId');
+        if (selectedPage == 0)
+            switchUrl = apiPath('/api/channel/main/activity/update');
+        else
+            switchUrl = apiPath('/api/channel/main/selling/update');
+        if (addJson)   updateJson = $.extend(updateJson, addJson);
+    //     return ajaxAction(
+    //             'PUT',
+    //             switchUrl,
+    //             updateJson,
+    //             true,
+    //             function (data, textStatus) {
+    //                 if (selectedPage == 0)  alert('热门活动' + updateJson.id + '编辑成功！');
+    //                 else alert('热卖商品' + updateJson.id + '编辑成功！');
+    //                 $('.fixedContainer').html('');
+    //                 $('.fixedLayer').css('display', 'none');
+    //                 getChannelProductList(true);
+    //                 updateJson={};
+    //                 addJson={};
+    //                 uploadStatus=[0,0];
+    //             },
+    //             function (errno, errmsg) {
+    //                 changeBind($('.submitDiv .saveBtn')[0], false);
+    //                 alert(errmsg);
+    //             });
+    }
+    //上线/下线频道
+    function channelOnline(data,status){
+        var List=[],url,requestJson={};
+        if(data){
+            var item = {};
+            item.id = data.id;
+            if(status){
+                item.status= 1;
+            }else{
+                item.status = 0;
+            }
+            List.push(item);
+        }else{
+            List = getOnlineStatus();
+        }
+        var selectedPage = $('#selectPage option:selected').attr('data-categoryId');
+        if(selectedPage==0){
+            url = apiPath('/api/channel/activity/status');
+            requestJson.activityList = List;
+        }
+        else{
+            url = apiPath('/api/channel/selling/status');
+            requestJson.sellingList = List;
+        }
+        // ajaxAction(
+        //         'PUT',
+        //         url,
+        //         requestJson,
+        //         true,
+        //         function(data,textStatus){
+        //             if(status==1){
+        //                 alert("上线成功！")
+        //             }else if(status==0){
+        //                 alert("下线成功！")
+        //             }else{
+        //                 alert('批量上线成功！');
+        //             }
+        //             getChannelProductList(true);
+        //         },
+        //         function(errno,errmsg){
+        //             alert(errmsg);
+        //         });
+        }
+</script>
+{% endblock %}

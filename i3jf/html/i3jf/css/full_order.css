@@ -1,0 +1,551 @@
+	a{
+		text-decoration: none;
+	}
+	input{ 
+		outline:none;
+	}
+	.clearFix:after{
+		content:'';
+		clear:both;
+		display:block;
+	}
+	.clearFix{
+		zoom:1;
+	}
+	.orders{
+		width:1200px;
+		overflow:hidden;
+	}
+	.searchOverall{
+		display:none;
+	}
+	#pageHead{
+		margin:4px 0 12px;
+	}
+	.showPage{ 
+		width:60px;
+		overflow:hidden;
+	}
+	.pageBtn{
+		width:58px;
+		margin:12px 20px 0 0;
+	}
+	.pageBtn a{
+		width:24px;
+		height:24px;
+		border:1px solid #ccc;
+	}
+	.pageBtn a i{
+		display:block;
+		width:7px;
+		height:13px;
+		margin:6px auto 0;
+	}
+	.pageBtn a:nth-child(1) i{
+		background:url("../images/leftBtn.png") no-repeat;
+	}
+	.pageBtn a:nth-child(2) i{
+		background:url("../images/rightBtn.png") no-repeat;
+	}
+	.pageBtn a.active{
+		background:#fff;
+	}
+
+	.goodsDisplay{
+		overflow:hidden;		
+	}
+	.goodsDisplay li{
+		padding:0;
+	}
+	.goodsDisplay.w960{
+		width:960px;
+	}
+	.displayList.w1000{
+		width:1000px;
+		margin-bottom:10px;
+	}
+	.displayList.w1180{
+		width:1180px;
+		margin-bottom:10px;
+	}
+	.displayList.w1180 li{
+		float:left;
+		margin-right:35px;
+	}
+	.displayList li.w225{
+		width:225px;
+		margin:0 20px 30px 0;
+	}
+	.displayList .g-pic{
+		display:inline-block;
+		border:1px solid #f5f5f5;				
+		background:#fff;
+		overflow:hidden;
+	}
+	.displayList .g-pic.w198{
+		width:198px;
+		height:198px;
+		margin-bottom:7px;
+	}
+	.displayList.w1180 p{
+		font-size:14px;
+	}
+	.displayList.w1180 li img.size1{
+		width:130px;
+		height:165px;
+		margin:16px 0 0 35px;
+	}
+	.displayList.w1180 .g-name{
+		width:200px;
+		padding-right:4px;
+		line-height:18px;
+		height:36px;
+		margin-bottom:12px;
+	}
+	.displayList.w1180 .g-name p{
+		width:196px;
+		line-height:22px;
+		height:46px;
+		overflow:hidden;
+	}
+	.displayList .g-price strong{
+		vertical-align:middle;
+		color:#cc0a2a;
+		font-size:18px;
+		/*max-width:100px;*/
+	}
+	.displayList .g-price .unit{
+		vertical-align:middle;
+		padding-left:5px;
+		width:auto;
+		color:#cc0a2a;
+		font-size:16px;
+		font-weight:bold;
+	}
+	.displayList .g-price .load-price{
+		vertical-align:middle;
+		padding-left:5px;
+		width:auto;
+		color:#333;
+		font-size:16px;
+		font-weight:normal;
+		cursor:pointer;
+	}
+	.ellipsis{
+		width-space:nowrap;
+		overflow:hidden;
+		text-overflow:ellipsis;
+	}
+	.displayList.w1000 .g-price span{
+		width:109px;
+		color:#999;
+		margin-top:3px;
+		text-align:right;
+	}
+	.displayList p:hover{
+		color:#cc0a2a;
+		text-decoration: underline;
+	}
+	
+	/*页码开始*/
+	.tcdPageCode{
+		text-align: right;
+		color: #333;
+		font-size:14px;
+		display:none;
+		margin:10px 0 40px 0;
+	}
+	.tcdPageCode button , .tcdPageCode div{
+		display: inline-block;
+		text-align:center;
+		color: #333;
+		height: 38px;	
+		line-height: 38px;
+		border: 1px solid #ccc;	
+		border-radius: 2px;
+		vertical-align: middle;
+		margin-right:10px;
+		background:#fff;
+		padding:0 14px;
+		cursor:pointer;
+	}
+	.tcdPageCode div.active{
+		color: #ed145b;
+		border-color:#ed145b;
+	}
+	.tcdPageCode .more-item{
+		margin-right:10px;
+	}
+	/*页码结束*/
+
+	.hotSale{
+		width:218px;
+		border:1px solid #f5f5f5;
+		background:#fff;
+	}
+	.hotST{
+		height:43px;
+		line-height:43px;
+		font-size:16px;
+		border-bottom:1px solid #f5f5f5;	
+		margin-bottom:20px;
+	}
+	.hotST img{
+		width:198px;
+		height:198px;
+	}
+	.hotST.w180{
+		width:180px;
+		padding:0 19px;
+	}
+	.displayList.w1180 li{
+		margin-bottom:20px;
+		width:200px;
+	}
+	.displayList.w1180 li img{
+		width:100%;
+		height:198px;
+	}
+	.seller{
+		display:none;
+		width:1198px;
+		background:#fff;
+		border:1px solid #f5f5f5;
+		overflow:hidden;
+	}
+	.seller li{
+		margin-right:35px;
+		float:left;
+	}
+	.hotST.w1198{
+		width:1198px;
+		padding-left:18px;
+	}
+	.goodsDisplay.w1140{
+		width:1140px;
+		margin:0 auto;
+	}
+	.mbtm{
+		margin-bottom:80px;
+	}
+
+	.orderDetail{
+		width:1200px;
+		overflow:hidden;
+	}
+	.goodsTit{
+		margin-bottom:14px;
+		margin-left:-3px;
+	}
+	.goodsTit b{
+		float:left;
+		font-size:18px;
+		border-left:2px solid #666;
+		padding:2px 20px 2px 18px;
+		cursor:pointer;
+	}
+	.goodsTit b.show{
+		color:#cc0a2a;
+	}
+	.detailList{
+		width:1200px;
+		min-height:336px;
+	}
+	.hDetail{
+		width:1200px;
+		overflow-x:hidden;
+	}
+	.nDetail{
+		display:none;
+		width:300px;
+		height:76px;
+		margin:110px auto 0;
+	}
+	.nDetail img{
+		width:68px;
+		height:76px;
+		margin-right:39px;
+	}
+	.emptyIntroduce p{
+		margin:8px 0 34px;
+	}
+	.emptyIntroduce a{
+		color:#d30a0a;
+		font-weight: bold;
+	}	
+	.detailList li{
+		display:none;
+		min-height: 336px;
+	}
+	.detailList li.active{
+		display:block;
+		min-height: 336px;
+	}
+
+	/***** 订单商品详列 开始 *****/
+		/*有订单时*/
+	.hDetail{
+		width:1200px;
+	}
+	.detailTit{
+		width:110%;
+		height:48px;
+		border:1px solid #f5f5f5;
+		background:#fafafa;
+		font-size:16px;
+		line-height:48px;
+		margin-bottom:10px;
+		display:none;
+	}
+
+	.detailTit span{
+		border-right:1px solid #f5f5f5;
+		text-align:center;
+		float:left;
+	}
+	.w498{
+		width:498px;
+	}
+	.w238{
+		width:238px;
+	}
+	.w215{
+		width:215px;
+	}
+	.w244{
+		width:244px;
+	}
+
+	/*下单时间和订单详细*/
+	.orderDetails{
+		width:1200px;
+	}
+	.orderDetails .wholeOrder{
+		width:1198px;
+		border:1px solid #f5f5f5;
+		border-bottom:none;
+		margin-bottom:10px;
+	}
+	.orderDetails .wholeOrder .orderTit{
+		font-size:14px;
+		height:34px;
+		background:#f5f5f5;
+		width:1182px;
+		padding-left:18px;
+		line-height:34px;
+	}
+	.orderTime{
+		width:190px;
+		height:34px;
+		overflow:hidden;
+	}
+	.c999{
+		color:#999;
+	}
+	.orderTime .orderNum{
+		text-decoration: underline;
+	}
+	.orderTime .orderNum:hover{
+		color:#cc0a2a;
+		cursor:pointer;
+	}
+	.orderTit a{
+		background:url("../images/delete.png") no-repeat left center;
+		padding-left:24px;
+		margin-right:18px;
+	}
+	.orderIntro{
+		width:1200px;
+		display:table;
+	}
+	.orderWords{
+		width:498px;
+		border-right:1px solid #f5f5f5;
+		display:table-cell;
+	}
+	.orderImg{
+		width:498px;
+		border-bottom:1px solid #f5f5f5;
+/*		margin-top:-1px;
+*/	}
+	.orderImg .order-pic{
+		width:98px;
+		height:98px;
+		margin:9px 20px 9px 9px;
+		border:1px solid #f5f5f5;
+	}
+	.orderImg a img{
+		width:98px;
+		height:98px;
+	}
+	.orderImg .order-tit{
+		width:286px;
+		height:48px;
+		overflow:hidden;
+		line-height:24px;
+		font-size:14px;
+		margin-top:35px;
+	}
+	.orderImg .order-tit p{
+		width:286px;
+		height:48px;
+	}
+	.orderImg p:hover{
+		text-decoration: underline;
+		color:#cc0a2a;
+		cursor:pointer;
+	}
+	.pay{
+		width:238px;
+		border-right:1px solid #f5f5f5;
+		border-bottom:1px solid #f5f5f5;
+		text-align:center;
+		display:table-cell;	
+		vertical-align: middle;
+		/*height:237px;*/
+	}
+	.payStyle{
+		height:44px;
+		vertical-align: middle;	
+	}
+	.payStyle p{
+		margin-bottom:6px;
+	}
+	.payGoods{
+		width:215px;
+		text-align:center;		
+		border-right:1px solid #f5f5f5;
+		border-bottom:1px solid #f5f5f5;
+		display:table-cell;
+		vertical-align: middle;	
+	}
+	.delOrder{
+		width:245px;
+		display:table-cell;
+		vertical-align: middle;	
+		text-align:center;
+		border-bottom:1px solid #f5f5f5;
+	}
+	.delOrder a{
+		display:block;
+	}
+	.delOrder .cueOrder,.delOrder .backOrder,{
+		color:#a1a1a1;
+	}
+	.coa1a1a1{
+		color:#a1a1a1;
+	}
+	.delOrder .goToPay,.delOrder .buy-again{
+		color:#cc0a2a;
+	}
+	.delOrder a:hover{
+		text-decoration: underline;
+	}
+	.ca1{
+		color:#a1a1a1;
+	}
+
+
+	/*页码*/
+	.pageList{
+		height:40px;
+		float:right;
+	}
+	.pageList a{
+		float:left;
+		width:38px;
+		height:38px;
+		border:1px solid #ccc;
+		background:#fff;
+		text-align:center;
+		line-height: 38px;	
+		margin-right:10px;
+	}
+	.pageList span{
+		width:30px;	
+		text-align:center;
+		line-height:38px;
+	}
+	.pageList a.w68{
+		width:68px;
+	}
+	.pageList a:hover{
+		color:#ed145b;
+	}
+	.pageList a.active{
+		color:#ed145b;
+	}
+	.pageList a.no{
+		background:#f5f5f5;
+	}
+
+
+	/***** 订单商品详列 结束 *****/
+
+	/*蒙版*/
+	.mask{
+		width:100%;
+		height:100%;
+		background:rgba(0,0,0,.4);
+		position:fixed;
+		left:0;
+		top:0;
+		display:none;
+		z-index:10;
+	}
+	.tooltip{
+		z-index:20;
+	}
+
+	/*获取商品数据的时候图片loading效果*/
+	.loading{
+		width:100%;
+		height:500px;
+		position:relative;
+	}
+	.imgLoad{
+        width:60px;
+        height:60px;
+        position:absolute;
+        left: 50%;
+        top: 50%;
+        margin-top:-30px;
+        margin-left:-30px;
+    }
+    .outer{
+        position:absolute;
+        width:100%;
+        height:100%;
+        background:url('../images/loadingCircle.png') no-repeat;
+        -webkit-animation:spin 800ms infinite linear;
+        animation:spin 800ms infinite linear;
+    }
+    .inner{
+        position:absolute;
+        width:40px;
+        height:26px;
+        background:url('../images/loadingInner.png') no-repeat;
+        left:0;
+        right:0;
+        top:0;
+        bottom:0;
+        margin:auto;
+    }
+    @keyframes spin {
+        0%   { transform: rotate(360deg); }
+        100% { transform: rotate(0deg); }
+    }
+    @-webkit-keyframes spin {
+        0%   { -webkit-transform: rotate(360deg); }
+        100% { -webkit-transform: rotate(0deg); }
+    }
+    .c0a2a{
+		color:#cc0a2a;
+	}
+	.moreLine{
+		display: -webkit-box;
+	    -webkit-line-clamp: 2;
+	    -webkit-box-orient: vertical;
+	    overflow: hidden;
+	    cursor: pointer;
+	}

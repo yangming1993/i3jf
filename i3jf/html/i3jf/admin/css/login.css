@@ -1,0 +1,22 @@
+          .login-box, .register-box{
+            padding: 15px 0px;
+            border: 2px solid rgba(0,0,0,0.5);
+            box-shadow: 4px 4px 10px 2px;
+          }
+          #showError{
+            display: block;
+            margin-bottom: 10px;
+            color: red;
+          }
+        #captcha {
+            border-radius: 2px;
+            cursor: pointer;
+            position: absolute;
+            z-index: 3;
+            right: 0;
+            top: 0;
+            width: 100px;
+            height: 34px;
+        }
+
+

@@ -1,0 +1,414 @@
+{% extends "i3jf/base.html" %}
+        {% block css %}
+		<link rel="stylesheet" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" href="{{static_url}}css/center.css">
+    	<link rel="stylesheet" href="{{static_url}}css/recharge.css">
+        {% endblock %}
+
+        {% block content %}
+		<div id="pageHead">
+			<div class="pageheadContent">
+				<div class="leftHead">
+					<div class="mainTittle left">
+						<a href="/"><img src="{{static_url}}images/logo.png" alt=""></a>
+					</div>
+					<div class="subTittle left" style="display: inline-block;">
+						<span class="subWord"></span>
+					</div>
+				</div>
+				<div class="searchOverall">
+					<input type="text" placeholder="请输入搜索内容" class="left searchInput">
+					<span class="left searchBtn">搜&nbsp;&nbsp;索</span>
+				</div>
+			</div>
+		</div>
+		 <div id="containerBox">
+			<div id="container" class="">
+			    <div class="rechar-sup-body">
+                    <form class="rechar-sup-content">
+                        <div class="content-row sup-row-fir">
+                            <label class="my-points">我的积分：</label>
+                            <span data-point="myPoints" class="color-num"></span>
+                        </div>
+                        <div class="content-row sup-row-sec">
+                            <label class="my-points">所缺积分：</label>
+                            <span data-point="needPoints" class="color-num"></span>
+                        </div>
+                        <div class="content-row  sup-row-thir" style="display:none;">
+                            <label class="my-points">充值积分：</label>
+                            <input type="text" placeholder="请输入积分数量" value="" data-autormb="rechargeRMB" oninput="checkNaN(this,true);timeOutSwitch(this);" onkeyup="checkNaN(this,true);timeOutSwitch(this);">
+                        </div>
+                        <div class="content-row">
+                            <label class="my-points">需支付：</label>
+                            <p class="should-pay"><span data-point="shouldPay" class="color-num"></span>&nbsp;元</p>
+                        </div>
+                        <div class="content-row sup-row-four">
+                            <label></label>
+                            <p class="tip-convert">1元=<span data-rule="switchRule">1</span>积分</p>
+                        </div>
+                        <div class="rechar-sup-btn">
+                            <!-- <button type="button"  class="btn-alipay" onclick="showZfbPage()">使用支付宝支付</button> -->
+                            <a id="fackLink" href="#" target="_blank"></a>
+                            <button type="button" class="btn-hebaopay" onclick="showHbPage(this)">使用和包支付</button>
+                            <p class="word-alert">注：和包支付需要允许浏览器弹出窗口，请确定您的浏览器允许弹出窗口后点击以上按钮</p>
+                        </div>
+                    </form>
+                </div>
+			</div>
+		</div>
+		<div class="wait-pay">
+        <div class="cue">
+            <h3></h3>
+            <span></span>
+        </div>
+        <div class="delBox">
+            <div class="payment-alert" style="font-size:22px;">请您在弹出的和包支付页面完成充值</div>
+            <div class="payment-alert">充值完成前请不要关闭本窗口</div>
+            <strong class="payment-alert">完成充值后请点击“充值完成”按钮</strong>
+            <div class="payment-control">
+                <button class="payment-button confirm" onclick="toPay(this);">充值完成</button>
+                <button class="payment-button abolish" onclick="toHelp();">帮助中心</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="check-pay">
+        <div class="cue">
+            <h3></h3>
+            <span></span>
+        </div>
+        <div class="delBox">
+            <strong class="payment-alert"></strong>
+            <div class="time-alt"></div>
+            <div class="payment-control">
+                <button class="payment-button do-now">立即跳转</button>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block js %}
+    <script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+    <script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+	<script type="text/javascript">
+
+        var checkLogin = new checkLogin();//判断登录
+        if (checkLogin.flag) {
+            logged_in(); //已登陆
+        }else{
+            not_logged_in(); //未登录
+            window.location.href = '/api/user/login/';
+        }
+        //未登录可以执行的方法
+        function not_logged_in(){
+            getCategoryList();//获取分类导航
+            setSortListHover();//分类导航hover
+        };
+        //已登录执行的方法
+        function logged_in(){
+            getCategoryList();//获取分类导航
+            setSortListHover();//分类导航hover
+            cartAmount();//购物车数量
+        };
+
+        var timeout = '';   //
+        getjf();
+        function getjf(){
+            $.ajax({
+                url:'/api/order/check/score',
+                type:'GET',
+                datatype:'json',
+                data:{
+                    'order_no':orderNo
+                },
+                success:function(data){
+                    // console.log("获取积分回调");
+                    var data = JSON.parse(data);
+                    // console.log(data);
+                    if (data.errno == 0) {
+                        $(".color-num").eq(0).text(data.credit_remaining);
+                        $(".color-num").eq(1).text(data.credit_need_recharge);
+                        $(".color-num").eq(2).text(data.credit_needed);
+                    }else{
+
+                    }
+                },
+                error:function(error){
+                    alert("获取积分失败,请刷新...");
+                }
+            })
+        }
+
+	    // //查询用户积分
+	    // function getUser(){
+	    //     if(!$('input[data-autoRMB="rechargeRMB"]').val())
+	    //         $('button.btn-recharge').attr('disabled','disabled');
+	    //     // console.log("查询用户积分接口进入");
+	    //     return $.ajax({
+	    //     	url:'/api/user/get_credit',
+	    //     	type:'GET',
+	    //     	datatype:'json',
+	    //     	data:{
+
+	    //     	},
+	    //     	success:function(data){
+	    //     		alert("查询用户积分接口回调");
+     //                var data = JSON.parse(data);
+     //                // console.log(data);
+	    //     		var errno = data.errno;
+	    //     		if (errno == 0) {
+	    //     			// console.log("查询用户积分接口回调成功---"+data);
+	    //     			var userAmount = data.amount;
+	    //                 $('span[data-point="myPoints"]').text(userAmount);
+	    //     		}else{
+	    //     			// console.log("查询用户积分接口回调异常---"+data);
+	    //     		}
+	    //     	},
+	    //     	error:function(error){
+	    //     		alert("查询用户积分接口失败---"+error);
+	    //     		var mainMsg = errmsg;
+	    //             var msgInfo = {
+	    //                 'mainMsg': mainMsg,
+	    //                 'alertType': true
+	    //             };
+	    //             diyAlert(msgInfo,true);
+	    //     	}
+	    //     })
+	    // }
+
+     //    //查询订单积分
+     //    function getPoints(){
+     //        if(!$('input[data-autoRMB="rechargeRMB"]').val()){
+     //            $('button.btn-alipay').attr('disabled','disabled');
+     //            $('button.btn-hebaopay').attr('disabled','disabled');
+     //        }
+     //        // console.log("查询订单积分接口进入");
+     //        return $.ajax({
+     //        	url:'/api/order/retrieve',
+     //        	type:'GET',
+     //        	datatype:'json',
+     //        	data:{
+     //        		'order_no':orderNo
+     //        	},
+     //        	success:function(data){
+     //        		var userAmount = data.userAmount;
+     //                var orderAmount = data.orderAmount;
+     //                var necessaryAmount = data.necessaryAmount;
+     //                if(necessaryAmount <= 0){
+     //                    location.href = apiPath('/super/orderList/pay?nb='+orderNo);
+     //                }
+     //                $('span[data-point="myPoints"]').text(userAmount);
+     //                $('span[data-point="needPoints"]').text(necessaryAmount);
+     //                $('input[data-autoRMB="rechargeRMB"]').val(necessaryAmount);
+     //                swicthPoints('input[data-autoRMB="rechargeRMB"]');
+     //        	},
+     //        	error:function(error){
+     //        		alert("查询订单积分接口失败---"+error);
+     //        		var mainMsg = errmsg;
+     //                var msgInfo = {
+     //                    'mainMsg': mainMsg,
+     //                    'alertType': true
+     //                };
+     //                diyAlert(msgInfo,true);
+     //        	}
+     //        })
+     //    }
+
+        // //间隔0.5秒执行实时调整积分数
+        // function timeOutSwitch(target){
+        //     clearTimeout(timeout);
+        //     timeout = setTimeout(function(){
+        //         swicthPoints(target);
+        //     },500);
+        // }
+        // function swicthPoints(target){
+        //     var necessaryAmount=$(target).val();
+        //     if(!necessaryAmount){
+        //         $('button.btn-alipay').attr('disabled','disabled');
+        //         $('button.btn-hebaopay').attr('disabled','disabled');
+        //     }else{
+        //         $('button.btn-alipay').attr('disabled',false);
+        //         $('button.btn-hebaopay').attr('disabled',false);
+        //     }
+        //     ajaxAction(
+        //             'GET',
+        //             apiPath('/api/recharge/count/price?amount='+necessaryAmount),
+        //             {},
+        //             true,
+        //             function (data, textStatus) {
+        //                 $('span[data-point="shouldPay"]').text(data.price);
+        //             },
+        //             function (errno, errmsg) {
+        //                 var mainMsg = errmsg;
+        //                 var msgInfo = {
+        //                     'mainMsg': mainMsg,
+        //                     'alertType': true
+        //                 };
+        //                 diyAlert(msgInfo,true);
+        //             });
+        // }
+
+        //用支付宝支付
+        function showZfbPage(){
+            var mainMsg = '暂未开通!';
+            var msgInfo = {
+                'mainMsg': mainMsg,
+                'alertType': true
+            };
+            diyAlert(msgInfo,true);
+            return;
+            var rechargeRMB = $('input[data-autoRMB="rechargeRMB"]').val();
+            if(rechargeRMB){
+                ajaxAction(
+                        'POST',
+                        apiPath('/api/recharge/create'),
+                        {
+                            'amount':rechargeRMB
+                        },
+                        true,
+                        function (data, textStatus) {
+                            var urlObj = data.payUrl;
+                            window.open(urlObj.url);
+                        },
+                        function (errno, errmsg) {
+                            var mainMsg = errmsg;
+                            var msgInfo = {
+                                'mainMsg': mainMsg,
+                                'alertType': true
+                            };
+                            diyAlert(msgInfo,true);
+                        });
+            }else{
+                var mainMsg = '请输入积分数量!';
+                var msgInfo = {
+                    'mainMsg': mainMsg,
+                    'alertType': true
+                };
+                diyAlert(msgInfo,true);
+            }
+        }
+
+        //用和包支付
+        function showHbPage(target){
+        	// console.log(target)
+            // $(target).attr('disabled',true);
+            // var rechargeRMB = $('input[data-autoRMB="rechargeRMB"]').val();
+            var rechargeRMB = $(".color-num").eq(2).text();
+            // console.log(rechargeRMB);
+            if(rechargeRMB){
+            	$.ajax({
+            		url:'/api/recharge/create/',
+            		type:'POST',
+            		datatype:'json',
+            		data:{
+            			'credit_amount':rechargeRMB,
+            			'return_type':1
+            		},
+            		success:function(data){
+                        var data = JSON.parse(data);
+                        // console.log(data);
+            			var errno = data.errno;
+            			if (errno == 0) {
+            				// console.log("点击用和包支付充值接口回调成功");
+            				waitPay(true);
+                            var urlObj = data.payUrl;
+                            var openLink = document.getElementById('fackLink');
+                            openLink.href = urlObj.url;
+                            openLink.click();
+            			}else{
+            				// console.log("点击用和包支付充值接口回调异常");
+            			}
+            		},
+            		error:function(error){
+            			alert("点击用和包支付充值失败,请刷新...");
+            			$(target).attr('disabled',false);
+                        // var mainMsg = errmsg;
+                        var msgInfo = {
+                            'mainMsg': mainMsg,
+                            'alertType': true
+                        };
+                        // diyAlert(msgInfo,true);
+            		}
+            	})
+            }
+        }
+
+        function waitPay(bool){
+            if(bool){
+                $('.wait-pay .cue h3').text('提示');
+                $('.toolback').show();
+                $('.wait-pay').show();
+                $('.wait-pay .cue span').on('click',function (){
+                    window.location.href = apiPath('/static/i3jf/order_detail.html?orderNumber='+orderNo);
+                });
+            }else{
+                $('.toolback').hide();
+                $('.wait-pay').hide();
+            }
+        }
+
+        function checkPayAlt(paramet){
+            waitPay(false);
+            $('.check-pay .cue h3').text('提示');
+            $('.toolback').show();
+            $('.check-pay').show();
+            var setTime = paramet.setTime;
+            $('.check-pay .payment-alert').text(paramet.msg);
+            $('.check-pay .cue span , .check-pay .do-now').on('click',function (){
+                window.location.href = paramet.linkUrl;
+            });
+            $('.check-pay .time-alt').text(setTime + ' 秒后自动跳转');
+            setInterval(function () {
+                if(setTime <= 0){
+                    window.location.href = paramet.linkUrl;
+                    return;
+                }
+                $('.check-pay .time-alt').text((--setTime) + ' 秒后自动跳转');
+            },1000);
+        }
+        //校验充值
+        function toPay(target){
+        	var money = $(".should-pay span").text();
+        	// console.log(aa)
+            $(target).attr('disabled',true);
+            // console.log("校验充值接口进入");
+            $.ajax({
+            	url:'/api/recharge/check_state',
+            	type:'GET',
+            	datatype:'json',
+            	data:{
+            		'recharge_id':money
+            	},
+            	success:function(data){
+            		var errno = data.errno;
+            		if (errno == 0) {
+            			// console.log("校验充值接口回调成功---"+data);
+            			var args = {
+                            'setTime':5
+                        };
+                        if(data.isPay){
+                            args.msg = '订单已支付成功！即将跳转至首页';
+                            args.linkUrl = apiPath('/super/index');
+                        }else{
+                            args.msg = '订单尚未支付！即将跳转至订单支付页';
+                            args.linkUrl = apiPath('/super/orderList/pay?nb='+orderNo);
+                        }
+                        checkPayAlt(args);
+            		}else{
+            			// console.log("校验充值接口回调异常---"+data);
+            		}
+            	},
+            	error:function(error){
+            		alert("校验充值失败,请刷新...");
+            		// var args = {
+              //           'setTime':5,
+              //           'msg':'订单状态异常,请稍后再试！即将跳转至订单详情页',
+              //           'linkUrl':apiPath('/static/detail_page/index.html?sku='+sku);
+              //       };
+              //       checkPayAlt(args);
+            	}
+            })
+        }
+    </script>
+    {% endblock %}

@@ -1,0 +1,273 @@
+{% extends "i3jf/base.html" %}
+		
+		{% block css %}
+		<link rel="stylesheet" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/center.css">
+		<style>
+			#errmsg2{
+				font-size:12px;
+				color:#cc0a2a;
+				margin-top:5px;
+			}
+			#errmsg3{
+				margin-top:605px;
+				font-size:12px;
+				color:#cc0a2a;
+			}
+		</style>
+		{% endblock %}
+
+		{% block content %}
+		<div id="pageHead">
+			<div class="pageheadContent">
+				<div class="leftHead">
+					<div class="mainTittle left">
+						<a href="/"><img src="{{static_url}}images/logo.png" alt=""></a>
+					</div>
+					<div class="separateD" style="border-right: 4px solid rgb(102, 102, 102);"></div>
+					<div class="subTittle left" style="display: inline-block;">
+						<span class="subWord" style="color: rgb(39, 39, 36);">安全中心</span>
+					</div>
+				</div>
+				<div class="searchOverall">
+					<input type="text" placeholder="请输入搜索内容" class="left searchInput">
+					<span class="left searchBtn">搜&nbsp;&nbsp;索</span>
+				</div>
+			</div>
+		</div>
+		<div id="containerBox">
+			<div id="container" class="">
+				<div class="main">
+					<p class="main_title">修改登录密码</p>
+					<table>
+					    <tbody><tr>
+							<td>
+							    <span>&nbsp;&nbsp;&nbsp;登录名：</span>
+							</td>
+							<td>
+								<span id="user_name" style="float:left;"></span>
+							</td>
+						</tr>
+					    <tr>
+							<td>
+							    <span>&nbsp;&nbsp;&nbsp;旧密码：</span>
+							</td>
+							<td>
+								<input class="old_password" type="password" placeholder="请输入旧密码">
+								<div id="errmsg"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+							    <span>&nbsp;&nbsp;&nbsp;新密码：</span>
+							</td>
+							<td class="describe_tr">
+								<input class="new_password" type="password" placeholder="6-20位字母和数字组成">
+								<div id="errmsg2"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+							    <span>确认密码：</span>
+							</td>
+							<td>
+								<input class="password_again" type="password" placeholder="请输入确认密码" onkeyup="chekKey(event);">
+								<div id="errmsg3"></div>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td id="save_td">
+								<button class="save">保存</button>
+							</td>
+						</tr>
+					</tbody></table>
+				</div>
+				<div class="success">
+					<img src="{{static_url}}images/register_ok.png">
+					<p style="position: relative;display: block;">恭喜您，修改登录密码成功!</p>
+					<a href="/api/user/login/">去逛逛</a>
+				</div>
+			</div>
+		</div>
+		{% endblock %}
+
+
+		{% block js%}
+		<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+		<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+
+		<script type="text/javascript">
+
+			var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+                logged_in(); //已登陆
+            }else{
+                not_logged_in(); //未登录
+                window.location.href = '/api/user/login/';
+            }
+
+            //未登录可以执行的方法
+            function not_logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+            };
+            //已登录执行的方法
+            function logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+                cartAmount();//购物车数量
+            };
+
+			$(function (){
+				doSomething();
+			})
+			var isPassword = /^(?=.*[a-zA-Z])(?=.*[0-7])[a-zA-Z0-9]{6,20}$/;
+
+			function doSomething(){
+				$('.save').bind('click', save);    //验证填写信息
+				getPhone();
+				setCheckAction();
+			}
+
+			//获取当前手机信息
+		    function getPhone(){
+
+		    	$.ajax({
+		    		url:'/api/user/retrieve',
+		    		type:'GET',
+		    		datatype:'json',
+		    		data:{
+
+		    		},
+		    		success:function(data){
+
+		    			$('#user_name').text(data.telephone);
+		    			var data = JSON.parse(data);
+
+		    			var errno = data.errno;
+		    			if (errno ==0) {
+		    				// console.log("获取当前手机信息接口回调成功---"+data);
+		    				$('#user_name').text(data.telephone);
+		    			}else{
+		    				// console.log("获取当前手机信息接口回调异常");
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("获取当前手机信息失败,请刷新...");
+		    		}
+		    	})
+		    }
+
+			function setCheckAction(){
+				$('.main input').bind('blur',function(){
+					checkFilter($(this));
+				});
+			}
+
+			function checkFilter(target){
+				var value = target.val();
+				var calss = target.attr('class');
+				var errmsgItem = target.parents('tr');
+				switch(calss){
+					case 'old_password':
+						if ( value.length <=0 ) {
+							errmsgItem.find('#errmsg').text('请填写旧密码！');
+							return false;
+				        }
+					break;
+
+					case 'new_password':
+						if ( value.length <=0 ) {
+				            errmsgItem.find('#errmsg2').text('请填写新密码！');
+							return false;
+				        }
+			        	if (!isPassword.test(value) || value.length < 6 || value.length > 20 ) {
+				            errmsgItem.find('#errmsg2').text('密码应由6-20位字母和数字组成！');
+				            return false;
+				        }else{
+				        	$('#errmsg2').hide();
+				        }
+					break;
+
+					case 'password_again':
+						var new_password = $('.new_password').val();
+
+						if( value.length<=0 ){
+				            var a=errmsgItem.find('#errmsg3').text('请确认密码！');
+				            errmsgItem.show();
+				            return false;
+				        }
+				        if ( new_password != value ) {
+				            errmsgItem.find('#errmsg3').text('两次输入的密码不一致!');
+				            return false;
+				        }
+					break;
+				}
+				errmsgItem.find('#errmsg').text('');
+				return true;
+			}
+		    /*----验证填写信息----*/
+		    function save(){
+		        var old_password = $(".old_password");
+		        var new_password = $(".new_password");
+		        var password_again = $(".password_again");
+		        var flag = true;
+
+		        if(!checkFilter(old_password)) flag = false;
+		        if(!checkFilter(new_password)) flag = false;
+		        if(!checkFilter(password_again)) flag = false;
+
+		        if(!flag) return;
+		        $('.save').attr("disabled",true);
+		        old_password = $(".old_password").val();
+		        new_password = $(".new_password").val();
+
+		        $.ajax({
+		        	url:'/api/user/password/change',
+		        	type:'POST',
+		        	datatype:'json',
+		        	data:{
+		        		'old_password':old_password,
+		        		'new_password':new_password
+		        	},
+		        	success:function(data){
+		        		// console.log(data);
+		        		var data = JSON.parse(data);
+		        		console.log(data);
+		        		var errno = data.errno;
+		        		if (errno == 0) {
+		        			$(".main").css('display','none');
+		                	$(".success").css('display','block');
+		                	sessionStorage.removeItem("login");
+
+
+
+		                	// alert('修改成功');
+		        		}else{
+		        			// console.log("修改登录密码接口回调成功异常");
+		        		}
+		        	},
+		        	error:function(error){
+		        		alert("修改登录密码失败,请刷新...");
+		        		switch(errno){
+		            		case 20402:
+		            			errmsg = '旧密码错误';
+		            		break;
+		            	}
+		                $('#errmsg').text(errmsg);
+		                $('.save').attr("disabled",false);
+		        	}
+		        })
+		    }
+		    //回车登录
+		    function chekKey(e){
+		        if(e.keyCode == 13){
+		            save();
+		        }
+		    }
+
+</script>
+
+	{% endblock %}

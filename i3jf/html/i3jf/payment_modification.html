@@ -1,0 +1,205 @@
+{% extends "i3jf/base.html" %}
+		
+		{% block css %}
+		<link rel="stylesheet" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/payment.css">
+		{% endblock %}
+
+
+		{% block content %}
+		<div id="pageHead">
+			<div class="pageheadContent">
+				<div class="leftHead">
+					<div class="mainTittle left">
+						<a href="/"><img src="{{static_url}}images/logo.png" alt=""></a>
+					</div>
+					<div class="separateD" style="border-right: 4px solid rgb(102, 102, 102);"></div>
+						<div class="subTittle left" style="display: inline-block;">
+						<span class="subWord" style="color: rgb(39, 39, 36);">个人设置</span>
+					</div>
+				</div>
+				<div class="searchOverall">
+					<input type="text" placeholder="请输入搜索内容" class="left searchInput">
+					<span class="left searchBtn">搜&nbsp;&nbsp;索</span>
+				</div>
+			</div>
+		</div>
+		<div id="containerBox">
+			<div id="container" class="">
+				<div class="main">
+					<p class="main_title">设置支付密码</p>
+					<table>
+						<tbody><tr class="new">
+							<td>
+							    <span>支付密码：</span>
+							</td>
+							<td class="describe_tr">
+
+								<p>请输入6位数字密码</p>
+							<div class="pwdcontainer"><input name="password" type="password" id="pwd" maxlength="6"></div></td>
+						</tr>
+						<tr class="again">
+							<td>
+							    <span>确认密码：</span>
+							</td>
+							<td class="tdinp"><div class="pwdcontainer"><input name="password" type="password" id="pwd_again" maxlength="6"></div></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<div id="errmsg"></div>
+							</td>
+						</tr>
+					</tbody></table>
+					<button class="save" onclick="save();" >保存</button>
+				</div>
+				<div class="success">
+					<img src="{{static_url}}images/register_ok.png">
+					<p>恭喜您，设置支付密码成功!</p>
+					<a onclick="window.history.back();">去逛逛</a>
+				</div>
+			</div>
+		</div>
+
+		{% endblock %}
+
+		{% block js%}
+		<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+		<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+		<script type="text/javascript">
+			var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+                logged_in(); //已登陆
+            }else{
+                not_logged_in(); //未登录
+                window.location.href = '/api/user/login';
+            }
+            //未登录可以执行的方法
+            function not_logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+            };
+            //已登录执行的方法
+            function logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+                cartAmount();//购物车数量
+            };
+
+			$(function (){;
+				// initPwd();
+				// initAgainPwd();
+				$(".first").focus();
+			});
+
+			// function initPwd(){
+			// 	$("#pwd").pwd();
+			// 	$('.new .pwdcontainer input').bind('blur',function(){
+			// 		var value = $(this).val();
+			// 		var index = $(this).attr('data-index');
+			// 		$("#errmsg").text('');
+			// 		if(index == 5 && checkNull(value)){
+			// 			$('.again .pwdcontainer input').attr('disabled',false);
+			// 			$(".again .first").focus();
+			// 		}else{
+			// 			initAgainPwd();
+			// 			$('.again .pwdcontainer input').attr('disabled',true);
+			// 		}
+			// 	});
+			// }
+
+			// function getPassword(targetId){
+			// 	var password = '';
+		 //        var passItem = $('#'+targetId+'.pwdcontainer .pwdInput');
+		 //        $.each(passItem,function(index,content){
+		 //            var value = $(content).val();
+		 //            password+= value+'';
+		 //        });
+			// }
+
+			// function initAgainPwd(){
+			// 	$('.again .pwdcontainer').parent().html('<input name="password" id="pwd_again" maxlength="6" >');
+			// 	$("#pwd_again").pwd();
+			// 	$('.again .pwdcontainer input').prop('disabled',true);
+			// 	$('.again .pwdcontainer input').bind('blur',function(){
+			// 		var value = $(this).val();
+			// 		var index = $(this).attr('data-index');
+			// 		var password = $("#pwd").val();
+			// 		setTimeout(function(){
+			// 			var password_again = $("#pwd_again").val();
+			// 			if(index == 5 && checkNull(value)){
+			// 				if ( password != password_again ) {
+			// 		            $("#errmsg").text('两次输入的密码不一致!');
+			// 		            $(".pwdInput ").val('');
+			// 		            $('.again .pwdcontainer input').attr('disabled',true);
+
+			// 		            $(".new .pwdcontainer").remove();
+			// 		            $(".describe_tr").append('<input name="password" id="pwd" maxlength="6" >');
+			// 		            initPwd();
+			// 		            $(".new .first").focus();
+			// 		        }else{
+			// 		        	$('.save').attr('disabled',false);
+			// 		        	$("#errmsg").text('');
+			// 		        }
+			// 			}
+			// 			else
+			// 			{
+			// 				$('.save').attr('disabled',true);
+			// 		        $("#errmsg").text('');
+			// 			}
+			// 		},100);
+			// 	});
+			// }
+		    //验证填写信息
+		    function save(){
+
+		        var password = $("#pwd").val();
+		        var password_again = $("#pwd_again").val();
+
+
+		        if ( password.length <=0 ) {
+		            $("#errmsg").text('请填写新支付密码！');
+		            return;
+		        }
+		        if ( password_again.length <=0 ) {
+		            $("#errmsg").text('请填写确认密码！');
+		            return;
+		        }
+		        if ( password != password_again ) {
+		            $("#errmsg").text('两次输入的密码不一致!');
+		            return;
+		        }
+
+		        $('.save').attr("disabled",true);
+		        // console.log("设置支付密码接口进入");
+		        $.ajax({
+		        	url:'/api/user/pay_password/',
+		        	type:'POST',
+		        	datatype:'json',
+		        	data:{
+		        		'newpassword':password
+		        	},
+		        	success:function(data){
+		        		// console.log(data);
+		        		var data = JSON.parse(data);
+		        		// console.log(data);
+		        		var errno = data.errno;
+		        		if (errno == 0) {
+		        			// console.log("设置支付密码接口回调成功---"+data);
+		        			$(".main").css('display','none');
+		                	$(".success").css('display','block');
+		        		}else{
+		        			// console.log("设置支付密码接口回调成功异常");
+		        		}
+		        	},
+		        	error:function(error){
+		        		alert("设置支付密码失败,请刷新...");
+		        		$('#errmsg').text(errmsg);
+		                $('.save').attr("disabled",false);
+		        	}
+		        })
+		    }
+
+		</script>
+		{% endblock %}

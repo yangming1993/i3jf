@@ -1,0 +1,51 @@
+    #selectPage{
+        width: 220px;
+        padding-left: 10px;
+        height: 30px;
+    }
+    .data-control{
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .webPic,.appPic,.backgroundPic{
+        height:30px;
+        width: 40px;
+    }
+    .editPanel{
+        width:400px;
+        height:480px;
+    }
+    .imgPreviewDiv{
+        position:absolute;
+        right: -428px;
+        top:0px;
+        width: 428px;
+        height: 428px;
+        line-height: 428px;
+        text-align: left;
+        font-size: 0px;
+        display:none;
+    }
+    .file-name{
+        width:180px;
+    }
+    #gotoListsDiv{
+        width: 780px;
+        height: 540px;
+    }
+    .tips{
+        margin-top: 34px;
+    }
+
+    .logo{
+        font-size:26px;
+        font-weight:bold;
+
+      }
+   .logo span{
+
+      }
+      .tips{
+        font-size: 10px;
+        color:darkgray;
+      }

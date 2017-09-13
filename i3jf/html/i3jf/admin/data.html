@@ -1,0 +1,552 @@
+{% extends "i3jf/admin/template.html" %}
+    {% block css %}
+    <link rel="stylesheet" href="{{static_url}}admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/skin-blue.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/common.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/myModify.css">
+    {% endblock %}
+          {% block content %}
+          <ul class="sidebar-menu">
+            <li class="header">菜单</li>
+            <li id="dataMenage" class="treeview active">
+              <a href="/api/oam/data_analysis/"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i> <span>数据分析</span></a>
+
+            </li>
+            <li id="userMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> <span>用户管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1" class="active"><a href="/api/oam/user/lists">用户列表</a></li>
+              </ul>
+            </li>
+            <li id="orderMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-hamburger"></i> <span>订单管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/order/lists">订单列表</a></li>
+                <!-- <li id="2"><a href="/static/i3jf/admin/special.html">异常订单</a></li> -->
+                <li id="3" class="active"><a href="/api/oam/returned/history">退货历史</a></li>
+              </ul>
+            </li>
+            <li id="contentMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-signal"></i> <span>数据管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/price/set">价格管理</a></li>
+                <li id="2"><a href="/api/oam/product/lists">产品列表</a></li><!--
+                <li id="4"><a href="/static/i3jf/admin/bind.html">分类管理</a></li> -->
+              </ul>
+            </li>
+            <li id="marketMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-film"></i> <span>推广管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/banner/ads/list">首页轮播管理</a></li>
+                <li id="2"><a href="/api/oam/channel/product/lists">首页频道管理</a></li>
+                <!-- <li id="3"><a href="/static/i3jf/admin/pull.html">精品推荐管理</a></li> -->
+              </ul>
+            </li>
+            <li id="productList" class="treeview">
+              <a href="/api/oam/get/product/detail"><i class="glyphicon glyphicon-volume-down"></i> <span>获取产品信息</span> </a>
+
+            </li>
+            <li class="treeview">
+              <a href="/api/oam/channel/detail"><i class="glyphicon glyphicon-th-large"></i> <span>地区管理</span> </a>
+            </li>
+
+            <!--
+            <li id="gotoMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-share-alt"></i><span>跳转管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">跳转类型列表</a></li>
+                <li id="2"><a href="javascript:void(0)">跳转列表</a></li>
+              </ul>
+            </li>
+            <li id="onsaleMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-gift"></i><span>促销管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">促销列表</a></li>
+              </ul>
+            </li>
+            <li id="noticeMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-volume-down"></i><span>公告管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">公告列表</a></li>
+              </ul>
+            </li>
+            <li id="adsMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-picture"></i><span>广告管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">广告列表</a></li>
+              </ul>
+            </li>
+            <li id="subStationMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-th-large"></i><span>子站管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">子站扣款记录列表</a></li>
+                <li id="2"><a href="javascript:void(0)">子站退款记录列表</a></li>
+              </ul>
+            </li>
+            <li id="sncategoryMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-th"></i> <span>苏宁分类管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">苏宁分类列表</a></li>
+              </ul>
+            </li>
+            <li id="financeMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-usd"></i> <span>财务管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">充值记录</a></li>
+              </ul>
+            </li> -->
+          </ul>
+        </section>
+      </aside>
+      <div class="content-wrapper" style="min-height: 874px;">
+        <section class="content-header">
+          <h1>
+            数据管理
+            <small>数据列表</small>
+          </h1>
+        </section>
+
+
+        <section class="content">
+            <div class="box box-default color-palette-box">
+                  <div class="box-body">
+                    <div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                      <!-- <div class="row">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6"></div>
+                      </div> -->
+                      <div class="row">
+                        <div class="col-sm-12">
+                            <div id="salesVolume" style="width: 100%;height:400px;"></div>
+                          </div>
+                          <div class="col-sm-10 col-md-offset-1">
+                            <div id="Order" style="width: 600px;height: 400px;float: right;"></div>
+                            <div id="Browser" style="width: 600px;height:400px;float: left;"></div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+            </div>
+
+  </section>
+
+</div>
+  <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
+  </div>
+  <div class="fixedLayer">
+      <div class="fixedContainer">
+
+      </div>
+  </div>
+{% endblock %}
+
+{% block js%}
+  <script src="{{static_url}}admin/js/jQuery-2.1.4.min.js"></script>
+  <script src="{{static_url}}admin/js/bootstrap.min.js"></script>
+  <script src="{{static_url}}admin/js/public.js"></script>
+  <script src="{{static_url}}admin/js/checkAction.js"></script>
+  <script src="{{static_url}}admin/js/base.js"></script>
+  <script type="text/javascript" src="{{static_url}}admin/js/echarts.common.min.js"></script>
+
+  <script type="text/javascript">
+        $(function(){
+          var checkLogin = new checkLogin();//判断登录
+          if (checkLogin.flag) {
+
+          }else{
+            window.location.href = "/api/oam/admin/login";
+          }
+
+          //判断登录
+          function checkLogin(){
+              var loginName = '';
+              var loginList = '';
+              var topOrderN = '';
+              //获取session 判断登录
+              var Login = sessionStorage.getItem("adminLogin");
+              console.log(Login);
+              // var Login = getSessionstronge("login");
+              if (Login == null) {  //没有登录
+                  console.log("没登录");
+                  this.flag = false;
+              }else{  //登录
+                  console.log("已经登陆");
+                  this.flag = true;
+                  $(".info p").eq(0).text(Login);
+                  $(".hidden-xs").text(Login);
+              }
+          }
+          salesvolumeData();
+          orderData();
+          browserData();
+        })
+        function salesvolumeData(){
+          $.ajax({
+            url:'/api/oam/count_order',
+            type:'GET',
+            datatype:'json',
+            data:{
+
+            },
+            success:function(data){
+              // console.log(data);
+              var data = JSON.parse(data);
+              var Times = [];
+              var Datas = [];
+              $.each(data,function(index,item){
+                Times.push(item.nub);
+                Datas.push(item.time);
+              });
+
+              salesVolume(Times,Datas);
+            },
+            error:function(error){
+              alert("销量数据获取失败！");
+            }
+          })
+        }
+        function salesVolume(Times,Datas){
+          // console.log(Times,Datas);
+          // 基于准备好的dom，初始化echarts实例
+          var myChart = echarts.init(document.getElementById('salesVolume'));
+          myChart.showLoading({
+              text: "正在加载数据..."
+          });
+          option = {
+            title: {
+                text: '超级积分商品销量',
+                subtext: '（数量）'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+              top:'7%',
+                data:['商品销量']
+            },
+            toolbox: {
+                show: false,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    dataView: {readOnly: false},
+                    magicType: {type: ['line', 'bar']},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            xAxis:  {
+                type: 'category',
+                boundaryGap: false,
+                data: Datas
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value}'
+                }
+            },
+            series: [
+                    {
+                        name:'商品销量',
+                        type:'line',
+                        showSymbol:true, //折点
+                        data:Times,
+
+
+                        markPoint: {
+                            data: [
+                                {type: 'max', name: '最大值'},
+                                {type: 'min', name: '最小值'}
+                            ]
+                        },
+                        markLine: {
+                            data: [
+                                {type: 'average', name: '平均值'}
+                            ]
+                        }
+                    }
+                ]
+          };
+          // 使用刚指定的配置项和数据显示图表。
+          myChart.setOption(option);
+          // 使用刚指定的配置项和数据显示图表。
+          myChart.setOption(option);
+          setTimeout(function(){
+            myChart.hideLoading();
+          },3000)
+        }
+
+
+        function orderData(){
+          $.ajax({
+            url:'/api/oam/count_order_state',
+            type:'GET',
+            datatype:'json',
+            data:{
+
+            },
+            success:function(data){
+              // console.log(data);
+              var data = JSON.parse(data);
+              orderEcharts(data);
+            },
+            error:function(error){
+              alert("订单数据获取失败！");
+            }
+          })
+        }
+
+        function orderEcharts(data){
+          var myChart = echarts.init(document.getElementById('Order'));
+          myChart.showLoading({
+              text: "正在加载数据..."
+          });
+          option = {
+              title: {
+                text: '超级积分订单成交信息',
+                subtext: '（个）'
+              },
+              tooltip: {
+                  trigger: 'item',
+                  formatter: "{a} <br/>{b}: {c} ({d}%)"
+              },
+
+              legend: {
+                  orient: 'vertical',
+                  x: 'right',
+                  data:['全部订单','成功订单','退货订单','未发货订单','未支付订单'],
+                  selected:{
+                    '全部订单':false
+                  }
+              },
+              series: [
+                  {
+                      name:'订单：',
+                      type:'pie',
+                      radius: ['50%', '70%'],
+                      center: ['50%', '60%'],
+
+                      labelLine: {
+                          normal: {
+                              show: true
+                          }
+                      },
+                      label: {
+                          normal: {
+                              formatter: '{b|{b}：}\n{hr|}\n  ({c}个)  {per|{d}%}  ',
+                              backgroundColor: '#eee',
+                              borderColor: '#aaa',
+                              borderWidth: 1,
+                              borderRadius: 4,
+                              // shadowBlur:3,
+                              // shadowOffsetX: 2,
+                              // shadowOffsetY: 2,
+                              // shadowColor: '#999',
+                              // padding: [0, 7],
+                              rich: {
+                                  a: {
+                                      color: '#999',
+                                      lineHeight: 22,
+                                      align: 'center'
+                                  },
+                                  // abg: {
+                                  //     backgroundColor: '#333',
+                                  //     width: '100%',
+                                  //     align: 'right',
+                                  //     height: 22,
+                                  //     borderRadius: [4, 4, 0, 0]
+                                  // },
+                                  hr: {
+                                      borderColor: '#aaa',
+                                      width: '100%',
+                                      borderWidth: 0.5,
+                                      height: 0
+                                  },
+                                  b: {
+                                      fontSize: 16,
+                                      lineHeight: 33
+                                  },
+                                  per: {
+                                      color: '#eee',
+                                      backgroundColor: '#334455',
+                                      padding: [2, 4],
+                                      borderRadius: 2
+                                  }
+                              }
+                          }
+                      },
+                      data:[
+                          {
+                            value:data.ordernum,
+                            name:'全部订单'
+                          },
+                          {
+                            value:data.successnum,
+                            name:'成功订单',
+                            selected:true
+                          },
+                          {
+                            value:data.cancelednum,
+                            name:'退货订单'
+                          },
+                          {
+                            value:data.nosendnub,
+                            name:'未发货订单'
+                          },
+                          {
+                            value:data.nopaynum,
+                            name:'未支付订单'
+                          }
+                      ],
+                      itemStyle: {
+                          normal: {
+                            formatter: '{b|{b}：}\n{hr|}\n  ({c}个)  {per|{d}%}  ',
+                              backgroundColor: '#eee',
+                              borderColor: '#aaa',
+                              borderWidth: 1,
+                              borderRadius: 4,
+                              // shadowBlur:3,
+                              // shadowOffsetX: 2,
+                              // shadowOffsetY: 2,
+                              // shadowColor: '#999',
+                              // padding: [0, 7],
+                              rich: {
+                                  a: {
+                                      color: '#999',
+                                      lineHeight: 22,
+                                      align: 'center'
+                                  },
+                                  // abg: {
+                                  //     backgroundColor: '#333',
+                                  //     width: '100%',
+                                  //     align: 'right',
+                                  //     height: 22,
+                                  //     borderRadius: [4, 4, 0, 0]
+                                  // },
+                                  hr: {
+                                      borderColor: '#aaa',
+                                      width: '100%',
+                                      borderWidth: 0.5,
+                                      height: 0
+                                  },
+                                  b: {
+                                      fontSize: 16,
+                                      lineHeight: 33
+                                  },
+                                  per: {
+                                      color: '#eee',
+                                      backgroundColor: '#334455',
+                                      padding: [2, 4],
+                                      borderRadius: 2
+                                  }
+                              }
+                          },
+                          emphasis: {
+                              label: {
+                                show: true,
+                                formatter: "{b|{b}：}\n{hr|}\n  ({c}个)  {per|{d}%} ",
+                                position: 'center',
+                                textStyle: {
+                                    fontSize: '18',
+                                    fontWeight: 'bold'
+                                }
+                              },
+                              labelLine:{
+                                show:true
+                              }
+                          }
+                      }
+                  }
+              ]
+          }
+          // 使用刚指定的配置项和数据显示图表。
+          myChart.setOption(option);
+          setTimeout(function(){
+            myChart.hideLoading();
+          },3000)
+        }
+
+        function browserData(){
+          $.ajax({
+            url:'/api/oam/count_trace',
+            type:'GET',
+            datatype:'json',
+            data:{
+
+            },
+            success:function(data){
+              // console.log(data);
+              var data = JSON.parse(data);
+              var Times = [];
+              var Datas = [];
+              $.each(data,function(index,item){
+                Times.push(item.nub);
+                Datas.push(item.time);
+              });
+              Browser(Times,Datas);
+            },
+            error:function(error){
+              alert("浏览量信息获取失败！");
+            }
+          })
+        }
+        function Browser(Times,Datas){
+          // console.log(Times,Datas)
+          var myChart = echarts.init(document.getElementById('Browser'));
+          myChart.showLoading({
+              text: "正在加载数据..."
+          });
+          option = {
+            title: {
+              text: '用户访问量',
+              subtext: '（人）'
+            },
+            color: ['#3398DB'],
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data : Datas,
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'商城访问量',
+                    type:'bar',
+                    barWidth: '60%',
+                    data:Times
+                }
+            ]
+          }
+          // 使用刚指定的配置项和数据显示图表。
+          myChart.setOption(option);
+          setTimeout(function(){
+            myChart.hideLoading();
+          },3000)
+        }
+
+  </script>
+
+  {% endblock %}

@@ -1,0 +1,406 @@
+    .main{
+        width: 83%;
+        height: auto;
+        margin: 0 auto;
+    }
+    .main_list{
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+	.basic_info,.safe{
+	    border: 1px solid #f5f5f5;
+	    padding: 20px;
+	    margin-bottom: 30px;
+	}
+	.basic_info{
+	    position: relative;
+	}
+	.basic_info_table,.safe_table{
+	    border-collapse: separate;
+	    border-spacing: 10px 10px;
+	}
+	.change_table{
+        display: none;
+	}
+    .change_table .notnull{
+        color:#cc0a2a;
+    }
+	.input{
+	    width: 196px;
+	    height: 26px;
+        padding-left: 5px;
+	    padding-right: 5px;
+	}
+	.float_right{
+	    float:right;
+	    color: #999999;
+	    font-size: 16px;
+	}
+	.name{
+	    padding-right: 10px;
+	    font-size: 16px;
+	}
+	.change{
+        color: #cc0a2a;
+	    font-size: 16px;
+	}
+    .change a{
+        font-size:14px;
+        color: #cc0a2a;
+    }
+	#change{
+	    position: absolute;
+	    top: 30px;
+	    right: 30px;
+        width:100px;
+        text-align:center;
+	}
+	.change:hover{
+	    cursor: pointer;
+	}
+	input[type="radio"]{
+	    width: 20px;
+	    height: 20px;
+	    vertical-align: middle;
+	}
+	input[type="radio"]+span{
+	    padding-left: 5px;
+	    padding-right: 20px;
+	    font-size: 16px;
+	}
+	.save,.cancel_button{
+        width: 100px;
+        height: 30px;
+        border: 0;
+        color: white;
+        float: right;
+        display: none;
+	}
+	.save{
+	    background-color: #cc0a2a;
+	    margin-right: 10px;
+	}
+	.cancel_button{
+	    background-color: #cccccc;
+	}
+    .save:hover,.cancel_button:hover{
+        cursor: pointer;
+    }
+    /*安全设置*/
+    .safe_table{
+        width: 100%;
+    }
+    .safe_table tr{
+        height: 50px;
+    }
+    .safe_table tr td:nth-last-child(1){
+        text-align: center;
+    }
+    .safe_table img{
+        vertical-align: middle;
+    }
+    .state_span{
+        line-height: 26px;
+        padding-left: 10px;
+        font-size:14px;
+    }
+    .safe_list_td{
+        width: 90px;
+        padding-left: 10px;
+    }
+    .safe_list{
+        font-size: 18px;
+        font-weight: bold;
+        padding: 0 0px;
+    }
+    .describe{
+        font-size: 14px;
+        padding: 0 5px 0 15px;
+        border-left: 1px solid black;
+        display: inline-block;
+        width: 550px;
+    }
+    .low,.middle,.high{
+        display:inline-block;
+        width: 30px;
+        height: 20px;
+        /*padding: 3px 8px;*/
+        text-align:center;
+        line-height:20px;
+        font-size:14px;
+        color: white;
+        margin-right: 3px;
+    }
+    .low{
+        background-color: #ff0033;
+    }
+    .middle{
+        background-color: #ff9900;
+    }
+    .high{
+        background-color: #33cc33;
+    }
+    .bind{
+        width: 100px;
+        height: 30px;
+        background-color: #cc0a2a;
+        border: 0;
+    }
+    .bind a{
+        color: white;
+        font-size: 16px;
+    }
+    .bind:hover{
+        cursor: pointer;
+    }
+    /*地址设置*/
+    ul li{
+        text-align: center;
+    }
+    .address_ul_title{ 
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        background-color: #f9f9f9;
+        border: 1px solid #f5f5f5;
+        border-bottom: 0;
+    }
+    .address_ul_title li{
+        font-size: 16px;
+        float: left;
+    }
+    .address_ul_info{
+        width: 100%;
+        height: auto;
+        line-height: 25px;
+        border: 1px solid #f5f5f5;
+        border-top: 0;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .address_ul_info li{
+       display: inline-block;
+       vertical-align: middle; 
+    }
+    .address_ul_info li span{
+        font-size:14px;
+    }
+    .default_address,.edit,.delete{
+        color: #cc0a2a;
+        /*font-size: 16px;*/
+        padding: 0 10px;
+    }
+    .default_address:hover,.edit:hover,.delete:hover{
+        cursor: pointer;
+        text-decoration:underline;
+    }
+    .default_address{
+        display: inline-block;
+        width: 100px;
+        padding: 0 5px;
+    }
+    .isDefault_address{
+        display: inline-block;
+        width: 100px;
+        padding: 0 5px;
+        color:#333!important;
+    }
+    .isDefault_address:hover{
+        cursor: auto!important;
+        text-decoration:none!important;
+    }
+    .edit{
+        border-left: 1px solid #cccccc;
+        border-right: 1px solid #cccccc;
+    }
+    .width_name{
+        width: 15%;
+    }
+    .width_address{
+        width: 40%;
+    }
+    .width_phone{
+        width: 20%;
+    }
+    .width_operate{
+        width: 25%;
+    }
+    /*添加地址*/
+    .add_address{
+        width: 129px;
+        height: 34px;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        border: 0;
+        background-color: #cc0a2a;
+        margin-top: 30px;
+        margin-bottom: 80px;
+        border-radius: 3px;
+        font-size:16px;
+    }
+    .add_address:hover{
+        cursor: pointer;
+    }
+    /*----蒙版-----*/
+	.mask{
+		width: 100%;
+		height: 100%;
+		background: rgba(0,0,0,.4);
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 9;
+		display: none;
+	}
+    .tooltip{
+        z-index: 999;
+    }
+	/*----地址弹出框----*/
+	#bg{
+        background-color: #666666;
+        position: absolute;
+        z-index: 99;
+        left: 0;
+        top: 0;
+        display: none;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+        filter: alpha(opacity=60);
+        -moz-opacity: 0.6;
+    }
+    .address_div{
+        min-width: 944px;
+        height: auto;
+        border: 10px solid #525252;
+        background-color: white;
+        position: absolute;
+		top: 40px;
+		left: 15%;
+		z-index: 999;
+        display: none;
+    }
+    .address_div input{
+        padding-left: 10px;
+    }
+    .item{
+        width: 94%;
+        height:80px;
+        margin: 20px auto 0; 
+        font-size: 14px;
+    }
+    .item:nth-child(5){
+        margin-top: 30px;
+    }
+    .item_address{
+        display: inline-block;
+        margin-left: 10px;
+        width: 300px;
+    }
+    .item_address_detail{
+        position: relative;
+        display: inline-block;
+    }
+    .item_address_detail p{
+        position: absolute;
+        top: 50px;
+        left: 10px;
+        color: #cc0a2a;
+    }
+    .item_first{
+        margin-top: 30px;
+    }
+    #address_title{
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        background-color: #f2f2f2;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .tip{
+        color: #ff0000;
+        display: inline-block;
+        width: 10px;
+    }
+    .item_{
+        display: inline-block; 
+        vertical-align:top;
+    }
+    .item_:nth-child(3) span{
+        padding-left: 10px;
+    } 
+    .margin-top{
+        border: 1px solid #cccccc;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+    /*----地弹出址----*/
+    #address_name{
+        width: 298px;
+        height: 38px;
+    }
+    #address_province,#address_city{
+        width: 100px;
+        height: 25px;
+        margin-right: 10px;
+    }
+    #address_district{
+        width: 160px;
+        height: 25px;  
+    }
+    #address_detail{
+        width: 528px;
+        height: 38px;
+    }
+    .item_ input{
+        width: 298px;
+        height: 38px;
+    }
+    .or{
+        display:inline-block;
+        padding: 0 0 0 10px;
+        line-height:88px;
+    }
+    #address_email{
+        width: 378px;
+        height: 38px;
+    }
+    #address_bieming{
+        width: 298px;
+        height: 38px;
+    }
+    .address_div button{
+        width: 125px;
+        height: 30px;
+        border: 0px;
+        background-color: #cc0a2a;
+        color: white;
+        font-size: 14px;
+        text-align: center;
+        margin: 20px 0 50px 10px;
+    }
+    .address_div button:nth-child(2){
+        background-color: #CCCCCC;
+        border: 1px solid #CCCCCC;
+        color: #FFF;
+        margin: 20px 0 0 10px;
+    }
+    .address_div button:hover{
+        cursor: pointer;
+    }
+    #email_td a{
+        display:block;
+    }
+    .cfff{
+        color:#fff;
+    }
+    .c0a2a{
+        color:#cc0a2a;
+    }
+    .address_div p.c0a2a{
+        margin-left:10px;
+    }

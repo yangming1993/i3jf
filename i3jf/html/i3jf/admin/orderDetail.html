@@ -1,0 +1,251 @@
+{% extends "i3jf/admin/template.html" %}
+
+    {% block css %}
+    <link rel="stylesheet" href="{{static_url}}admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/skin-blue.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/dataTables.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/common.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/myModify.css">
+    {% endblock %}
+      {% block content %}
+                    <ul class="sidebar-menu">
+            <li class="header">菜单</li>
+            <li id="dataMenage" class="treeview">
+              <a href="/api/oam/data_analysis/"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i> <span>数据分析</span></a>
+
+            </li>
+            <li id="userMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> <span>用户管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu active">
+                <li id="1" class="active"><a href="/api/oam/user/lists">用户列表</a></li>
+              </ul>
+            </li>
+            <li id="orderMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-hamburger"></i> <span>订单管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/order/lists">订单列表</a></li>
+                <!-- <li id="2"><a href="/static/i3jf/admin/special.html">异常订单</a></li> -->
+                <li id="3"><a href="/api/oam/returned/history">退货历史</a></li>
+              </ul>
+            </li>
+            <li id="contentMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-signal"></i> <span>数据管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/price/set">价格管理</a></li>
+                <li id="2"><a href="/api/oam/product/lists">产品列表</a></li><!--
+                <li id="4"><a href="/static/i3jf/admin/bind.html">分类管理</a></li> -->
+              </ul>
+            </li>
+            <li id="marketMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-film"></i> <span>推广管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/banner/ads/list">首页轮播管理</a></li>
+                <li id="2"><a href="/api/oam/channel/product/lists">首页频道管理</a></li>
+                <!-- <li id="3"><a href="/static/i3jf/admin/pull.html">精品推荐管理</a></li> -->
+              </ul>
+            </li>
+            <li id="productList" class="treeview">
+              <a href="/api/oam/get/product/detail"><i class="glyphicon glyphicon-volume-down"></i>
+              <span>获取产品信息</span> </a>
+
+            </li>
+            <li class="treeview">
+              <a href="/api/oam/get/area/detail"><i class="glyphicon glyphicon-th-large"></i> <span>地区管理</span> </a>
+            </li>
+
+          </ul>
+        </section>
+      </aside>
+
+      <div class="content-wrapper" style="min-height: 897px;">
+        <section class="content-header">
+          <h1>
+            订单管理 <small>订单详情</small>
+          </h1>
+        </section>
+        <section class="content">
+          	<div class="box box-default color-palette-box">
+        <div id="order-panel">
+            <div class="guestInformation">
+                <h3>收货人信息</h3>
+                <div class="receiveDetails">
+                    <div class="receiveInform clearFix">
+                        <span class="left c999">收货人：</span>
+                        <span class="left customerName"></span>
+                    </div>
+                    <div class="receiveInform clearFix">
+                        <span class="left c999">地址：</span>
+                        <span class="left customerAdd"></span>
+                    </div>
+                    <div class="receiveInform clearFix">
+                        <span class="left c999">手机号码：</span>
+                        <span class="left customerTel"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="guestInformation">
+                <h3>支付方式</h3>
+                <div class="receiveDetails">
+                    <div class="receiveInform clearFix">
+                        <span class="left c999">支付方式：</span>
+                        <span class="left payType">在线支付</span>
+                    </div>
+                </div>
+            </div>
+            <div class="guestInformation">
+                <h3>商品信息及服务信息</h3>
+                <div class="gsDetails w1200">
+                    <div class="gsTit">
+                        <span class="w440">商品信息</span>
+                        <span class="w260">单价（元）</span>
+                        <span class="w224">数量</span>
+                        <span class="w274">服务信息</span>
+                    </div>
+                    <div class="information w1200">
+                       <div class="wholeInfor w1200">
+                          <div class="gsTit gsTit-item">
+                          </div>
+                       </div>
+                    </div>
+                    <div class="payInfor">
+                        <div class="pay">
+                            <b>商品总积分：</b>
+                            <strong class="countPay"></strong>
+                        </div>
+                        <div class="pay">
+                            <b>运费：</b>
+                            <strong class="sendPay"></strong>
+                        </div>
+                        <div class="pay">
+                            <b>商品应付积分：</b>
+                            <strong class="shouldPay"></strong>
+                        </div>
+                        <div class="pay">
+                            <b>收货地址：</b>
+                            <div class="acceptAdd"></div>
+                        </div>
+                        <div class="pay">
+                            <b>收货人：</b>
+                            <span class="acceptName"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </section>
+      </div>
+      <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
+    </div>
+    <div class="fixedLayer">
+    <div class="fixedContainer">
+    </div>
+</div>
+
+    <img id="basePicInfo" src="" style="display:none;">
+
+
+    {% endblock %}
+
+
+    {% block js %}
+    <script src="{{static_url}}admin/js/jQuery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="{{static_url}}admin/js/bootstrap.min.js"></script>
+    <script src="{{static_url}}admin/js/app.min.js"></script>
+    <script src="{{static_url}}admin/js/checkAction.js"></script>
+    <script src="{{static_url}}admin/js/public.js"></script>
+    <script src="{{static_url}}admin/js/base.js"></script>
+    <script type="text/javascript">
+      $(function(){
+            var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+
+            }else{
+              window.location.href = "/api/oam/admin/login";
+            }
+
+            //判断登录
+            function checkLogin(){
+                var loginName = '';
+                var loginList = '';
+                var topOrderN = '';
+                //获取session 判断登录
+                var Login = sessionStorage.getItem("adminLogin");
+                console.log(Login);
+                // var Login = getSessionstronge("login");
+                if (Login == null) {  //没有登录
+                    console.log("没登录");
+                    this.flag = false;
+                }else{  //登录
+                    console.log("已经登陆");
+                    this.flag = true;
+                    $(".info p").eq(0).text(Login);
+                    $(".hidden-xs").text(Login);
+                }
+            }
+        getOrderDetail();
+    	});
+
+        //获取到url参数
+        function UrlSearch()
+        {
+           var name,value;
+           var str=location.href; //取得整个地址栏
+           var num=str.indexOf("?")
+           str=str.substr(num+1); //取得所有参数
+
+           var arr=str.split("&"); //各个参数放到数组里
+           for(var i=0;i < arr.length;i++){
+            num=arr[i].indexOf("=");
+            if(num>0){
+             name=arr[i].substring(0,num);
+             value=arr[i].substr(num+1);
+             this[name]=value;
+             }
+            }
+        }
+        var Request=new UrlSearch(); //实例化
+        var orderId= Request.orderId;
+        function getOrderDetail(){
+            $.ajax({
+              url:'/api/oam/order/orderdetails',
+              type:'GET',
+              datatype:'json',
+              data:{
+                'id':orderId
+                   },
+              success:function(data){
+                var data = JSON.parse(data);
+                $(".receiveDetails").find(".customerName").html(data.receiverName);
+                $('.receiveDetails').find('.customerAdd').html(data.receiverAddress);
+                $('.receiveDetails').find('.customerTel').html(data.receiverTel);
+                var item = '';
+                for(var i=0;i<data.orderItemList.length;i++){
+                  item +=
+                          '<div class="w440">'+
+                          '<p data-sku="136564274">'+data.orderItemList[i].name+'</p>'+
+                          '</div>'+
+                          '<div class="w260">'+data.orderItemList[i].price+'</div>'+
+                          '<div class="w224">'+data.orderItemList[i].num+'</div>'+
+                          '<div class="w274">苏宁易购</div>'
+                }
+                $('.gsTit-item').html(item);
+                $('.pay').find('.countPay').html(data.orderAmt+'分');
+                var orderAmt = Number(data.orderAmt);
+                var freight = Number(data.freight);
+                var orderPrice = orderAmt+freight;
+                $('.pay').find('.shouldPay').html(orderPrice.toFixed(2)+'分');
+                $('.pay').find('.sendPay').html(data.freight+'分');
+                $('.pay').find('.acceptAdd').html(data.receiverAddress);
+                $('.pay').find('.acceptName').html(data.receiverName);
+              },
+              error:function(error){
+                alert("订单详情数据失败！");
+              }
+
+            })
+        }
+    </script>
+{% endblock %}

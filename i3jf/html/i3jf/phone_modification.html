@@ -1,0 +1,679 @@
+{% extends "i3jf/base.html" %}
+
+		{% block css %}
+		<link rel="stylesheet" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/style.css">
+		<!-- <link rel="stylesheet" type="text/css" href="{{static_url}}css/center.css"> -->
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/phone_m.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/payment.css">
+		<style type="text/css">
+			.main{
+				height: auto;
+			}
+			.msg_code{
+				width: 132px;
+			}
+		</style>
+		{% endblock %}
+
+
+		{% block content %}
+		<div id="pageHead">
+			<div class="pageheadContent">
+				<div class="leftHead">
+					<div class="mainTittle left">
+						<a href="/"><img src="{{static_url}}images/logo.png" alt=""></a>
+					</div>
+					<div class="separateD" style="border-right: 4px solid rgb(102, 102, 102);"></div>
+					<div class="subTittle left" style="display: inline-block;">
+						<span class="subWord" style="color: rgb(39, 39, 36);">安全中心</span>
+					</div>
+				</div>
+				<div class="searchOverall">
+					<input type="text" placeholder="请输入搜索内容" class="left searchInput">
+					<span class="left searchBtn">搜&nbsp;&nbsp;索</span>
+				</div>
+			</div>
+		</div>
+		 <div id="containerBox">
+			<div id="container" class="">
+				<div class="main">
+					<p class="main_title">修改绑定手机</p>
+					<table>
+						<tbody><tr>
+							<td>
+								<span>当前手机号码：</span>
+							</td>
+							<td>
+								<span class="now-phone"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span>旧验证码：</span>
+							</td>
+							<td>
+								<input class="code2" type="text" placeholder="旧手机验证码">
+								<button class="get_code2" id="btn">获取短信验证码</button>
+								<div class="errmsg2"></div>
+							</td>
+						</tr>
+						<tr>
+				            <td>
+				                <span>图形验证码：</span>
+				            </td>
+				            <td>
+				                <input class="message_imgs" type="text" placeholder="请输入图形验证码">
+				                <div class="msg_code" onclick="getCaptcha('#code_img');">
+				                <img id="code_img" src="" style="width: 130px; height: 40px;"></div>
+				                <div class="errmsg tperrmsg"></div>
+				            </td>
+				        </tr>
+						<tr>
+							<td>
+								<span>新手机号码：</span>
+							</td>
+							<td>
+								<input class="phone" type="text" placeholder="请输入您绑定的手机号码" maxlength="11">
+								<div class="errmsg"></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span>新验证码：</span>
+							</td>
+							<td>
+								<input class="code" type="text" placeholder="新手机验证码" onkeyup="chekKey(event);">
+								<button class="get_code">获取短信验证码</button>
+								<div class="errmsg"></div>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<button class="post" onclick="save();">保存</button>
+							</td>
+						</tr>
+					</tbody></table>
+				</div>
+				<div class="success">
+					<img src="{{static_url}}images/register_ok.png">
+					<p>恭喜您，修改绑定手机成功！请重新登录账号！</p>
+					<p class="jump-info"><span class="second">3</span><span>秒后跳至登录……</span></p>
+					<a href="/static/login/index.html">去登录</a>
+				</div>
+			</div>
+		</div>
+		{% endblock %}
+
+		{% block js %}
+		<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+		<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+		<script type="text/javascript">
+			var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+                logged_in(); //已登陆
+            }else{
+                not_logged_in(); //未登录
+                window.location.href = '/api/user/login/';
+            }
+            //未登录可以执行的方法
+            function not_logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+            };
+            //已登录执行的方法
+            function logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+                cartAmount();//购物车数量
+            };
+
+			$(function (){
+				//图形验证码
+		        getCaptcha('#code_img');
+		        doSomething()
+			})
+
+			var isMobile=/^1[3-5 7-8]\d{9}$/;
+
+			function doSomething(){
+				$('.get_code').on("click",function(){
+					console.log("发送验证");
+					getCode()
+				});
+				getPhone();
+				setCheckAction();
+
+			}
+			//获取当前手机信息
+		    function getPhone(){
+
+		    	$.ajax({
+		    		url:'/api/user/retrieve',
+		    		type:'GET',
+		    		datatype:'json',
+		    		data:{
+
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				$('.now-phone').text(data.telephone);
+		    				$(".get_code2").on("click",function(){
+						    	sendMessage2(data.telephone);
+
+					            // var end=3;
+					            // var timer=null;
+					            //     $(this).attr('disabled','disabled')
+					            //     var _this=$(this);
+					            //     _this.val(end);
+
+					            //     clearInterval(timer);
+					            //        timer=setInterval(function time(){
+					            //         end--;
+					            //         _this.val(end);
+					            //         format(end)
+					            //             },1000);
+
+					            //     function format(end){
+					            //         if(end==0){
+						           //          clearInterval(timer);
+						           //          _this.val('点击发送验证码');
+						           //          _this.removeAttr('disabled');
+					            //         }
+					            //     }
+						    })
+
+		    			}else{
+		    				$("now-phone").text("无法获取到当前手机号码,请刷新...");
+		    			}
+		    		},
+		    		error:function(error){
+		    			$("now-phone").text("无法获取到当前手机号码,请刷新...");
+		    		}
+		    	})
+		    }
+			//获取图片验证码
+			function getCaptcha(id){
+				$.ajax({
+					url:'/api/user/get_captcha',
+					type:'GET',
+					datatype:'json',
+					data:{
+
+					},
+					success:function(data){
+
+						var errno = data.errno;
+						if (errno == 0) {
+							var captcha = data.captcha_url;
+							$(id).attr('src',captcha);
+					        $(id).css({
+					            width: '130px',
+					            height: '40px'
+					        });
+						}else{
+							$(".tperrmsg").text("获取验证码错误");
+						}
+
+					},
+					error:function(error){
+						alert("获取图片验证码失败,请刷新...");
+					}
+				})
+
+		    }
+		    $(".message_imgs").blur(function(){
+		    	captcha();
+		    })
+		    // /*----验证图片验证码----*/
+		    function captcha(obj,err){
+		        var code=$('.message_imgs').val();
+		        $.ajax({
+		        	url:'/api/user/check_captcha',
+		        	type:'GET',
+		        	datatype:'json',
+		        	data:{
+		        		'captcha':code
+		        	},
+		        	success:function(data){
+		        		var data = JSON.parse(data);
+		        		var errno = data.errno;
+		        		if (errno == 0) {
+		           			$(".tperrmsg").text("");
+		        		}else{
+		        			$(".tperrmsg").text("请输入正确的验证码");
+		        		}
+		        	},
+		        	error:function(error){
+		        		$(".tperrmsg").text("验证码验证失败");
+
+		        	}
+		        })
+		    }
+
+
+
+
+
+		    //获取旧手机验证码
+			function sendMessage2(phone){
+				$.ajax({
+					url:'/api/user/change_telephone/get_verification_code_for_old',
+					type:'GET',
+					datatype:'json',
+					data:{
+						'telephone':phone
+					},
+					success:function(data){
+						var data = JSON.parse(data);
+						// console.log(data);
+						var errno = data.errno;
+						if (errno == 0) {
+							$('.get_code2').addClass('timeOut');
+							$('.get_code2').text(codeTime+'s后重新发送');
+							codeTimeout = setTimeout(timeOutCode2,1000);
+						}else{
+							$(".errmsg2").text("无法正确获取短信验证码...");
+						}
+					},
+					error:function(error){
+						clearTimeout(codeTimeout);
+						codeTime = 0;
+						timeOutCode2();
+			            $('.errmsg2').eq(1).text("验证码发送失败");
+					}
+				})
+			}
+			//失去焦点校验
+			$(".code2").blur(function(){
+
+				changePhone2();
+			})
+			//校验旧手机验证码
+			function changePhone2(){
+				var phones = $(".now-phone").text();
+				var codes = $(".code2");
+				var codeVal=codes.val();
+
+				$.ajax({
+					url:'/api/user/change_telephone/check_verification_code_for_old',
+					type:'GET',
+					datatype:'json',
+					data:{
+						'telephone':phones,
+						'code':codeVal
+					},
+					success:function(data){
+						var data = JSON.parse(data);
+						// console.log(data);
+						var errno = data.errno;
+						if (errno == 0) {
+							$('.errmsg2').text("验证成功");
+						}else{
+							$('.errmsg2').eq(1).text("请正确输入验证码");
+						}
+					},
+					error:function(error){
+
+						$('.errmsg2').eq(1).text("请正确输入验证码");
+						$('.post').attr("disabled",false);
+					}
+				})
+			}
+
+
+
+
+			function setCheckAction(){
+				$('.main input').bind('blur',function(){
+					checkFilter($(this));
+				});
+			}
+
+
+
+			//手机号是否存在验证
+			function checkPhone(callback){
+				$('.get_code').attr('disabled',false);
+				var check;
+				var checkPhone;
+				var phone=$(".phone").val();
+				if (phone.length>0) {
+					check=$('.errmsg').eq(0);
+					checkPhone=phone;
+				}
+				// console.log("手机号是否存在验证接口进入");
+				$.ajax({
+					url:'/api/user/check_mobile',
+					type:'GET',
+					datatype:'json',
+					data:{
+						'mobile':checkPhone
+					},
+					success:function(data){
+						var data = JSON.parse(data);
+						// console.log(data);
+						var errno = data.errno;
+						if (errno == 0) {
+							// console.log("手机号是否存在验证接口回调成功---"+data);
+							check.html('&nbsp;');
+							$(".phone").attr('phone-msg','&nbsp;');
+							if(callback) callback();
+						}else{
+							// console.log("手机号是否存在验证接口回调成功异常");
+						}
+					},
+					error:function(error){
+						alert("手机号是否存在验证接口失败,请刷新...");
+						check.text(errmsg);
+						$(".phone").attr('phone-msg',errmsg);
+						$('.get_code').attr('disabled',true);
+					}
+				});
+			}
+			//逐行验证
+			function checkFilter(target){
+				var value = target.val();
+				var calss = target.attr('class');
+				var errmsgItem = target.parents('tr');
+				switch(calss){
+					case 'phone':
+						var pNum=$(target).attr('phone-number');
+		        		var pMsg=$(target).attr('phone-msg');
+						if ( value.length <=0 ) {
+							errmsgItem.find('.errmsg').text('请输入手机号！');
+							return false;
+						}
+						if (!isMobile.test(value)) {
+							errmsgItem.find('.errmsg').text('手机号码格式不正确！');
+							return false;
+						}
+						else{
+							errmsgItem.find('.errmsg').text('');
+							if(pNum)
+				        	{
+				        		if(pNum==value)
+				        		{
+				        			errmsgItem.find('.errmsg').html(pMsg);
+				        			return;
+				        		}
+				        		else
+				        		{
+				        			$(target).attr('phone-number',value);
+				        		}
+				        	}
+				        	else
+				        	{
+				        		$(target).attr('phone-number',value);
+				        	}
+							checkPhone();
+							return true;
+						}
+						break;
+
+					case 'code':
+						var reg_password = $('.code').val();
+						if( value.length<=0 ){
+							errmsgItem.find('.errmsg').text('请输入验证码！');
+							return false;
+						}
+						if ( reg_password != value ) {
+							errmsgItem.find('.errmsg').text('请确认验证码!');
+							return false;
+						}
+						break;
+					case 'message_imgs':
+						var imgNum=$(target).attr('img-number');
+		        		var imgMsg=$(target).attr('img-msg');
+		                if( value.length!=4 ){
+		                    errmsgItem.find('.errmsg').text('请填写4位图形验证码！');
+		                    return false;
+		                }
+		                else
+		                {
+		                	errmsgItem.find('.errmsg').text('');
+		                	if(imgNum)
+				        	{
+				        		if(imgNum==value)
+				        		{
+				        			errmsgItem.find('.errmsg').html(imgMsg);
+				        			return;
+				        		}
+				        		else
+				        		{
+				        			$(target).attr('img-number',value);
+				        		}
+				        	}
+				        	else
+				        	{
+				        		$(target).attr('img-number',value);
+				        	}
+		                    // captcha($('.message_imgs'),errmsgItem.find('.errmsg'));
+		                    return true;
+		                }
+		                break;
+				}
+				errmsgItem.find('.errmsg').html('&nbsp;');
+				return true;
+			}
+			//获取短信验证码
+			var initTime = 60;
+			var initTime2 = 60;
+			var codeTime = initTime;
+			var codeTime2 = initTime2;
+			var codeTimeout;
+			var codeTimeout2;
+			function getCode(){
+				var phone = $(".phone").val();
+				console.log(phone);
+
+				if ( phone.length <=0 ) {
+					$('.errmsg').eq(1).text('请填写手机号码！');
+					return;
+				}
+				if ( !isMobile.test(phone) ){
+					$('.errmsg').eq(1).text('手机号码格式不正确！');
+					return;
+				}
+				// if($('.errmsg').eq(0).html()=='该手机号已经注册过')
+				// {
+				// 	return false;
+				// }
+				console.log("发送新验证");
+				sendMessage();
+				// checkPhone(function(){
+				// 	sendMessage();
+				// });
+			}
+			function timeOutCode(){
+				if(codeTime <= 1){
+					codeTime = initTime;
+					$('.get_code').removeClass('timeOut');
+					$('.get_code').text('获取短信验证码');
+					// getCaptcha('#code_img');
+					// disabledButton($('.get_code')[0],false);
+				}else{
+					// disabledButton($('.get_code')[0],true);
+					codeTime--;
+					$('.get_code').addClass('timeOut');
+					$('.get_code').text(codeTime+'s后重新发送');
+					codeTimeout = setTimeout(timeOutCode,1000);
+			    }
+			}
+			function timeOutCode2(){
+				if(codeTime2 <= 1){
+					codeTime2 = initTime2;
+					$('.get_code2').removeClass('timeOut');
+					$('.get_code2').text('获取短信验证码');
+					// getCaptcha('#code_img');
+					// disabledButton($('.get_code')[0],false);
+				}else{
+					// disabledButton($('.get_code')[0],true);
+					codeTime2--;
+					$('.get_code2').addClass('timeOut');
+					$('.get_code2').text(codeTime2+'s后重新发送');
+					codeTimeout2 = setTimeout(timeOutCode2,1000);
+			    }
+			}
+			//获取手机验证码
+			function sendMessage(){
+				console.log("发送新短信接口进入");
+				// disabledButton($(".get_code")[0],true);
+				var phone = $(".phone").val();
+				var codes=$(".message_imgs").val();
+				// console.log("获取手机验证码接口进入");
+				$.ajax({
+					url:'/api/user/change_telephone/get_verification_code_for_new',
+					type:'GET',
+					datatype:'json',
+					data:{
+						'telephone':phone
+					},
+					success:function(data){
+						var data = JSON.parse(data);
+						console.log(data);
+						var errno = data.errno;
+						if (errno == 0) {
+							// console.log("获取手机验证码接口回调成功---"+data);
+							$('.get_code').addClass('timeOut');
+							$('.get_code').text(codeTime+'s后重新发送');
+							codeTimeout = setTimeout(timeOutCode,1000);
+						}else{
+							// console.log("获取手机验证码接口回调成功异常");
+						}
+					},
+					error:function(error){
+						alert("获取手机验证码失败,请刷新...");
+						clearTimeout(codeTimeout);
+						codeTime = 0;
+						timeOutCode();
+			            $('.errmsg').eq(1).text("验证码获取失败！");
+						$('.post').attr("disabled",false);
+						$(".get_code").attr("disabled", false);
+					}
+				})
+			}
+			//验证填写信息
+			function save(){
+
+				var phones = $(".phone");
+				var codes = $(".code");
+				var codes2 = $(".code2");
+				var message_code = $(".message_imgs");
+				var flag = true;
+				console.log(checkFilter(phones));
+				if(!checkFilter(phones)) flag = false;
+				if(!checkFilter(codes)) flag = false;
+				if(!checkFilter(message_code)) flag = false;
+
+				if(!flag) return;
+				$('.post').attr("disabled",true);
+				//changePhone();  //校验手机验证码
+				newmobile()  //修改手机号
+			}
+			//回车登录
+		    function chekKey(e){
+		        if(e.keyCode == 13){
+		            save();
+		        }
+		    }
+
+
+			//失去焦点校验
+			$(".code").blur(function(){
+				changePhone();
+			})
+			//校验新手机验证码
+			function changePhone(){
+				var phones = $(".phone");
+				var codes = $(".code");
+				var codeVal = codes.val();
+				var phoneVal = phones.val();
+				// console.log("校验手机验证码接口进入");
+				$.ajax({
+					url:'/api/user/change_telephone/check_verification_code_for_new',
+					type:'GET',
+					datatype:'json',
+					data:{
+						'telephone':phoneVal,
+						'code':codeVal
+					},
+					success:function(data){
+						var data = JSON.parse(data);
+						// console.log(data);
+						var errno = data.errno;
+						if (errno == 0) {
+							// console.log("校验新手机验证码接口回调成功---"+data);
+							//退出登录
+							logout(function(){
+			                    $(".main").css('display','none');
+								$(".success").css('display','block');
+			                    setTimeLogin(3,function(){
+			                        location.href=apiPath('/static/i3jf/login.html');
+			                    });
+			                });
+						}else{
+							// console.log("校验新手机验证码接口回调成功异常");
+						}
+					},
+					error:function(error){
+						alert("校验新手机验证码失败,请刷新...");
+						// $('.errmsg').eq(1).text(errmsg);
+						$('.post').attr("disabled",false);
+					}
+				})
+			}
+
+			//新手机修改
+			function newmobile(){
+				var phone = $(".phone").val();
+				console.log(phone);
+				console.log("修改绑定手机接口进入");
+				$.ajax({
+					url:'/api/user/change_telephone',
+					type:'POST',
+					datatype:'json',
+					data:{
+						'new_telephone':phone
+					},
+					success:function(data){
+						var data = JSON.parse(data);
+						console.log(data);
+						var errno = data.errno;
+						if (errno == 0) {
+							// console.log("新手机号修改接口回调成功---"+data);
+							//退出登录
+							logout(function(){
+			                    $(".main").css('display','none');
+								$(".success").css('display','block');
+			                    setTimeLogin(3,function(){
+			                        location.href=apiPath('/static/i3jf/login.html');
+			                    });
+			                });
+						}else{
+							// console.log("新手机号修改接口回调成功异常");
+						}
+					},
+					error:function(error){
+						alert("新手机号修改失败,请刷新...");
+					}
+				})
+			}
+			//倒数跳转时间
+		    function setTimeLogin(value,callback){
+		        if(value <= 0){
+		            callback();
+		            return;
+		        }
+		        $('.jump-info .second').text(value);
+		        setTimeout(function(){
+		            setTimeLogin(--value,callback);
+		        },1000);
+		    }
+
+		</script>
+		{% endblock %}

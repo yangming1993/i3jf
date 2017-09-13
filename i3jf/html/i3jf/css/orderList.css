@@ -1,0 +1,1173 @@
+/*确认订单*/
+button{
+    cursor: pointer;
+}
+    /*我的订单（空）*/
+.order-body {
+    margin: 200px 485px 364px;
+    width: 220px;
+    height: 100px;
+}
+.order-body .order-emp-img {
+    float: left;
+    margin: 5px 0;
+    padding: 0;
+    width: 82px;
+    height: 91px;
+}
+.order-body .order-emp-img img {
+    width: 82px;
+    height: 91px;
+}
+.order-body .order-emp-text {
+    float: right;
+    margin: 10px 0;
+    height: 80px;
+}
+.order-body .order-emp-text p {
+    height: 60px;
+}
+.order-body .order-emp-text a {
+    font-weight: bold;
+    font-family: "Microsoft YaHei";
+    color: #d30a0a;
+}
+    /*确认订单*/
+.panel-head {
+    width: 1200px;
+    height: 50px;
+    font-weight: bold;
+    line-height: 50px;
+    font-size: 22px;
+    text-indent: 22px;
+}
+.panel-body {
+    padding-bottom: 25px;
+    width: 1200px;
+}
+.confirm-order-content {
+    margin: 45px 0 70px;
+}
+.confirm-order-content .panel-order-info {
+    margin-bottom: 25px;
+    width: 1200px;
+    height: auto;
+}
+.modify-title {
+    height: 70px;
+    line-height: 70px;
+}
+.modify-title h3 {
+    display: inline-block;
+}
+.modify-title a {
+    display: inline-block;
+    margin-left: 24px;
+    font-weight: 800;
+    color: #cc0a2a;
+    cursor: pointer;
+}
+.pay-radio-button {
+    float: left;
+    margin: 50px 0;
+    width: 150px;
+    line-height: 18px;
+}
+.pay-radio-button input {
+    display: none;
+}
+.pay-pattern {
+    position: relative;
+    display: inline-block;
+    padding: 5px 12px;
+    text-indent: 0;
+    vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border: 2px solid #cc0a2a;
+    cursor: pointer;
+}
+.pay-pattern b {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: url('../images/selected-icon.png') no-repeat;
+    overflow: hidden;
+}
+.confirm-order-content .panel-order-submit .order-submit-fir {
+    text-align:right;
+}
+.panel-order-submit .order-submit-fir, .panel-order-submit .order-submit-sec, .panel-order-submit .order-submit-thir, .panel-order-submit .order-submit-four{
+    text-align:right;
+}
+/*start地址列表*/
+.panel-order-info .panel-body .modify-info {
+    margin-bottom: 15px;
+    width: 1200px;
+    height: 130px;
+    line-height: 130px;
+    border: 1px solid #F5F5F5;
+    text-indent: 25px;
+}
+.panel-body .modify-info P {
+    margin: 29px 0 10px;
+    height: 48px;
+    line-height: 48px;
+}
+.addr-switch {
+    padding: 5px 0;
+    width: 110px;
+    height: 28px;
+    line-height: 28px;
+    cursor: pointer;
+}
+.addr-switch b {
+    display: inline-block;
+    margin-left: 5px;
+    width: 9px;
+    height: 10px;
+    line-height: 10px;
+    vertical-align: middle;
+}
+.switch-on b {
+    background: url('../images/addr-i.png') no-repeat 0 0;
+}
+.switch-off b {
+    background: url('../images/addr-i.png') no-repeat 0 -10px;
+}
+.panel-order-info .panel-body .empty-address {
+    margin-bottom: 15px;
+    padding-left: 25px;
+    width: 1200px;
+    height: 100px;
+    line-height: 100px;
+    border: 1px solid #F5F5F5;
+}
+.panel-order-info .panel-body .empty-address button {
+    margin-left: 25px;
+    width: 68px;
+    height: 28px;
+    color: #FFF;
+    background-color: #cc0a2a;
+    border: 1px solid #cc0a2a;
+}
+.alert-text {
+    margin-left: 10px;
+    color: #cc0a2a;
+}
+/*地址列表*/
+.modify-list {
+    padding: 10px 25px;
+    line-height: 30px;
+    border: 1px solid #F5F5F5;
+}
+.new-addr-bar {
+    width: 100%;
+    height: 30px;
+}
+
+.new-addr-bar a {
+    cursor: pointer;
+}
+
+.new-addr-bar a:hover {
+    text-decoration: underline;
+}
+
+.modify-list ul {
+    margin: 20px 0;
+    height: auto;
+    max-height: 196px;
+}
+
+.modify-list button {
+    margin-right: 0;
+    height: 31px;
+    width: 128px;
+    font-size: 15px;
+    text-align: center;
+}
+
+#theAddress span,
+#addressBook span {
+    display: inline-block;
+    margin-right: 15px;
+    text-indent: 0;
+    vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.contactAddress {
+    width: 570px;
+}
+.panel-order-submit .contactAddress {
+    display: inline-block;
+    width: auto;
+    max-width: 1050px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+#addressBook .new-address-li {
+    list-style: none;
+    float: left;
+    margin: 7px 0;
+    width: 99.8%;
+    height: 35px;
+}
+.new-address-li input[name="address"] {
+    display: none;
+}
+.contactSign {
+    list-style: none;
+    position: relative;
+    display: inline-block;
+    padding: 7px 12px;
+    width: 160px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.contactSign:hover,
+.address-select {
+    padding: 5px 12px;
+    border: 2px solid #cc0a2a;
+}
+.address-select b {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: url('../images/selected-icon.png') no-repeat;
+    overflow: hidden;
+}
+#cartInfo tr.item_goods{
+    border-left: 1px solid #f5f5f5;
+    border-right: 1px solid #f5f5f5;
+}
+#cartInfo{
+    border:none;
+}
+
+/*----蒙版-----*/
+.mask{
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.4);
+}
+.tooltip{
+    z-index: 999;
+}
+
+/*----地址弹出框----*/
+#bg{
+    position: absolute;
+    z-index: 99;
+    left: 0;
+    top: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: #666666;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    -moz-opacity: 0.6;
+}
+
+.address_div{
+    position: absolute;
+    top: 40px;
+    left: 15%;
+    z-index: 999;
+    display: none;
+    width: 70%;
+    height: auto;
+    min-width: 920px;
+    background-color: white;
+    border: 10px solid #525252;
+}
+.address_div input{
+    padding-left: 10px;
+}
+.item{
+    width: 94%;
+    height: 80px;
+    margin: 20px auto 0;
+    font-size: 14px;
+}
+.item:nth-child(5){
+    margin-top: 30px;
+}
+.item_address{
+    display: inline-block;
+    margin-left: 10px;
+    width: 300px;
+}
+.item_address_detail{
+    position: relative;
+    display: inline-block;
+}
+.item_address_detail p{
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    color: #cc0a2a;
+}
+.item_first{
+    margin-top: 30px;
+}
+#address_title{
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    background-color: #f2f2f2;
+}
+.tip{
+    display: inline-block;
+    width: 10px;
+    color: #ff0000;
+}
+.item_{
+    display: inline-block;
+    vertical-align: top;
+}
+.item_:nth-child(3) span{
+    padding-left: 10px;
+}
+.margin-top{
+    margin-top: 10px;
+    margin-left: 10px;
+    border: 1px solid #cccccc;
+}
+
+#address_name{
+    width: 298px;
+    height: 38px;
+}
+#address_province,
+#address_city{
+    margin-right: 10px;
+    width: 100px;
+    height: 25px;
+}
+#address_district{
+    width: 160px;
+    height: 25px;
+}
+#address_detail{
+    width: 528px;
+    height: 38px;
+}
+.item_ input{
+    width: 298px;
+    height: 38px;
+}
+.or{
+    padding: 0 0 0 10px;
+}
+#address_email{
+    width: 378px;
+    height: 38px;
+}
+#address_bieming{
+    width: 298px;
+    height: 38px;
+}
+.address_div button{
+    margin: 20px 0 50px 10px;
+    width: 125px;
+    height: 30px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    background-color: #cc0a2a;
+    border: 0;
+}
+.address_div button:nth-child(2){
+    margin: 20px 0 0 10px;
+    color: #FFF;
+    background-color: #CCCCCC;
+    border: 1px solid #CCCCCC;
+}
+.address_div button:hover{
+    cursor: pointer;
+}
+/*end地址列表*/
+.panel-order-info .panel-body .table-order-info {
+    width: 1200px;
+    border: 1px solid #F5F5F5;
+    border-collapse: collapse;
+}
+.panel-body .table-order-info thead {
+    height: 60px;
+    line-height: 60px;
+    background-color: #f9f9f9;
+}
+.panel-body .table-order-info thead th {
+    font-weight: normal;
+    font-size: 18px;
+
+}
+.table-order-info td {
+    border: none;
+}
+.table-order-info tbody tr {
+    height: 95px;
+    border-bottom: 1px solid #F5F5F5;
+}
+.table-order-info tbody .store {
+    height: 64px;
+}
+.table-order-info tbody tr td {
+    text-align: center;
+}
+.table-order-info tbody tr td:first-child {
+    padding: 0 25px;
+    text-align: left;
+}
+.confirm-order-content .panel-order-submit {
+    width: 1200px;
+    height: 390px;
+    background: #F9F9F9;
+    border: 1px solid #F5F5F5;
+}
+.confirm-order-content .panel-order-submit {
+    text-align: right;
+}
+.confirm-order-content .panel-order-submit label {
+    font-weight: bold;
+    font-size: 16px;
+}
+.confirm-order-content .panel-order-submit .order-submit-fir {
+    margin: 30px 0 25px;
+    height: 35px;
+    line-height: 35px;
+}
+.confirm-order-content .order-submit-fir div,
+.order-submit-fir div span{
+    display: inline-block;
+    font-weight: bold;
+    font-size: 28px;
+    color: #cc0a2a;
+}
+.panel-order-submit .order-submit-fir,
+.panel-order-submit .order-submit-sec,
+.panel-order-submit .order-submit-thir,
+.panel-order-submit .order-submit-four {
+    margin-bottom: 18px;
+    width: 98%;
+    height: 25px;
+    line-height: 25px;
+}
+.confirm-order-content .panel-order-submit p {
+    display: inline-block;
+}
+.confirm-order-content .order-submit-fif button,
+.modify-list button {
+    margin-right: 23px;
+    width: 168px;
+    height: 48px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #FFF;
+    background-color: #cc0a2a;
+    border: 1px solid #cc0a2a;
+}
+    /*订单提交成功*/
+.confirm-order-body {
+    margin-bottom: 212px;
+    width: 1200px;
+    height: auto;
+}
+.confirm-order-body .submit-order-content .submit-order-fir {
+    margin: 98px 440px 50px;
+    width: 295px;
+    height: 72px;
+}
+.submit-order-content .submit-order-fir img {
+    float: left;
+    width: 72px;
+    height: 72px;
+}
+.submit-order-content .submit-order-fir p {
+    display: inline-block;
+    margin-left: 25px;
+    height: 72px;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 72px;
+}
+.submit-order-content .submit-order-sec {
+    margin-bottom: 50px;
+    width: 1200px;
+    height: 210px;
+    border: 1px solid #F5F5F5;
+}
+.submit-order-content .submit-order-sec .order-info {
+    margin: 25px 0;
+    height: 60px;
+}
+.submit-order-sec .order-info p{
+    float: left;
+    width: 400px;
+    font-size: 18px;
+    text-align: center;
+}
+.submit-order-content .submit-order-sec .btn-submit {
+    text-align: center;
+}
+.submit-order-sec .btn-submit button {
+    width: 168px;
+    height: 48px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #FFF;
+    background-color: #cc0a2a;
+    border: 1px solid #cc0a2a;
+    letter-spacing: 4px;
+}
+.submit-order-content .submit-order-thir {
+    margin-bottom: 118px;
+    font-size: 17px;
+}
+.submit-order-content .submit-order-thir .tip-left {
+    float: left;
+    width: 100px;
+    height: 55px;
+    font-weight: bold;
+}
+.submit-order-content .submit-order-thir p {
+    margin-bottom: 18px;
+    color: #adadad;
+}
+/*确认支付*/
+.payment-body {
+    margin: 70px 0 329px;
+    width: 1200px;
+    height: 370px;
+    font-size: 22px;
+    text-align: center;
+    border: 1px solid #F5F5F5;
+}
+.payment-body .payment-content {
+    margin: 78px 480px;
+    width: 260px;
+    height: 200px;
+}
+.payment-body .payment-row-fir {
+    margin-bottom: 75px;
+    height: 72px;
+}
+.payment-body .payment-row-fir img {
+    float: left;
+    width: 72px;
+    height: 72px;
+}
+.payment-body .payment-row-fir p {
+    display: inline-block;
+    margin-left: 25px;
+    height: 72px;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 72px;
+}
+.payment-body .payment-row-sec button {
+    width: 168px;
+    height: 48px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #FFF;
+    letter-spacing: 4px;
+    background-color: #cc0a2a;
+    border: 1px solid #cc0a2a;
+}
+.hidden {
+    display: none;
+}
+.payment-body .confirm-payment {
+    margin: 65px 365px;
+    width: 510px;
+    height: 250px;
+}
+.confirm-pay-fir {
+    margin-bottom: 30px;
+    height: 40px;
+    line-height:40px;
+}
+.payment-body .confirm-payment label,
+.confirm-payment table tbody td:first-child {
+    float: left;
+    padding-right:10px;
+    width: 150px;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: right;
+}
+.payment-body .confirm-payment span {
+    display: inherit;
+    font-weight: bold;
+    font-size: 28px;
+    color: #cc0a2a;
+    text-align: left;
+}
+.payment-body .confirm-pay-sec {
+    font-size: 12px;
+    text-align: right;
+}
+.payment-body .confirm-pay-sec div {
+    color: #cc0a2a;
+    text-align: left;
+ }
+.payment-body .confirm-pay-thir button {
+    margin-top: 20px;
+    width: 168px;
+    height: 48px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #FFF;
+    letter-spacing: 4px;
+    background-color: #cc0a2a;
+    border: 1px solid #cc0a2a;
+}
+    /*支付成功*/
+.pay-success-body {
+    margin: 70px 0 284px;
+    width: 1200px;
+    height: 400px;
+    font-size: 22px;
+    text-align: center;
+    border: 1px solid #F5F5F5;
+}
+.pay-success-body .pay-success-content {
+    margin: 60px 390px 70px;
+    width: 420px;
+    height: 270px;
+}
+.pay-success-body .success-row-fir {
+    margin: 0 75px 70px;
+    width: 260px;
+    height: 75px;
+}
+.pay-success-body .success-row-fir img {
+    float: left;
+    width: 72px;
+    height: 72px;
+}
+.pay-success-body .success-row-fir p {
+    display: inline-block;
+    margin-left: 25px;
+    height: 72px;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 72px;
+}
+.pay-success-body .success-row-sec {
+    margin-bottom: 50px;
+}
+.pay-success-body .success-row-sec .payment-num {
+    font-size: 18px;
+    color: #cc0a2a;
+}
+.pay-success-body .success-row-thir button {
+    width: 360px;
+    height: 48px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #FFF;
+    letter-spacing: 4px;
+    background-color: #cc0a2a;
+    border: 1px solid #cc0a2a;
+}
+/*支付密码*/
+#zf{
+    width: 160px;
+    height: 40px;
+    background-color: white;
+    border: 1px solid #D4D4D4;
+    border-radius: 5px;
+}
+.pwdInput {
+    text-align: center;
+    border-style: solid;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 0;
+    border-color: #D4D4D4;
+}
+.first {
+    border-left-width: 1px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.last {
+    border-right-width: 1px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.pwdcontainer,
+#confirmPay,
+#rechargeBtn{
+    float:left;
+}
+.confirm-pay-thir{
+    padding-left:160px;
+}
+#payBtn,
+#confirmBtn,
+#confirmPwd{
+    display:none;
+}
+
+
+/*发票*/
+.invoice-title{
+    width: 100%;
+    height: 60px;
+}
+.tips-new-white {
+    position: relative;
+    margin-left: 15px;
+    float: left;
+}
+.tips-new-white b {
+    position: absolute;
+    top: 12px;
+    left: -8px;
+    width: 9px;
+    height: 17px;
+    vertical-align: middle;
+    background: url(//misc.360buyimg.com/user/purchase/2.0.0/css/i/arrow-left.png) 0 0 no-repeat;
+}
+.tips-new-white span {
+    float: left;
+    background-color: #fff;
+    color: #333;
+    padding: 5px 10px;
+    vertical-align: middle;
+    line-height: 20px;
+    margin-top: 5px;
+    box-shadow: 0 0 3px rgba(0,0,0,.15);
+    border: 1px solid #ddd;
+}
+.tips-new-white span i {
+    width: 12px;
+    height: 16px;
+    background: url(//misc.360buyimg.com/user/purchase/2.0.0/css/i/light-icon.png) 0 0 no-repeat;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    top: -1px;
+    margin-right: 5px;
+}
+.invoice-content {
+    padding: 10px 20px;
+    line-height: 18px;
+    border:1px solid #F5F5F5;
+}
+.invoice-cont {
+    padding: 10px 20px;
+    line-height: 18px;
+}
+.ftx-05 {
+    color: #005ea7;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.i-type,.i-tit,.i-number,.i-l{
+    font-size: 13px;
+    color: #666;
+}
+.invoice-xq{
+    width: 600px;
+    float: right;
+}
+#mainId{
+    width: 620px;
+    position: fixed;
+    z-index: 10000;
+    height: 550px;
+    display: none;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0; 
+    margin: auto;
+}
+.ui-dialog {
+    border: 4px solid rgba(0,0,0,.1);
+    border: 4px solid #ccc\9;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+.ui-dialog-title {
+    position: relative;
+    padding: 0 10px;
+    height: 31px;
+    line-height: 31px;
+    background: #f3f3f3;
+    font-size: 14px;
+    color: #666;
+    font-family: "Microsoft YaHei";
+}
+div.ui-dialog-content {
+    position: relative;
+}
+.ui-dialog-content {
+    padding: 10px;
+    overflow: auto;
+    background: #fff;
+}
+.ui-dialog-close {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    z-index: 100000;
+    top: 10px;
+    right: 10px;
+    overflow: hidden;
+    width: 13px;
+    height: 13px;
+    background: url(//misc.360buyimg.com/jdf/1.0.0/ui/dialog/1.0.0/dialog.png) no-repeat;
+    font-size: 0;
+}
+.invoice-dialog {
+    margin-left: 20px;
+    height: 40px;
+}
+.ml30 {
+    margin-left: 30px;
+}
+.tip-cont{
+    font-size: 13px;
+    display: block;
+}
+.tab-nav {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 10px;
+}
+.tab-nav ul {
+    display: inline-block;
+    display: block;
+}
+.tab-nav .tab-nav-item {
+    float: left;
+    position: relative;
+    margin-right: 10px;
+    border: 1px solid #ebebeb;
+    padding: 6px 24px;
+    cursor: pointer;
+}
+.tab-nav .tab-item-selected {
+    border: 2px solid #e4393c;
+    padding: 5px 23px;
+    cursor: default;
+}
+.tab-nav .tab-item-selected b {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 12px;
+    height: 12px;
+    overflow: hidden;
+    background: url(//misc.360buyimg.com/user/purchase/2.0.0/css/i/selected-icon.png) no-repeat;
+}
+.invoice-tips {
+    padding: 5px 0;
+    background-color: #fffdee;
+    color: #f60;
+}
+.form .item {
+    display: inline-block;
+    display: block;
+    margin-bottom: 15px;
+    line-height: 25px;
+}
+.form .item span.label {
+    width: 120px;
+    line-height: 24px;
+}
+.form .item span.label {
+    width: 120px;
+    line-height: 24px;
+}
+.form .item span.label {
+    float: left;
+    height: 18px;
+    line-height: 18px;
+    padding: 4px 0 3px;
+    width: 75px;
+    text-align: right;
+}
+.invoice-tit-list {
+    max-height: 132px;
+    width: 360px;
+    overflow-y: auto;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+.invoice-tit-list .invoice-item {
+    float: none;
+    position: relative;
+    margin-bottom: 10px;
+    padding: 6px 5px;
+    width: 325px;
+    text-align: left;
+}
+.invoice-list .invoice-item-selected {
+    border: 2px solid #e4393c;
+    padding: 5px 18px;
+}
+.invoice-list .invoice-item {
+    float: left;
+    position: relative;
+    z-index: 1;
+    height: 18px;
+    line-height: 18px;
+    margin: 2px 10px 3px 0;
+    border: 1px solid #ebebeb;
+    padding: 6px 19px;
+    text-align: center;
+    cursor: pointer;
+}
+.invoice-tit-list .invoice-item {
+    float: none;
+    position: relative;
+    margin-bottom: 10px;
+    padding: 6px 5px;
+    width: 325px;
+    text-align: left;
+}
+.invoice-list .invoice-item {
+    float: left;
+    position: relative;
+    z-index: 1;
+    height: 18px;
+    line-height: 18px;
+    margin: 2px 10px 3px 0;
+    border: 1px solid #ebebeb;
+    padding: 6px 19px;
+    text-align: center;
+    cursor: pointer;
+}
+.invoice-tit-list .invoice-item .itxt {
+    border: none;
+    padding: 0;
+    width: 100%;
+}
+.invoice-tips i {
+    float: left;
+    height: 20px;
+    width: 20px;
+    padding: 0 5px;
+    background: url(//misc.360buyimg.com/user/purchase/2.0.0/css/i/warn-ico.png) 5px -1px no-repeat;
+}
+.form .itxt04 {
+    width: 225px;
+}
+.form .itxt {
+    height: 18px;
+    width: 155px;
+    padding: 3px 5px 2px;
+}
+.form .area, .form .itxt, .form .selt {
+    line-height: 18px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    vertical-align: middle;
+    float: none;
+}
+.form input {
+    float: none;
+}
+.form .item span.label {
+    width: 120px;
+    line-height: 24px;
+}
+.form .itxt05 {
+    width: 325px;
+    line-height: 22px;
+    height: 22px;
+}
+.invoice-list {
+    width: 428px;
+}
+.invoice-list ul {
+    display: inline-block;
+    display: block;
+}
+.invoice-list .invoice-item-selected {
+    border: 2px solid #e4393c;
+    padding: 5px 18px;
+}
+.invoice-list .invoice-item {
+    float: left;
+    position: relative;
+    z-index: 1;
+    height: 18px;
+    line-height: 18px;
+    margin: 2px 10px 3px 0;
+    border: 1px solid #ebebeb;
+    padding: 6px 19px;
+    text-align: center;
+    cursor: pointer;
+}
+.invoice-list .invoice-item-selected b {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 12px;
+    height: 12px;
+    overflow: hidden;
+    background: url(//misc.360buyimg.com/user/purchase/2.0.0/css/i/selected-icon.png) no-repeat;
+}
+.form .itxt03 {
+    width: 185px;
+}
+.form .itxt {
+    height: 18px;
+    width: 155px;
+    padding: 3px 5px 2px;
+}
+.form .area, .form .itxt, .form .selt {
+    line-height: 18px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    vertical-align: middle;
+    float: none;
+    width: 353px;
+}
+.form input {
+    float: none;
+}
+.form .error-msg {
+    display: inline-block;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 10px 0 30px;
+    vertical-align: middle;
+    color: #e4393c;
+    background: url(//misc.360buyimg.com/user/purchase/2.0.0/css/i/error-ico.png) 8px 4px no-repeat #fff;
+}
+.form .item span.label {
+    width: 120px;
+    line-height: 24px;
+}
+.form .item span.label {
+    width: 120px;
+    line-height: 24px;
+}
+.form .item span.label {
+    float: left;
+    height: 18px;
+    line-height: 18px;
+    padding: 4px 0 3px;
+    /*width: 75px;*/
+    text-align: right;
+}
+
+.btn-1 {
+    font-family: arial,"Microsoft YaHei";
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    background-color: #e74649;
+    background-image: -moz-linear-gradient(top,#e74649,#df3134);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#e74649),color-stop(1,#df3134));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e74649', endColorstr='#df3134', GradientType='0');
+    -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e74649', endColorstr='#df3134');
+    background-image: linear-gradient(to top,#e74649 0,#df3134 100%);
+    border-radius: 3px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 0 15px;
+    cursor: pointer;
+    border: 0;
+    float: none;
+}
+.btn-9 {
+    font-family: arial,"Microsoft YaHei";
+    display: inline-block;
+    height: 23px;
+    line-height: 23px;
+    background-color: #f2f2f2;
+    background-image: -moz-linear-gradient(top,#f2f2f2,#f7f7f7);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#f2f2f2),color-stop(1,#f7f7f7));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f2f2f2', endColorstr='#f7f7f7', GradientType='0');
+    -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f2f2f2', endColorstr='#f7f7f7');
+    background-image: linear-gradient(to top,#f2f2f2 0,#f7f7f7 100%);
+    border-radius: 3px;
+    color: #323333;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 0 14px;
+    cursor: pointer;
+    float: none;
+    border: 1px solid #ddd;
+}
+.ml10 {
+    margin-left: 10px;
+}
+
+.invoice-list .invoice-item-li {
+    float: left;
+    position: relative;
+    margin-right: 10px;
+    border: 1px solid #ebebeb;
+    padding: 6px 24px;
+    cursor: pointer;
+}
+.invoice-list .invoice-item-selected {
+    border: 2px solid #e4393c;
+    padding: 5px 18px;
+}
+
+.invoice-list .tab-item-selected {
+    border: 2px solid #e4393c;
+    padding: 5px 23px;
+    cursor: default;
+}
+.invoice-list .tab-item-selected b {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 12px;
+    height: 12px;
+    overflow: hidden;
+    background: url(//misc.360buyimg.com/user/purchase/2.0.0/css/i/selected-icon.png) no-repeat;
+}

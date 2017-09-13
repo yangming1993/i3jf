@@ -1,0 +1,263 @@
+button {
+    cursor: pointer;
+}
+/*积分充值*/
+.color-num {
+    font-weight: bolder;
+    font-size: 38px;
+    cursor: default;
+}
+.content-row p {
+    display: inline-block;
+}
+.content-row label {
+    display: inline-block;
+    font-weight: 500;
+    font-size: 22px;
+    text-align: right;
+}
+.content-row input {
+    width: 350px;
+    height: 48px;
+    font-size: 18px;
+    color: #333;
+    text-indent: 25px;
+    border: 1px solid #CCCCCC;
+}
+.content-row .my-points,
+.content-row .need-points {
+    font-weight: bold;
+    font-size: 23px;
+}
+.rechar-btn button,
+.rechar-sup-btn button {
+    font-weight: bold;
+    font-size: 19px;
+}
+[data-point = "myPoints"] {
+    color: #33CC33;
+}
+.need-points span {
+    margin-left: 20px;
+    color: #ff9900;
+}
+[data-point = "needPoints"] {
+    color: #cc0a2a;
+}
+.content-row .tip-convert,
+.content-row .tip-convert span {
+    display: inline-block;
+    font-size: 17px;
+    color: #999999;
+}
+    /*和包充值*/
+.rechar-body {
+    width: 1200px;
+    height: 460px;
+    border: 1px solid #F5F5F5;
+}
+.rechar-body .rechar-content {
+    margin: 60px 350px;
+    padding: 0;
+}
+.rechar-body .rechar-content .content-row {
+    margin-bottom: 35px;
+}
+.rechar-body .content-row label {
+    padding-right: 20px;
+    width: 120px;
+}
+.rechar-content .content-row-fir,
+.rechar-content .content-row-four {
+    height: auto;
+}
+.rechar-body .rechar-content .content-row-sec {
+    margin-bottom: 10px;
+}
+.rechar-body .content-row .should-pay {
+    font-size: 22px;
+}
+.rechar-body .rechar-content .rechar-btn {
+    text-align: center;
+}
+.rechar-body .rechar-btn button {
+    padding-left: 45px;
+    width: 282px;
+    height: 48px;
+    color: #FFF;
+    letter-spacing: 2px;
+    background: #E30076 url('../images/hebao-bg.png') center center;
+    border: 1px solid pink;
+}
+    /*支付宝充值*/
+.rechar-body .rechar-btn .zhifubao{
+    border: 1px solid #00a1e9;
+    background: #00A2E7 url('../images/ali-bg.png') center center;
+}
+    /*缺积分充值*/
+.rechar-sup-body {
+    margin: 35px 0 179px;
+    width: 1200px;
+    height: 540px;
+    border: 1px solid #F5F5F5;
+}
+.rechar-sup-body .rechar-sup-content {
+    margin: 60px 250px;
+    padding: 0;
+}
+.rechar-sup-body .rechar-sup-content .content-row {
+    margin-bottom: 60px;
+}
+.rechar-sup-body .rechar-sup-content .sup-row-fir {
+    margin-bottom: 20px;
+}
+.rechar-sup-body .rechar-sup-content .sup-row-sec {
+    margin-bottom: 40px;
+}
+.rechar-sup-body .rechar-sup-content .sup-row-thir {
+    margin-bottom: 10px;
+}
+.rechar-sup-body .rechar-sup-content .sup-row-four {
+    margin-bottom: 10px;
+}
+.rechar-sup-body .content-row label {
+    padding-right: 25px;
+    width: 195px;
+}
+.rechar-sup-body .rechar-sup-btn button {
+    margin: 0 30px;
+    padding-left: 45px;
+    width: 282px;
+    height: 48px;
+    color: #FFF;
+    letter-spacing: 1px;
+    border: 0 solid pink;
+}
+.rechar-sup-body .rechar-sup-btn .btn-alipay {
+    background: #00A2E7 url('../images/ali-bg.png') center center;
+}
+.rechar-sup-body .rechar-sup-btn .btn-hebaopay {
+    background: #E30076 url('../images/hebao-bg.png') center center;
+}
+.rechar-sup-body .should-pay{
+    font-size:22px;
+}
+    /*充值成功*/
+.success-body {
+    margin: 75px 0 324px;
+    width:1200px;
+    height: 355px;
+    border: 1px solid #F5F5F5;
+}
+.success-body .success-content {
+    margin: 80px 420px;
+    padding: 0;
+}
+.success-body .success-row-fir {
+    margin: 0 55px 72px;
+    height: 72px;
+    line-height: 72px;
+}
+.success-body .success-row-fir img {
+    float: left;
+    width: 72px;
+    height: 72px;
+}
+.success-body .success-row-fir p {
+    float: left;
+    display: inline-block;
+    margin-left: 25px;
+    font-weight: bold;
+    font-size: 30px;
+}
+.success-body .success-row-sec {
+    text-align: center;
+}
+.success-body .success-row-sec a {
+    display: block;
+    width: 360px;
+    height: 50px;
+    font-weight: 600;
+    font-size: 20px;
+    color: #FFF;
+    line-height: 50px;
+    letter-spacing: 4px;
+    background-color: #cc0a2a;
+    border: 1px solid #cc0a2a;
+}
+        .rechar-sup-btn{
+            text-align:center;
+        }
+        .rechar-sup-body .rechar-sup-content .content-row{
+            margin-bottom:20px;
+        }
+        .wait-pay .delBox{
+            margin:35px auto;
+        }
+        .wait-pay .payment-alert{
+            display:block;
+            margin-bottom:15px;
+            width:100%;
+            text-align:center;
+        }
+        .wait-pay .payment-control{
+            margin-top:35px;
+            width:100%;
+            text-align:center;
+        }
+        .wait-pay  .payment-control .payment-button{
+            margin:0px 25px;
+            padding:7px 0px;
+            width:146px;
+            background:#cc0a2a;
+            border:1px solid #cc0a2a;
+            color:#fff;
+            font-size:20px;
+            cursor:pointer;
+        }
+        .check-pay{
+            width:600px;
+            min-height:220px;
+            border:10px solid rgba(0,0,0,.6);
+            position:fixed;
+            top:50%;
+            margin-top:-200px;
+            left:50%;
+            margin-left:-300px;
+            background:#fff;
+            display:none;
+            z-index:500;
+        }
+        .check-pay .delBox{
+            margin-top:30px;
+        }
+        .check-pay .payment-alert{
+            display:block;
+            width:100%;
+            text-align:center;
+        }
+        .check-pay .time-alt{
+            display:block;
+            margin:15px auto;
+            width:100%;
+            color:#008ef7;
+            text-align:center;
+        }
+        .check-pay .payment-button{
+            display:block;
+            margin:0px auto;
+            padding:7px 0px;
+            width:146px;
+            background:#cc0a2a;
+            border:1px solid #cc0a2a;
+            color:#fff;
+            font-size:20px;
+            cursor:pointer;
+        }
+        .word-alert{
+            margin: 10px auto 0px auto;
+            width: 282px;
+            text-align: left;
+            font-size: 14px;
+            color: red;
+        }

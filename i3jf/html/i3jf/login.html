@@ -1,0 +1,178 @@
+{% extends "i3jf/base.html" %}
+    {% block css %}
+    	<link rel="stylesheet" type="text/css" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/public.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/login.css">
+		
+    {% endblock %}
+    {% block content %}
+
+		<div id="pageHead">
+			<div class="pageheadContent">
+				<div class="leftHead">
+					<div class="mainTittle left">
+						<a href="/"><img src="{{static_url}}images/logo.png" alt=""></a>
+					</div>
+					<div class="separateD"></div>
+					<div class="subTittle left">
+						<span class="subWord">欢迎登录</span>
+					</div>
+				</div>
+				<div class="searchOverall">
+					<input type="text" placeholder="请输入搜索内容" class="left searchInput">
+					<span class="left searchBtn">搜&nbsp;&nbsp;索</span>
+				</div>
+			</div>
+		</div>
+		<div id="containerBox">
+			<div id="container" class="">
+				<div class="login">
+					<img class="login_pic" src="{{static_url}}images/login_pic4.png">
+					<div class="login_log">
+	    				<div class="login_title">会员登录</div>
+	    				<div class="login_title_xia" id="errmsg"></div>   <!--错误提示-->
+						<div class="login_name">
+		    				<img src="{{static_url}}images/login_name.png" class="img">
+		    				<input id="name" class="text" type="text" placeholder="请输入手机号码或邮箱">
+						</div>
+						<div class="login_password">
+							<img src="{{static_url}}images/login_password.png" class="img">
+							<input id="password" class="text" type="password" placeholder="请输入密码" onkeyup="chekKey(event);">
+						</div>
+						<div class="checkbox">
+							<label class="automatic_login">
+							    <i></i><span>自动登录</span>
+							</label>
+							<a class="forget_password" href="/api/user/forgetpassword/">忘记密码</a>
+						</div>
+						<button id="login" onclick="login();">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+						<div class="login_register">
+							<a class="register" href="/api/user/register/">立即注册</a>
+						</div>
+					</div>
+					<div class="login_success">
+						<h2 class="login_success_tit">账号已登录成功</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		{% endblock %}
+
+		{%block js%}
+		<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+		<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+		<script type="text/javascript">
+
+			var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+                $(".login_log").hide();
+                $(".login_success").show();
+            }else{
+                $(".login_success").hide();
+            }
+			$(function(){
+
+			    //自动登录
+				$('.automatic_login').on('click',function (){
+					if($(this).hasClass('active'))
+					{
+						$(this).removeClass('active');
+					}
+					else
+					{
+						$(this).addClass('active');
+						$(this).attr('id', 'auto');
+					}
+				});
+			})
+
+		    //回车登录
+			function chekKey(e){
+				if(e.keyCode == 13){
+					login();
+				}
+			}
+
+		    //登录信息验证
+		    var backUrl='' ;
+
+		    //session记录登录    渲染头部
+		    function clickCounter(name)
+			{
+				if(typeof(Storage)!=="undefined")
+				{
+					sessionStorage.setItem("login",name);
+				}
+				else
+				{
+					alert("抱歉，请打开高版本浏览器");
+				}
+			}
+			function login(){
+
+			    var name=$("#name").val();
+			    var password=$("#password").val();
+
+			    if( $.trim(name).length <=0 ){
+		            $('#errmsg').text('请填写手机号！');
+		            return;
+		        }
+		        if( $.trim(password).length<=0 ){
+		            $('#errmsg').text('请填写密码！');
+		            return;
+		        }
+		        // $('#login').attr("disabled",true);
+		        // console.log("登录接口进入");
+		        $.ajax({
+		        	url:'/api/user/login_view/',
+		        	type:'POST',
+		        	datatype:'json',
+		        	data:{
+		        		'mobile':name,
+		        		'password':password
+		        	},
+		        	success:function(data){
+		        		// var errno = data.errno;
+		        		console.log(data)
+		        		var data = JSON.parse(data);
+
+		        		if (data.errno == 0) {
+		        			// console.log(name);
+		        			clickCounter(name);
+		        			var Register = getSessionstronge('Register');
+		        			console.log(Register);
+		        			// alert("denglu");
+		        			if (Register == null) {
+		        				window.history.go(-1);
+		        			}else{
+		        				window.location.href = "/";
+		        				sessionStorage.removeItem("Register");
+		        			}
+		        		}else{
+		        			$('#errmsg').text('用户名或密码不正确');
+		        			return;
+		        		}
+
+		        	},
+		        	error:function(error){
+		        		// alert("登录请求失败");
+		        		$('#errmsg').text('用户名或密码不正确');
+		                $('#login').attr("disabled",false);
+		                if(errno=='20402')
+		                {
+		                	$('#password').val('');
+		                }
+		        	}
+		        })
+			}
+			function loginSuccess(){
+				$(".login_log").show();
+				$(".login_success").hide();
+			}
+
+		</script>
+		{%endblock%}
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)https://www.i3jf.com/super/myorder?slug=0#1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="shortcut icon" href="{{static_url}}images/browserLogo.ico">
+		<title>超级积分I3JF.com、省钱网购首选、正品保障、配送便捷、积分当钱花，省钱购购购！</title>
+
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<meta name="keywords" content="积分购物,积分商城,手机,笔记本,电脑,零食,CD,VCD,DV,相机,数码,配件,手表,存储卡,超级积分">
+		<meta name="description" content="超级积分I3JF.COM-专业的综合网上积分购物商城,销售家电、数码通讯、电脑、家居百货、服装服饰、母婴、图书、食品等数千个品牌优质商品.便捷、诚信的服务，为您提供愉悦的网上购物体验!">
+
+		<link rel="stylesheet" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" href="{{static_url}}css/full_order.css">
+
+		<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+
+	</head>
+	<body>
+		<div id="top">
+			<div id="topAd"></div>
+			<div id="nav">
+				<div id="loginMenu">
+					<div class="left backToHome">
+						<a href="/">
+							<img src="{{static_url}}images/index.png" alt="">
+							<span>返回首页</span>
+						</a>
+					</div>
+					<ul class="right  ">
+						<li class="left unloginStatus"><a href="/api/user/login" class="offline">[登录]</a></li>
+						<li class="left unloginStatus"><a href="/api/user/register/">[免费注册]</a></li>
+						<li class="left cart"><a class="myCart" data-href="/api/user/mycart" onclick="check_login(this);">购物车 <span>(0)</span></a></li>
+						<li class="left"><a href="javascript:void(0);" onclick="toHelper();">帮助中心</a></li>
+						<!-- <li class="left"><a href="javascript:void(0);">客户服务</a></li> -->
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="pageHead">
+			<div class="pageheadContent">
+				<div class="leftHead">
+					<div class="mainTittle left">
+						<a href="/"><img src="{{static_url}}images/logo.png" alt=""></a>
+					</div>
+					<div class="separateD" style="border-right: 4px solid rgb(102, 102, 102);"></div>
+					<div class="subTittle left" style="display: inline-block;">
+						<span class="subWord" style="color: rgb(211, 10, 10);">
+							我的订单
+						</span>
+					</div>
+				</div>
+				<div class="searchOverall">
+					<input type="text" placeholder="请输入搜索内容" class="left searchInput">
+					<span class="left searchBtn">搜&nbsp;&nbsp;索</span>
+				</div>
+			</div>
+		</div>
+		<div id="containerBox">
+			<div id="container" class="">
+
+<div class="orders mbtm">
+	<div class="orderDetail">
+		<div class="goodsTit clearFix" id="goodsTit">
+			<b class="show">全部订单</b>
+			<b>待支付</b>
+			<b>待发货</b>
+			<b>已退货</b>
+		</div>
+		<ul class="detailList" id="wholeOrderShow">
+		<!-- 全部订单 -->
+			<li class="active">
+				<!-- 订单中有数据的时候 -->
+				<div class="hDetail">
+					<div class="detailTit clearFix">
+						<span class="w498">订单商品</span>
+						<span class="w238">支付总积分</span>
+						<span class="w215">订单状态</span>
+						<span class="w244">操作</span>
+					</div>
+					<div class="orderDetails"></div>
+					<div class="loading">
+						<div class="imgLoad">
+						    <div class="outer"></div>
+						    <div class="inner"></div>
+						</div>
+					</div>
+				</div>
+				<div class="nDetail clearFix">
+					<img src="{{static_url}}images/orderBag.png" class="left">
+					<div class="emptyIntroduce">
+						<p>您的订单为空~</p>
+						<a href="/">去首页看看</a>
+					</div>
+				</div>
+			</li>
+		<!-- 全部订单 结束 -->
+
+		<!-- 待发货 开始 -->
+			<li>
+				<div class="hDetail">
+					<div class="detailTit clearFix">
+						<span class="w498">订单商品</span>
+						<span class="w238">支付总积分</span>
+						<span class="w215">订单状态</span>
+						<span class="w244">操作</span>
+					</div>
+					<div class="orderDetails"></div>
+					<div class="loading">
+						<div class="imgLoad">
+						    <div class="outer"></div>
+						    <div class="inner"></div>
+						</div>
+					</div>
+				</div>
+				<div class="nDetail clearFix">
+					<img src="{{static_url}}images/orderBag.png" class="left">
+					<div class="emptyIntroduce">
+						<p>您的待付款订单为空~</p>
+						<a href="/">去首页看看</a>
+					</div>
+				</div>
+			</li>
+		<!-- 待发货 结束 -->
+
+		<!-- 待收货 开始 -->
+			<li>
+				<div class="hDetail">
+					<div class="detailTit clearFix">
+						<span class="w498">订单商品</span>
+						<span class="w238">支付总积分</span>
+						<span class="w215">订单状态</span>
+						<span class="w244">操作</span>
+					</div>
+					<div class="orderDetails"></div>
+					<div class="loading">
+						<div class="imgLoad">
+						    <div class="outer"></div>
+						    <div class="inner"></div>
+						</div>
+					</div>
+				</div>
+				<div class="nDetail clearFix">
+					<img src="{{static_url}}images/orderBag.png" class="left">
+					<div class="emptyIntroduce">
+						<p>您的待发货订单为空~</p>
+						<a href="/">去首页看看</a>
+					</div>
+				</div>
+			</li>
+		<!-- 待收货 结束 -->
+		<!-- 已退货 开始 -->
+			<li>
+				<div class="hDetail">
+					<div class="detailTit clearFix">
+						<span class="w498">订单商品</span>
+						<span class="w238">支付总积分</span>
+						<span class="w215">订单状态</span>
+						<span class="w244">操作</span>
+					</div>
+					<div class="orderDetails"></div>
+					<div class="loading">
+						<div class="imgLoad">
+						    <div class="outer"></div>
+						    <div class="inner"></div>
+						</div>
+					</div>
+				</div>
+				<div class="nDetail clearFix">
+					<img src="{{static_url}}images/orderBag.png" class="left">
+					<div class="emptyIntroduce">
+						<p>您的已退货订单为空~</p>
+						<a href="/">去首页看看</a>
+					</div>
+				</div>
+			</li>
+		<!-- 已退货 结束 -->
+		</ul>
+		<div class="tcdPageCode" page="1" style="display: block;">
+			<button id="prev" class="page-button" disabled="disabled" style="background: rgb(245, 245, 245); color: rgb(51, 51, 51);">上一页</button>
+			<div position="1" class="page-item active">1</div><button id="next" class="page-button" disabled="disabled" style="background: rgb(245, 245, 245); color: rgb(51, 51, 51);">下一页</button>
+		</div>
+	</div>
+	<div class="seller">
+		<h2 class="hotST w1198">猜你喜欢</h2>
+		<div class="goodsDisplay w1140">
+			<ul class="displayList w1180 clearFix">
+
+			</ul>
+		</div>
+		<div class="loading">
+			<div class="imgLoad">
+			    <div class="outer"></div>
+			    <div class="inner"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+			</div>
+		</div>
+				<div id="footer">
+			<div id="footerContent">
+				<div class=" ">
+					<p>版权所有深圳前海艾智信科技有限公司
+					</p>
+					<a href="http://www.miibeian.gov.cn/" target="_blank">©2016&nbsp;&nbsp;I3JF&nbsp;&nbsp;粤ICP备16021142号-1</a>
+				</div>
+				<ul class="right ">
+					<!-- <li class="left">法律声明</li> -->
+					<li class="left" onclick="toHelper(4,1)">服务条款</li>
+					<li class="left" onclick="toHelper(4,2)">隐私声明</li>
+					<li class="left" onclick="toHelper(4,0)">关于我们</li>
+					<li class="left" onclick="toHelper(2,3)">联系我们</li>
+					<!-- <li class="left">网站导航</li> -->
+				</ul>
+			</div>
+		</div>
+		<div class="toolback"></div>
+		<div class="tooltip">
+			<div class="cue">
+				<h3></h3>
+				<span></span>
+			</div>
+			<div class="delBox">
+					<strong></strong>
+					<p></p>
+					<div class="cancel">
+						<button class="confirm left"></button>
+						<button class="abolish right"></button>
+					</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+		<script type="text/javascript">
+			var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+                logged_in(); //已登陆
+            }else{
+                not_logged_in(); //未登录
+                window.location.href = '/api/user/login/';
+            }
+
+            //未登录可以执行的方法
+            function not_logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+            };
+            //已登录执行的方法
+            function logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+                cartAmount();//购物车数量
+            };
+
+
+		</script>
+
+		<script src="{{static_url}}js/myorder.js"></script>
+
+	</body>
+</html>

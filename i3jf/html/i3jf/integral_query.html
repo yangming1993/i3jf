@@ -1,0 +1,100 @@
+{% extends "i3jf/base.html" %}
+        {% block css %}
+
+		<link rel="stylesheet" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/integral.css">
+
+		{% endblock %}
+
+		{% block content %}
+		<div id="pageHead">
+			<div class="pageheadContent">
+				<div class="leftHead">
+					<div class="mainTittle left">
+						<a href="/"><img src="{{static_url}}images/logo.png" alt=""></a>
+					</div>
+					<div class="separateD" style="border-right: 4px solid rgb(102, 102, 102);"></div>
+					<div class="subTittle left" style="display: inline-block;">
+						<span class="subWord" style="color: rgb(39, 39, 36);">
+							积分查询
+						</span>
+					</div>
+				</div>
+				<div class="searchOverall">
+					<input type="text" placeholder="请输入搜索内容" class="left searchInput">
+					<span class="left searchBtn">搜&nbsp;&nbsp;索</span>
+				</div>
+			</div>
+		</div>
+		 		<div id="containerBox">
+			<div id="container" class="">
+				<div class="main">
+				    <div class="point_div">
+				    	<span class="point">我的积分</span>
+				    	<span class="point_number"></span>
+				    </div>
+					<div class="two_button">
+						<!-- <a href="/super/recharge/zhifubao">
+				                    <button class="zhifubao"><img src="/bundles/main/images/zhifubao.png">用支付宝充值</button>
+				                </a> -->
+						<a href="/static/recharge_hebao.html">
+				            <!-- <button class="hebao"><img src="/bundles/main/images/hebao-bg.png">用和包充值</button> -->
+				            <button class="hebao">&nbsp;&nbsp;用和包充值</button>
+				        </a>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endblock %}
+
+
+		{% block js %}
+		<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+		<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+		<script type="text/javascript">
+
+		    	var checkLogin = new checkLogin();//判断登录
+	            if (checkLogin.flag) {
+	                logged_in(); //已登陆
+	            }else{
+	                not_logged_in(); //未登录
+	                window.location.href = '/api/user/login/';
+	            }
+	            //未登录可以执行的方法
+	            function not_logged_in(){
+	                getCategoryList();//获取分类导航
+	                setSortListHover();//分类导航hover
+	            };
+	            //已登录执行的方法
+	            function logged_in(){
+	                getCategoryList();//获取分类导航
+	                setSortListHover();//分类导航hover
+	                cartAmount();//购物车数量
+	            };
+
+		        $.ajax({
+		        	url:'/api/user/get_credit',
+		        	type:'GET',
+		        	datatype:'json',
+		        	data:{
+
+		        	},
+		        	success:function(data){
+		        		var data = JSON.parse(data);
+		        		// console.log(data);
+		        		var errno = data.errno;
+		        		if (errno == 0) {
+		        			$(".point_number").text(data.credit);
+		        		}else{
+		        			// console.log("获取用户积分接口回调异常");
+		        		}
+		        	},
+		        	error:function(error){
+		        		alert("获取用户积分接口失败");
+		        	}
+		        })
+
+
+		</script>
+		{% endblock %}

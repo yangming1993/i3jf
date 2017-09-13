@@ -1,0 +1,273 @@
+*{
+    font-family:"Hiragino Sans GB","Microsoft Yahei",SimSun,Arial,"Helvetica Neue",Helvetica;
+    outline:none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+a{
+    text-decoration: none;
+}
+img[placepic = 'true']{
+    background:url(../images/loading.png) no-repeat;
+    background-position:center;
+}
+div.help,div.contact,div.topMenu{
+    position:relative;
+    z-index:1;
+    width: 1200px;
+    margin:0 auto;
+}
+.menuNav{
+    position:relative;
+    z-index:2;
+
+}
+.topListBox{
+    position: absolute;
+    top: 0px;
+    left:240px;
+    z-index: 2;
+    /* display:none; */
+}
+.helpContainer{
+    background-color: #f5f5f5;
+    min-width: 1200px;
+}
+.contactContainer{
+    background-color:#f9f9f9;
+}
+#bottom{
+    font-size:14px;
+}
+.help{
+    height: 70px;
+    padding-top: 40px;
+    padding-bottom:40px;
+}
+.theSame{
+    width: 21%;
+}
+.helpDetailBox{
+    display: table;
+}
+.helpDetailBox img{
+    /*display: table-cell;  双行文本时*/
+    display:inline-block;  /*单行文本*/
+    vertical-align: middle;
+}
+.curText{
+    /*display: table-cell; 双行文本时*/
+    display: inline-block;  /*单行文本时*/
+    vertical-align: middle;
+    padding-left:10px;
+}
+.contact{
+    line-height: 2;
+    padding-top: 40px;
+    padding-bottom:40px;
+}
+.clear{
+    display:block;
+    content:"clear";
+    height:0;
+    clear:both;
+    overflow:hidden;
+    visibility:hidden;
+}
+.sameCol{
+    width: 18%;
+}
+.sameCol dt{
+    margin-bottom: 10px;
+}
+#banner{
+    min-width:1200px;
+}
+#topList{
+    position:relative;
+    z-index:5;
+}
+.sortListContainer{
+    width: 220px;
+    position: absolute;
+    top: 50px;
+    left:0px;
+    z-index:10;
+}
+.sortListBox{
+
+}
+
+#topList ul.topList li{
+    font-size: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 48px;
+}
+#topList ul.topList li:hover{
+    cursor:pointer;
+    color:rgb(211, 10, 10);
+}
+.sortList{
+    background-color: rgba(0,0,0,0.8);
+    width: 220px;
+    position:relative;
+}
+.sortList ul{
+    padding-top:15px;
+    padding-bottom: 15px;
+    min-height:420px;
+}
+.sortList ul .product-false a{
+    color:#ababab!important;
+    cursor:default;
+}
+.sortList ul .product-false a:hover{
+    text-decoration:none!important;
+}
+.sortList li{
+    display:table;
+    padding-top:6px;
+    padding-bottom:6px;
+    font-size:0px;
+    width:100%;
+    height:19px;
+}
+.sortList li a{
+    font-size:14px;
+    color:#fff;
+    padding-right: 10px;
+}
+.sortList li .subSortTittle a{
+    color: #333;
+}
+.sortList li .subSortTittle a:hover{
+    color: #cc0a2a;
+    text-decoration: underline;
+}
+.sortDetail{
+    display:block;
+    vertical-align: middle;
+    padding-left: 10px;
+}
+.sortIcon{
+    /*display: table-cell;  icon存在的时候加上*/
+    display:none;
+    vertical-align: middle;
+    width: 22px;
+    text-align: center;
+    padding-right: 10px;
+}
+.sortMenu{
+    width: 220px;
+    height: 48px;
+    line-height: 48px;
+    cursor:pointer;
+}
+.sortMenu img{
+    width:22px;
+    padding-left: 10px;
+    padding-right:10px;
+    vertical-align: middle;
+}
+.sortMenu span{
+    font-size: 16px;
+    color:#fff;
+    vertical-align:middle;
+}
+#ceilingTopBar{
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 50px;
+    z-index:5;
+    background-color: #fef5f6;
+}
+.fixedTopBar{
+    position:relative;
+    top: 5px;
+    width: 1200px;
+    margin: 0 auto;
+}
+.fixedTopBar .topListBox{
+    display:none;
+}
+.fixedTopBar #topList{
+    border:none;
+}
+.fixedTopBar .sortMenu{
+    height:40px;
+    line-height:40px;
+    background-color:#cc0b2a;
+}
+.fixedTopBar .sortListContainer{
+    top:40px;
+    display:none;
+}
+.topBarSearch{
+    position:absolute;
+    top: 5px;
+    left: 290px;
+    width: 745px;
+    z-index: 6;
+}
+.topBarSearch input{
+    height: 30px;
+    width: 650px;
+}
+.topBarSearch .searchBtn{
+    height: 30px;
+    width: 95px;
+    line-height: 30px;
+}
+.sortList li:hover{
+    background:url('../images/squre15.png') #cc0a2a no-repeat 212px center;
+}
+.sortList li .subSorts{
+    position:absolute;
+    left:220px;
+    top:5px;
+    z-index:5;
+    background-color:#fff;
+    padding:18px;
+    width: 720px;
+    visibility: hidden;
+    font-size:14px;
+    min-height:410px;
+    overflow:hidden;
+}
+.subSortsContent{
+    display: table-row;
+}
+ .subSortTittle{
+    display:table-cell;
+    min-width: 68px;
+    white-space:nowrap;
+    padding-right:5px;
+    max-width: 80px;
+    overflow: hidden;
+}
+.subSortLists{
+    display:table-cell;
+    max-width: 648px;
+}
+.subSortLists span.ite{
+    display:inline-block;
+    padding-left:15px;
+    padding-top:3px;
+    padding-bottom:3px;
+}
+.subSortLists span.ite a{
+    color: #333;
+}
+.subSortLists span.ite a:hover{
+    color: #cc0a2a;
+    text-decoration: underline;
+}
+button[disabled = "disabled"],.confirm-order-content .order-submit-fif button[disabled = "disabled"], .cart-content .to-pay button[disabled = "disabled"], .payment-body .confirm-pay-thir button[disabled = "disabled"], .rechar-sup-body .rechar-sup-btn button[disabled = "disabled"], .rechar-body .rechar-btn button[disabled = "disabled"], .login #login[disabled = "disabled"],.register .input button[disabled = "disabled"],.main #save_td button[disabled = "disabled"],.main .save[disabled = "disabled"],.main .post[disabled = "disabled"],.main .message_code_table .submit_again[disabled = "disabled"] ,.shop button[disabled = "disabled"] , .tcdPageCode button[disabled = "disabled"] , #dataList button[disabled = "disabled"] {
+    background-color: #CCCCCC!important;
+    border: 1px solid #CCCCCC!important;
+    color: #FFF!important;
+    cursor:default!important;
+}

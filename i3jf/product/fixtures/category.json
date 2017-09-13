@@ -1,0 +1,1051 @@
+[
+  {"手机摄影摄像数码影音": [
+
+  {"手机":[{"category":"iphone"},{"category":"小米"},{"category":"华为"},{"category":"三星"},{"category":"魅族"},{"category":"OPPO"},{"category":"乐视"},{"category":"诺基亚"},{"category":"索尼"},{"category":"奇酷大神"},{"category":"努比亚"},{"category":"美图"},{"category":"vivo"},{"category":"锤子"},{"category":"金立"},{"category":"联想"},{"category":"中兴"},{"category":"摩托罗拉"},{"category":"其他手机"}]},
+
+  {"手机配件":[{"category":"移动电源"},{"category":"电池/充电器"},{"category":"保护壳/套"},{"category":"贴膜"},{"category":"读卡器"},{"category":"储存卡"},{"category":"iphone配件"},{"category":"蓝牙耳机"},{"category":"手机耳机"},{"category":"便携/蓝牙音箱"},{"category":"其他配件"}]},
+
+  {"摄影摄像":[{"category":"单反"},{"category":"微单"},{"category":"数码相机"},{"category":"运动相机"},{"category":"拍立得"},{"category":"摄像机"},{"category":"镜头"},{"category":"滤镜"},{"category":"三脚架/云台"},{"category":"摄影包"},{"category":"机身清洁工具"},{"category":"望远镜"},{"category":"航拍器"},{"category":"户外器材"}]},
+
+  {"数码影音":[{"category":"耳机/耳麦"},{"category":"MP3/MP4"},{"category":"录音笔"},{"category":"收音/录音机"},{"category":"数码相框"},{"category":"影音附件"}]},
+
+  {"智能设备":[{"category":"智能手表"},{"category":"智能手环"},{"category":"智能防丢"},{"category":"运动跟踪"},{"category":"体感车"}]},
+
+  {"无忧出行":[{"category":"单反"},{"category":"微单"}]}]},
+
+
+  {"电脑平板电教电玩":[ 
+
+  {"电脑整机":[{"category":"笔记本"},{"category":"台式机"},{"category":"电脑一体机"},{"category":"超极本"},{"category":"游戏本"},{"category":"服务器"}]},
+
+  {"平板":[{"category":"ipad"},{"category":"surface"},{"category":"kindle"},{"category":"三星平板"},{"category":"联想平板"},{"category":"华为平板"},{"category":"先锋平板"},{"category":"其他平板"},{"category":"平板配件"}]},
+
+  {"DIY硬件":[{"category":"组装机"},{"category":"显示器"},{"category":"CPU"},{"category":"硬盘"},{"category":"SSD固态硬盘"},{"category":"主板"},{"category":"显卡"},{"category":"内存"},{"category":"其他硬件"}]},
+
+  {"电脑外设":[{"category":"键盘"},{"category":"鼠标"},{"category":"键鼠套装"},{"category":"鼠标垫"},{"category":"手写板"},{"category":"交换机"},{"category":"路由器"},{"category":"网卡"},{"category":"随身wifi"},{"category":"4G/3G上网"},{"category":"移动硬盘"},{"category":"U盘"},{"category":"电脑音箱"},{"category":"摄像头"},{"category":"打印机"},{"category":"投影仪"},{"category":"UPS"},{"category":"电脑清洁"},{"category":"线材"},{"category":"wifi扩展"},{"category":"保护膜/套"},{"category":"其他设备"}]},
+
+  {"电教电玩":[{"category":"电子词典"},{"category":"点读机/点读笔"},{"category":"学生电脑"},{"category":"其他"}]}]},
+
+
+  {
+    "电视冰箱洗衣机空调": [
+
+      {
+        "电视": [
+          { "category": "平板电视" },
+          { "category": "智能电视" },
+          { "category": "4K超高清" },
+          { "category": ">=55英寸" },
+          { "category": "50英寸" },
+          { "category": "42英寸" },
+          { "category": "<42英寸" },
+          { "category": "PPTV电视" },
+          { "category": "先锋电视" }
+        ]
+      },
+
+      {
+        "冰箱": [
+          { "category": "三门" },
+          { "category": "双门" },
+          { "category": "多门" },
+          { "category": "对开门" },
+          { "category": "小冰箱" },
+          { "category": "三星" },
+          { "category": "松下" },
+          { "category": "LG" },
+          { "category": "海尔" },
+          { "category": "美的" },
+          { "category": "海信" },
+          { "category": "容声" },
+          { "category": "统帅" },
+          { "category": "美菱" },
+          { "category": "康佳" }
+        ]
+      },
+
+      {
+        "洗衣机": [
+          { "category": "全自动" },
+          { "category": "滚筒" },
+          { "category": "波轮" },
+          { "category": "小洗衣机" },
+          { "category": "干衣机" },
+          { "category": "洗干一体机" },
+          { "category": "6公斤" },
+          { "category": "7公斤" },
+          { "category": "松下" },
+          { "category": "惠而浦" },
+          { "category": "三洋" },
+          { "category": "LG" },
+          { "category": "小天鹅" },
+          { "category": "海尔" },
+          { "category": "西门子" },
+          { "category": "美的" },
+          { "category": "格兰仕" },
+          { "category": "康佳" }
+        ]
+      },
+
+      {
+        "空调": [
+          { "category": "家用空调" },
+          { "category": "挂机" },
+          { "category": "柜机" },
+          { "category": "变频" },
+          { "category": "1匹" },
+          { "category": "1.5匹" },
+          { "category": "2匹" },
+          { "category": "3匹" },
+          { "category": "美的" },
+          { "category": "海尔" },
+          { "category": "奥克斯" },
+          { "category": "志高" },
+          { "category": "惠而浦" },
+          { "category": "三菱重工" },
+          { "category": "科隆" },
+          { "category": "商用空调" },
+          { "category": "移动空调" }
+        ]
+      },
+
+      {
+        "冰柜/酒柜": [
+          { "category": "冰柜" },
+          { "category": "展示柜" },
+          { "category": "酒柜" },
+          { "category": "冰吧" },
+          { "category": "星星" },
+          { "category": "海尔" },
+          { "category": "美的" }
+        ]
+      },
+
+      {
+        "影音": [
+          { "category": "HiFi音箱" },
+          { "category": "回音壁" },
+          { "category": "网络盒子" },
+          { "category": "DVD" },
+          { "category": "蓝光播放器" },
+          { "category": "家庭影院" },
+          { "category": "迷你音响" },
+          { "category": "家用音响" }
+        ]
+      }
+    ]
+  },
+
+
+      {
+        "厨卫电器小家电个护": [
+
+          {
+            "厨卫大家电": [
+              { "category": "油烟机/灶具" },
+              { "category": "电热水器" },
+              { "category": "燃气热水器" },
+              { "category": "浴霸/排气扇" },
+              { "category": "洁身器" },
+              { "category": "洗碗机" },
+              { "category": "消毒柜" },
+              { "category": "厨宝" },
+              { "category": "嵌入式厨电" },
+              { "category": "垃圾处理机" },
+              { "category": "采暖炉" }
+            ]
+          },
+
+          {
+            "配件": [
+              { "category": "电视配件" },
+              { "category": "空调配件" },
+              { "category": "洗衣机配件" },
+              { "category": "冰箱配件" },
+              { "category": "机顶盒" }
+            ]
+          },
+
+          {
+            "生活小家电": [
+              { "category": "净水机" },
+              { "category": "吸尘器" },
+              { "category": "扫地机器人" },
+              { "category": "挂烫机" },
+              { "category": "空气净化器" },
+              { "category": "取暖器/暖风机" },
+              { "category": "加湿器/香薰仪" },
+              { "category": "电熨斗" },
+              { "category": "除湿机" },
+              { "category": "空调扇" },
+              { "category": "电风扇" },
+              { "category": "毛球修剪器" },
+              { "category": "清洁机" },
+              { "category": "其他小家电" },
+              { "category": "飞利浦" },
+              { "category": "科沃斯" },
+              { "category": "饮水机" }
+            ]
+          },
+
+          {
+            "厨卫小家电": [
+              { "category": "电压力锅" },
+              { "category": "电饭煲" },
+              { "category": "微波炉" },
+              { "category": "电磁炉" },
+              { "category": "烤箱" },
+              { "category": "电水壶" },
+              { "category": "豆浆机" },
+              { "category": "榨汁机" },
+              { "category": "料理机" },
+              { "category": "面包机/多士炉" },
+              { "category": "电饼档/烤饼机" },
+              { "category": "原汁机" },
+              { "category": "多用途锅" },
+              { "category": "电炖锅" },
+              { "category": "电蒸锅" },
+              { "category": "电陶炉" },
+              { "category": "养生壶" },
+              { "category": "电热饭盒" },
+              { "category": "果蔬机" },
+              { "category": "其他小家电" },
+              { "category": "九阳" },
+              { "category": "苏泊尔" },
+              { "category": "格兰仕" }
+            ]
+          },
+
+          {
+            "个护健康": [
+              { "category": "电动剃须刀" },
+              { "category": "电动牙刷" },
+              { "category": "电吹风" },
+              { "category": "足浴盆" },
+              { "category": "电子秤" },
+              { "category": "理发器" },
+              { "category": "美发器" },
+              { "category": "美容器" },
+              { "category": "鼻毛修剪器" },
+              { "category": "剃毛器" },
+              { "category": "按摩器" },
+              { "category": "足浴器" },
+              { "category": "按摩椅" },
+              { "category": "体温计" },
+              { "category": "计步器" },
+              { "category": "其他健康电器" },
+              { "category": "飞利浦" },
+              { "category": "松下" },
+              { "category": "飞科" }
+            ]
+          }
+        ]
+      },
+
+
+      {
+        "食品酒水饮料冲调": [
+
+          {
+            "休闲食品": [
+              { "category": "饼干" },
+              { "category": "坚果" },
+              { "category": "糖果" },
+              { "category": "口香糖" },
+              { "category": "薯片" },
+              { "category": "巧克力" },
+              { "category": "糕点/点心" },
+              { "category": "卤味小食" },
+              { "category": "肉松肉脯" },
+              { "category": "膨化食品" },
+              { "category": "蜜饯果铺" },
+              { "category": "海味即食" },
+              { "category": "果冻布丁" },
+              { "category": "郭元益月饼" }
+            ]
+          },
+
+          {
+            "方便速食": [
+              { "category": "方便面" },
+              { "category": "方便粥" },
+              { "category": "其他速食" }
+            ]
+          },
+
+          {
+            "酒水": [
+              { "category": "白酒" },
+              { "category": "啤酒" },
+              { "category": "葡萄酒/果酒" },
+              { "category": "黄酒/米酒" },
+              { "category": "养生酒" },
+              { "category": "预调酒" }
+            ]
+          },
+
+          {
+            "医疗冲调": [
+              { "category": "茶饮料" },
+              { "category": "碳酸饮料" },
+              { "category": "功能饮料" },
+              { "category": "饮用水" },
+              { "category": "果蔬汁" },
+              { "category": "咖啡" },
+              { "category": "茶叶" },
+              { "category": "蜂蜜" },
+              { "category": "奶茶" },
+              { "category": "麦片谷物" },
+              { "category": "果味冲调" }
+            ]
+          },
+
+          {
+            "牛奶乳品": [
+              { "category": "纯牛奶" },
+              { "category": "酸奶" },
+              { "category": "风味奶" },
+              { "category": "成人奶粉" }
+            ]
+          },
+
+          {
+            "米面粮油": [
+              { "category": "大米" },
+              { "category": "食用油" },
+              { "category": "面粉" },
+              { "category": "杂粮" },
+              { "category": "南北干货" },
+              { "category": "枣子" }
+            ]
+          },
+
+          {
+            "厨房调料": [
+              { "category": "酱油" },
+              { "category": "调味酱" },
+              { "category": "其他调料" }
+            ]
+          },
+
+          {
+            "营养保健": [
+              { "category": "保健饮品" },
+              { "category": "传统滋补" },
+              { "category": "膳食纤维" },
+              { "category": "胶原蛋白" },
+              { "category": "复合维生素" },
+              { "category": "冬虫夏草" },
+              { "category": "鱼油磷脂" },
+              { "category": "左旋肉碱" },
+              { "category": "玛卡玛咖" },
+              { "category": "参类" },
+              { "category": "灵芝" },
+              { "category": "枸杞" },
+              { "category": "燕窝" },
+              { "category": "阿胶" },
+              { "category": "蜂制品" },
+              { "category": "酵素" }
+            ]
+          },
+
+          {
+            "中秋月饼": [
+              { "category": "香港美心月饼" },
+              { "category": "美华月饼" },
+              { "category": "元朗荣华月饼" },
+              { "category": "香港奇华月饼" },
+              { "category": "圣安娜饼屋月饼" },
+              { "category": "富锦月饼" },
+              { "category": "其他月饼" }
+            ]
+          }
+        ]
+      },
+
+
+      {
+        "家纺家居家居用品": [
+
+          {
+            "家纺": [
+              { "category": "床品套件" },
+              { "category": "春秋被" },
+              { "category": "冬被" },
+              { "category": "夏凉被" },
+              { "category": "床垫" },
+              { "category": "枕芯枕套" },
+              { "category": "坐垫/抱枕" },
+              { "category": "毛巾浴巾" },
+              { "category": "毛巾被/毯" },
+              { "category": "地毯地垫" },
+              { "category": "餐桌布艺" },
+              { "category": "防尘罩" },
+              { "category": "十字绣" },
+              { "category": "窗帘/窗纱" }
+            ]
+          },
+
+          {
+            "家具": [
+              { "category": "沙发" },
+              { "category": "床" },
+              { "category": "餐桌" },
+              { "category": "电视柜" },
+              { "category": "电脑桌" },
+              { "category": "衣柜" },
+              { "category": "鞋柜" },
+              { "category": "茶几" },
+              { "category": "书桌" },
+              { "category": "床垫" },
+              { "category": "置物架" },
+              { "category": "客厅家具" },
+              { "category": "餐厅家具" },
+              { "category": "卧室家具" },
+              { "category": "书房家具" },
+              { "category": "家具套装" }
+            ]
+          },
+
+          {
+            "生活日用": [
+              { "category": "收纳用品" },
+              { "category": "晴雨用品" },
+              { "category": "洗晒用品" },
+              { "category": "安全防护" },
+              { "category": "装饰用品" },
+              { "category": "保暖用品" }
+            ]
+          },
+
+          {
+            "清洁用品": [
+              { "category": "衣物洗护" },
+              { "category": "家庭清洁" },
+              { "category": "纸巾湿巾" },
+              { "category": "清洁工具" },
+              { "category": "一次性用品" }
+            ]
+          },
+
+          {
+            "餐厨用具": [
+              { "category": "烹饪锅具" },
+              { "category": "水具/水杯" },
+              { "category": "刀具/砧板" },
+              { "category": "保温杯" },
+              { "category": "餐具" },
+              { "category": "保鲜盒/便当盒" },
+              { "category": "茶具" },
+              { "category": "酒具" },
+              { "category": "厨房小用具" }
+            ]
+          },
+
+          {
+            "厨房卫浴": [
+              { "category": "龙头" },
+              { "category": "水槽" },
+              { "category": "花洒" },
+              { "category": "马桶" },
+              { "category": "浴室柜" },
+              { "category": "五金挂件" },
+              { "category": "厨房配件" },
+              { "category": "鱼缸" },
+              { "category": "地漏" }
+            ]
+          },
+
+          {
+            "五金/工具": [
+              { "category": "瓷砖" },
+              { "category": "插座" },
+              { "category": "锁具" },
+              { "category": "监控摄像" },
+              { "category": "油漆涂料具" }
+            ]
+          },
+
+          {
+            "汽车用品": [
+              { "category": "行车记录仪" },
+              { "category": "电子狗" },
+              { "category": "导航仪" },
+              { "category": "车载冰箱" },
+              { "category": "车载空气净化" },
+              { "category": "电源" },
+              { "category": "充气泵" },
+              { "category": "汽车脚垫" },
+              { "category": "汽车座套" },
+              { "category": "车用香水" },
+              { "category": "方向盘套" },
+              { "category": "安全座椅" },
+              { "category": "挂饰/摆饰" }
+            ]
+          },
+
+          {
+            "宠物生活": [
+              { "category": "狗粮" },
+              { "category": "猫粮" },
+              { "category": "宠物零食" },
+              { "category": "宠物清洁" },
+              { "category": "宠物保健" },
+              { "category": "鱼缸水族箱" }
+            ]
+          },
+
+          {
+            "成人用品": [
+              { "category": "安全避孕" },
+              { "category": "验孕测孕" },
+              { "category": "人体润滑" },
+              { "category": "情趣内衣" },
+              { "category": "性爱玩具" }
+            ]
+          }
+        ]
+      },
+
+
+      {
+        "孕婴奶粉营养辅食孕婴洗护": [
+
+          {
+            "孕婴奶粉": [
+              { "category": "1段" },
+              { "category": "2段" },
+              { "category": "三段" },
+              { "category": "四段" },
+              { "category": "孕妈奶粉" },
+              { "category": "特配奶粉" },
+              { "category": "进口奶粉" }
+            ]
+          },
+
+          {
+            "营养辅食": [
+              { "category": "DHA" },
+              { "category": "清火开胃" },
+              { "category": "钙铁锌" },
+              { "category": "益生菌" },
+              { "category": "米粉" },
+              { "category": "营养面食" },
+              { "category": "宝宝零食" },
+              { "category": "进口辅食" }
+            ]
+          },
+
+          {
+            "孕婴洗护": [
+              { "category": "洗衣液" },
+              { "category": "洗发/沐浴" },
+              { "category": "孕婴童护肤" },
+              { "category": "孕妈洗护" },
+              { "category": "婴童清洁机" },
+              { "category": "婴童护臀" }
+            ]
+          },
+
+          {
+            "喂养用品": [
+              { "category": "安全防护" },
+              { "category": "水杯/水壶" },
+              { "category": "奶瓶" },
+              { "category": "暖奶器" },
+              { "category": "吸奶器" },
+              { "category": "坐便器" },
+              { "category": "保温消毒" }
+            ]
+          },
+
+          {
+            "尿布/湿巾": [
+              { "category": "S号尿裤" },
+              { "category": "M号尿裤" },
+              { "category": "L号尿裤" },
+              { "category": "XL/XXL号" },
+              { "category": "拉拉裤" },
+              { "category": "湿巾" }
+            ]
+          },
+
+          {
+            "童装童鞋": [
+              { "category": "棉服/羽绒服" },
+              { "category": "套装" },
+              { "category": "宝宝内衣" },
+              { "category": "T恤/衬衫" },
+              { "category": "公主裙" },
+              { "category": "卫衣" },
+              { "category": "针织衫" },
+              { "category": "外套" },
+              { "category": "裤子" },
+              { "category": "亲子装" },
+              { "category": "童装" },
+              { "category": "靴子" },
+              { "category": "运动鞋" },
+              { "category": "帆布鞋" },
+              { "category": "学步鞋" },
+              { "category": "童鞋" }
+            ]
+          },
+
+          {
+            "童年床/床品": [
+              { "category": "安全座椅" },
+              { "category": "婴儿推车" },
+              { "category": "婴儿床" },
+              { "category": "餐椅" },
+              { "category": "自行车" },
+              { "category": "电动车" },
+              { "category": "三轮车" },
+              { "category": "儿童家具" },
+              { "category": "睡袋/抱被" },
+              { "category": "浴巾/毛巾" },
+              { "category": "婴儿枕" },
+              { "category": "婴儿被褥" },
+              { "category": "床品套装" },
+              { "category": "隔尿垫" }
+            ]
+          },
+
+          {
+            "儿童玩具": [
+              { "category": "0-6个月" },
+              { "category": "6-12个月" },
+              { "category": "1-3岁" },
+              { "category": "3-6岁" },
+              { "category": "益智玩具" },
+              { "category": "户外玩具" },
+              { "category": "模型玩具" },
+              { "category": "遥控航模" },
+              { "category": "积木拼插" },
+              { "category": "毛绒玩具" },
+              { "category": "动漫周边" },
+              { "category": "DIY手工" },
+              { "category": "创意/收纳" },
+              { "category": "进口玩具" }
+            ]
+          },
+
+          {
+            "孕妈专区": [
+              { "category": "孕妇装" },
+              { "category": "孕妇裤" },
+              { "category": "防辐射服" },
+              { "category": "内衣/裤" },
+              { "category": "家居服" },
+              { "category": "月子服" },
+              { "category": "背婴带" },
+              { "category": "妈咪包" }
+            ]
+          }
+        ]
+      },
+
+
+      {
+        "女装女包女鞋男装男包": [
+
+          {
+            "女装女包": [
+              { "category": "毛呢大衣" },
+              { "category": "羽绒服" },
+              { "category": "棉衣" },
+              { "category": "秋冬连衣裙" },
+              { "category": "针织/毛衣" },
+              { "category": "羊绒衫" },
+              { "category": "短外套" },
+              { "category": "卫衣" },
+              { "category": "风衣" },
+              { "category": "T恤" },
+              { "category": "衬衫" },
+              { "category": "小西装" },
+              { "category": "半身裙" },
+              { "category": "休闲裤" },
+              { "category": "牛仔裤" },
+              { "category": "中老年女装" },
+              { "category": "婚礼/礼服/旗袍" },
+              { "category": "皮草" },
+              { "category": "单肩背" },
+              { "category": "斜挎包" },
+              { "category": "双肩包" },
+              { "category": "手提包" },
+              { "category": "钱包/卡包" },
+              { "category": "女士手包" }
+            ]
+          },
+
+          {
+            "女鞋": [
+              { "category": "靴子" },
+              { "category": "短靴" },
+              { "category": "马丁靴" },
+              { "category": "雪地靴" },
+              { "category": "休闲鞋" },
+              { "category": "单鞋" },
+              { "category": "高跟鞋" },
+              { "category": "帆布鞋" },
+              { "category": "豆豆鞋" },
+              { "category": "增高鞋" },
+              { "category": "拖鞋" },
+              { "category": "平底鞋" }
+            ]
+          },
+
+          {
+            "男装男包": [
+              { "category": "夹克" },
+              { "category": "羽绒服" },
+              { "category": "衬衫" },
+              { "category": "毛呢大衣" },
+              { "category": "T恤" },
+              { "category": "牛仔裤" },
+              { "category": "休闲裤" },
+              { "category": "卫衣" },
+              { "category": "保暖衬衫" },
+              { "category": "羊毛衫" },
+              { "category": "真皮皮衣" },
+              { "category": "棉服" },
+              { "category": "皮衣" },
+              { "category": "针织/毛衣" },
+              { "category": "大码男装" },
+              { "category": "风衣" },
+              { "category": "POLO衫" },
+              { "category": "西裤" },
+              { "category": "斜挎包" },
+              { "category": "双肩包" },
+              { "category": "单肩包" },
+              { "category": "手提包" },
+              { "category": "商务包" },
+              { "category": "腰带/皮具" },
+              { "category": "钱包/卡包" }
+            ]
+          },
+
+          {
+            "男鞋": [
+              { "category": "马丁靴" },
+              { "category": "工装靴" },
+              { "category": "雪地靴" },
+              { "category": "商务鞋" },
+              { "category": "休闲鞋" },
+              { "category": "豆豆鞋" },
+              { "category": "帆布鞋" },
+              { "category": "棉鞋" },
+              { "category": "正装鞋" },
+              { "category": "布洛克鞋" }
+            ]
+          },
+
+          {
+            "内衣": [
+              { "category": "保暖内衣" },
+              { "category": "秋衣秋裤" },
+              { "category": "睡衣" },
+              { "category": "睡裙" },
+              { "category": "情侣睡衣" },
+              { "category": "情趣内衣" },
+              { "category": "文胸" },
+              { "category": "袜子" },
+              { "category": "男士内裤" },
+              { "category": "女士内裤" },
+              { "category": "背心/吊带" },
+              { "category": "连裤袜" },
+              { "category": "美体塑身" }
+            ]
+          },
+
+          {
+            "功能箱包": [
+              { "category": "拉杆箱" },
+              { "category": "万向轮箱" },
+              { "category": "旅行包" },
+              { "category": "运动休闲包" },
+              { "category": "腰包胸包" },
+              { "category": "电脑包" },
+              { "category": "书包" },
+              { "category": "登山包" },
+              { "category": "箱包配件" }
+            ]
+          },
+
+          {
+            "钟表眼镜": [
+              { "category": "男表" },
+              { "category": "女表" },
+              { "category": "机械表" },
+              { "category": "瑞士名表" },
+              { "category": "国产名表" },
+              { "category": "日韩名表" },
+              { "category": "闹钟挂钟" },
+              { "category": "男士机械表" },
+              { "category": "女士石英表" },
+              { "category": "眼镜" },
+              { "category": "太阳镜" },
+              { "category": "偏光开阳镜" }
+            ]
+          },
+
+          {
+            "珠宝饰品": [
+              { "category": "黄金" },
+              { "category": "钻石" },
+              { "category": "铂金" },
+              { "category": "珍珠" },
+              { "category": "彩宝" },
+              { "category": "琥珀" },
+              { "category": "翡翠玉石" },
+              { "category": "银饰品" },
+              { "category": "木饰品" },
+              { "category": "时尚饰品" },
+              { "category": "水晶玛瑙" },
+              { "category": "小叶紫檀" },
+              { "category": "施华洛世奇" }
+            ]
+          },
+
+          {
+            "时尚礼品": [
+              { "category": "zippo" },
+              { "category": "打火机" },
+              { "category": "瑞士军刀" },
+              { "category": "酒壶/茶具" },
+              { "category": "工艺摆件" }
+            ]
+          }
+        ]
+      },
+
+
+      {
+        "运动鞋运动服饰体育健身": [
+
+          {
+            "运动鞋": [
+              { "category": "篮球鞋" },
+              { "category": "休闲板鞋" },
+              { "category": "跑步鞋" },
+              { "category": "帆布鞋" },
+              { "category": "足球鞋" },
+              { "category": "羽毛球鞋" },
+              { "category": "网球鞋" },
+              { "category": "训练鞋" }
+            ]
+          },
+
+          {
+            "运动服饰": [
+              { "category": "运动夹克" },
+              { "category": "卫衣" },
+              { "category": "羽绒服" },
+              { "category": "棉服" },
+              { "category": "运动套装" },
+              { "category": "运动裤" }
+            ]
+          },
+
+          {
+            "体育健身": [
+              { "category": "跑步机" },
+              { "category": "健身车" },
+              { "category": "哑铃" },
+              { "category": "俯卧版" },
+              { "category": "甩脂机" },
+              { "category": "踏步机" },
+              { "category": "中小型健身器材" },
+              { "category": "羽毛球" },
+              { "category": "篮球" },
+              { "category": "足球" },
+              { "category": "网球" },
+              { "category": "兵乓球" },
+              { "category": "轮滑鞋" },
+              { "category": "泳装" },
+              { "category": "瑜伽" }
+            ]
+          },
+
+          {
+            "户外装备": [
+              { "category": "冲锋衣" },
+              { "category": "抓绒衣" },
+              { "category": "溯溪鞋" },
+              { "category": "徒步鞋" },
+              { "category": "登山鞋" },
+              { "category": "越野跑鞋" },
+              { "category": "户外休闲鞋" },
+              { "category": "帐篷" },
+              { "category": "睡袋" },
+              { "category": "望远镜" },
+              { "category": "登山杖" },
+              { "category": "照明" },
+              { "category": "刀具" },
+              { "category": "野餐炊具" },
+              { "category": "背包" }
+            ]
+          },
+
+          {
+            "骑行/垂钓": [
+              { "category": "山地车" },
+              { "category": "公路车" },
+              { "category": "折叠自行车" },
+              { "category": "死飞" },
+              { "category": "思维车" },
+              { "category": "电动车" },
+              { "category": "骑行服饰" },
+              { "category": "鱼竿" },
+              { "category": "鱼饵" },
+              { "category": "鱼线" },
+              { "category": "鱼线轮" },
+              { "category": "浮漂" },
+              { "category": "钓椅" },
+              { "category": "鱼钩钓钩" }
+            ]
+          }
+        ]
+      },
+
+
+      {
+        "面部护肤彩妆香氛洗护发": [
+
+          {
+            "面部护肤": [
+              { "category": "爽肤水" },
+              { "category": "乳液" },
+              { "category": "精华" },
+              { "category": "洗面奶" },
+              { "category": "眼霜" },
+              { "category": "瑞唇膏" },
+              { "category": "面膜" },
+              { "category": "睡眠面膜" },
+              { "category": "补水面膜" },
+              { "category": "海外人气面膜" },
+              { "category": "美白淡斑" },
+              { "category": "海外尖货" }
+            ]
+          },
+
+          {
+            "彩妆香氛": [
+              { "category": "bb/cc霜" },
+              { "category": "气垫BB" },
+              { "category": "粉底" },
+              { "category": "眉笔" },
+              { "category": "眉粉/眉膏" },
+              { "category": "眼影" },
+              { "category": "眼线" },
+              { "category": "睫毛膏" },
+              { "category": "唇膏唇彩" },
+              { "category": "香水" },
+              { "category": "精油" },
+              { "category": "化妆棉/棒" },
+              { "category": "美甲工具" },
+              { "category": "卸妆" },
+              { "category": "隔离" }
+            ]
+          },
+
+          {
+            "口腔护理": [
+              { "category": "牙膏" },
+              { "category": "牙刷" },
+              { "category": "口腔套装" },
+              { "category": "儿童牙膏" },
+              { "category": "牙粉" },
+              { "category": "牙线" },
+              { "category": "漱口水/口喷" }
+            ]
+          },
+
+          {
+            "洗护发": [
+              { "category": "洗发水" },
+              { "category": "进口洗护" },
+              { "category": "护发素" },
+              { "category": "洗护套装" },
+              { "category": "沐浴露" },
+              { "category": "发膜" },
+              { "category": "身体乳" },
+              { "category": "香皂" },
+              { "category": "脱毛" },
+              { "category": "染发" },
+              { "category": "美发工具" },
+              { "category": "丰胸美乳" }
+            ]
+          },
+
+          {
+            "女性护理": [
+              { "category": "卫生巾" },
+              { "category": "日用卫生巾" },
+              { "category": "夜用卫生巾" },
+              { "category": "进口卫生巾" },
+              { "category": "护垫" },
+              { "category": "卫生巾套装" },
+              { "category": "迷你卫生巾" },
+              { "category": "私处洗液" }
+            ]
+          },
+
+          {
+            "男士专区": [
+              { "category": "洗面奶" },
+              { "category": "乳液" },
+              { "category": "护肤套装" },
+              { "category": "男士香水" },
+              { "category": "剃须护理" },
+              { "category": "洗发水" },
+              { "category": "沐浴乳" }
+            ]
+          }
+        ]
+      },
+
+
+      {
+        "游戏主机游戏附件游戏": [
+
+          {
+            "游戏主机": [
+              { "category": "XBOX" },
+              { "category": "PS4" },
+              { "category": "PS" },
+              { "category": "Vita" },
+              { "category": "其他" },
+              { "category": "微软" },
+              { "category": "索尼" },
+              { "category": "任天堂" },
+              { "category": "小霸王" }
+            ]
+          },
+
+          {
+            "游戏附件": [
+              { "category": "XBOX" },
+              { "category": "PS4" },
+              { "category": "PS" },
+              { "category": "Vita" },
+              { "category": "其他主机附件" },
+              { "category": "手柄" },
+              { "category": "耳机" },
+              { "category": "微软" },
+              { "category": "索尼" },
+              { "category": "任天堂" },
+              { "category": "小霸王" }
+            ]
+          },
+
+          {
+            "游戏": [
+              { "category": "XBOX" },
+              { "category": "PS4" },
+              { "category": "PSVita" }
+            ]
+          }
+        ]
+      }
+    ]
+  

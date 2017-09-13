@@ -1,0 +1,658 @@
+{% extends "i3jf/admin/template.html" %}
+    {% block css %}
+    <link rel="stylesheet" href="{{static_url}}admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/skin-blue.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/dataTables.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/common.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/myModify.css">
+    {% endblock %}
+
+    {% block content %}
+          <ul class="sidebar-menu">
+            <li class="header">菜单</li>
+            <li id="dataMenage" class="treeview">
+              <a href="/api/oam/data_analysis/"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i> <span>数据分析</span></a>
+
+            </li>
+            <li id="userMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> <span>用户管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu active">
+                <li id="1" class="active"><a href="/api/oam/user/lists">用户列表</a></li>
+              </ul>
+            </li>
+            <li id="orderMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-hamburger"></i> <span>订单管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/order/lists">订单列表</a></li>
+                <!-- <li id="2"><a href="/static/i3jf/admin/special.html">异常订单</a></li> -->
+                <li id="3"><a href="/api/oam/returned/history">退货历史</a></li>
+              </ul>
+            </li>
+            <li id="contentMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-signal"></i> <span>数据管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/price/set">价格管理</a></li>
+                <li id="2"><a href="/api/oam/product/lists">产品列表</a></li><!--
+                <li id="4" class="active"><a href="/static/i3jf/admin/bind.html">分类管理</a></li> -->
+              </ul>
+            </li>
+            <li id="marketMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-film"></i> <span>推广管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/banner/ads/list">首页轮播管理</a></li>
+                <li id="2"><a href="/api/oam/channel/product/lists">首页频道管理</a></li>
+                <!-- <li id="3"><a href="/static/i3jf/admin/pull.html">精品推荐管理</a></li> -->
+              </ul>
+            </li>
+            <li id="productList" class="treeview">
+              <a href="/api/oam/get/product/detail"> <i class="glyphicon glyphicon-volume-down"></i>
+              <span>获取产品信息</span></a>
+
+            </li>
+            <li class="treeview">
+              <a href="/api/oam/get/area/detail"><i class="glyphicon glyphicon-th-large"></i> <span>地区管理</span> </a>
+            </li>
+          </ul>
+        </section>
+      </aside>
+
+      <div class="content-wrapper" style="min-height: 897px;">
+        <section class="content-header">
+          <h1>
+            数据管理            <small>分类管理</small>
+          </h1>
+        </section>
+        <section class="content">
+          	<div class="box box-default color-palette-box">
+		<div class="box-body">
+            <p id="category-nav">
+                <span class="active" nowid="0">全部</span>
+                <button id="doReturn" class="btn btn-warning pull-right" onclick="returnLevel();" style="display:none;">返回</button>
+                <button id="doAdd" class="btn btn-primary pull-right" onclick="showAdd();" style="display:none;margin-right:20px;">添加分类</button>
+                <!-- <button id="updateCache" class="btn btn-primary pull-right" style="margin-right:20px;">更新缓存</button> -->
+            </p>
+            <div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                <div class="row">
+                   <div class="col-sm-6"></div>
+                   <div class="col-sm-6"></div>
+                </div><div class="row">
+                <div class="col-sm-12">
+                   <table id="dataTable" class="table table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="dataTable_info" style="width: 1640px;">
+
+                    </table>
+                    <div id="dataTable_processing" class="dataTables_processing" style="display: none;">处理中...</div>
+                </div>
+            </div>
+           </div>
+		</div>
+    </div>
+
+        </section>
+      </div>
+      <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
+    </div>
+    <div class="fixedLayer">
+    <div class="fixedContainer">
+    </div>
+</div>
+    <img id="basePicInfo" src="" style="display:none;">
+{% endblock %}
+
+{% block js%}
+    <script src="{{static_url}}admin/js/jQuery-2.1.4.min.js"></script>
+    <script src="{{static_url}}admin/js/bootstrap.min.js"></script>
+    <script src="{{static_url}}admin/js/checkAction.js"></script>
+    <script src="{{static_url}}admin/js/public.js"></script>
+    <script src="{{static_url}}admin/js/base.js"></script>
+    <script src="{{static_url}}admin/js/dataTables.min.js"></script>
+
+    <script type="text/javascript">
+    $(function(){
+        var checkLogin = new checkLogin();//判断登录
+        if (checkLogin.flag) {
+
+        }else{
+          window.location.href = "/api/oam/admin/login";
+        }
+
+        //判断登录
+        function checkLogin(){
+            var loginName = '';
+            var loginList = '';
+            var topOrderN = '';
+            //获取session 判断登录
+            var Login = sessionStorage.getItem("adminLogin");
+            console.log(Login);
+            // var Login = getSessionstronge("login");
+            if (Login == null) {  //没有登录
+                console.log("没登录");
+                this.flag = false;
+            }else{  //登录
+                console.log("已经登陆");
+                this.flag = true;
+                $(".info p").eq(0).text(Login);
+                $(".hidden-xs").text(Login);
+            }
+        }
+    		initMenu('content',4);
+        searchCategory({"id":0});
+        loadDefaultInfo();
+    	});
+
+        var nowLevel = 1;
+        var editType = 0;
+        var isLoading = true;
+        var upInfo = {};
+        var fileNum=0;
+        //data是Json
+        function searchCategory(data){
+            changeBind($('#doReturn')[0],true);
+            getCategoryList(false,data);
+        }
+
+
+        function getCategoryList(keepFlag,navData){
+            if(!isLoading) return;
+            isLoading = false;
+            var dt = $('#dataTable').dataTable({
+                "paging": true,//分页
+                "ordering": true,//是否启用排序
+                "searching": true,//搜索
+                "paginationType":"full_numbers",
+                "autoWidth":true,
+                "ajax": {
+                    "url":"/api/oam/product/categroy1_list",
+
+                    "dataSrc":"firstlist"
+
+                },
+                "language": {
+                  lengthMenu: '<select class="form-control input-xsmall">' + '<option value="1">1</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="30">30</option>' + '<option value="40">40</option>' + '<option value="50">50</option>' + '</select>条记录',//左上角的分页大小显示。
+                  search: '<span>关键字搜索：</span>',
+                  paginate: {//分页的样式内容。
+                    previous: "上一页",
+                    next: "下一页",
+                    first: "第一页",
+                    last: "最后"
+                  },
+                  zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
+                  //下面三者构成了总体的左下角的内容。
+                  info: "总共_PAGES_ 页，显示第_START_ 到第 _END_ ，筛选之后得到 _TOTAL_ 条，初始_MAX_ 条 ",//左下角的信息显示，大写的词为关键字。
+                  infoEmpty: "0条记录",//筛选为空时左下角的显示。
+                  infoFiltered: ""//筛选之后的左下角筛选提示，
+                },
+                "columns": [
+                    {
+                      "title":'',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"id",
+                      "title":'分类ID',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"name",
+                      "title":'分类名称',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"",
+                      "title":'操作',
+                      "class":'th-center td-center'
+                    }
+                ],
+                "columnDefs": [
+                    {
+                        "render": function(data,type,row){
+                            var inputDiv = '<input type="checkbox" class="table-checkbox" name="showLists" data-name="'+row.name+'" data-id="'+row.sku+'"/>';
+                            return inputDiv;
+                        },
+                        "targets":0
+                    },
+                    {
+                    "render": function(data,type,row){
+                        var edit = '<a href="javascript:void(0)" class="btn btn-sm modify">编辑</a>';
+                        var deleteItem = '<a href="javascript:void(0)" class="btn btn-sm delete-item">删除</a>';
+                        var check = '<a href="javascript:void(0)" class="btn btn-sm check-detail">查看子菜单</a>';
+                        var btns = edit+'<br/>'+deleteItem;
+                        if(nowLevel < 4) btns+= '<br />' + check;
+                        return btns;
+                    },
+                    "targets":3
+                }],
+                "createdRow":function(row,data,index){
+                    function showOrgImg(url){
+                        var oImg = $('<img style="max-height:600px;max-width:800px;">');
+                        oImg.load(function() {
+                            var oWidth = $(oImg)[0].width+'px';
+                            var oHeight = $(oImg)[0].height+'px';
+                            $('.fixedContainer').html('<div class="image-prev"></div>')
+                            $('.fixedContainer .image-prev').html(oImg);
+                            $('.fixedContainer').css({
+                                'width':oWidth,
+                                'height':oHeight,
+                                'max-width':'800px',
+                                'max-height':'600px',
+                                'box-shadow':'0px 0px 10px rgba(0,0,0,0)',
+                                'background-color':'rgba(0,0,0,0)'
+                            });
+                            $('.fixedContainer img').after('<div class="closeBtn"><img src="/bundles/oam/images/close.png" alt=""/></div>');
+                            $('.closeBtn').css('right','-30px');
+                            $('.fixedLayer').css('display','block');
+                            $('.closeBtn').css('display','block');
+                        });
+                        oImg.attr('src',url);
+                    }
+                    $('.fixedContainer').on('click','.closeBtn',function(){
+                        $('.fixedLayer').css('display','none');
+                        $('.fixedContainer').html('');
+                    });
+                    // $('td',row).eq(4).on('click',function(){
+                    //     showOrgImg(data.webPicUrl);
+                    // });
+                    // $('td',row).eq(5).on('click',function(){
+                    //     showOrgImg(data.appPicUrl);
+                    // });
+                    $('td',row).eq(3).find('.modify').bind('click',function(){
+                        showModify(data);
+                    });
+                    $('td',row).eq(3).find('.check-detail').unbind('click').bind('click',function(){
+                        // searchCategory(data);
+                        console.log(data);
+                        if (data.first == '1') {
+                            erji(data);
+                        }
+                    });
+                    $('td',row).eq(3).find('.delete-item').bind('click',function(){
+                        if(!myConfirm('是否删除该分类？')) return;
+                        deleteCategory(data.id);
+                    });
+                },
+
+            });
+
+            function erji(data){
+              $('.check-detail').click(function(){
+              var Url = '/api/oam/product/categroy2_list?id='+data.id;
+              dt.ajax.url(Url).load();
+            })
+
+            }
+        }
+
+        //编辑状态下第二个下拉框的值变化时发生的变化
+        function changeCategoryD2(callback1,callback2){
+            $('.level:gt(0)').html("");
+            getCategoryInfo($('#level0 option:selected').val(),1,function(){
+                if(callback1) callback1();
+                getCategoryInfo($('#level1 option:selected').val(),2,function(){
+                    if(callback2) callback2();
+                });
+            });
+        }
+        function editForthValue(){
+            var value1 = $($('#category-nav span')[1]).attr("nowid");
+            var value2 = $($('#category-nav span')[2]).attr("nowid");
+            var value3 = $($('#category-nav span')[3]).attr("nowid");
+            $('#level0 option[value="'+value1+'"]').prop('selected',true);
+            changeCategoryD2(function(){
+                $('#level1 option[value="'+value2+'"]').prop('selected',true);
+            },function(){
+                $('#level2 option[value="'+value3+'"]').prop('selected',true);
+            });
+        }
+
+        function showAdd(rowData){
+            editType = 1;
+            var selectCategory='';
+            if(nowLevel==4){
+                selectCategory = '<div class="form-horizontal">'
+                        +'<div class="form-group">'
+                        +'<label class="col-sm-3 control-label">所属分类</label>'
+                        +'<div class="col-sm-9 margin-negative">'
+                        +'<select class="form-control level" id="level0" onchange="changeCategoryD2();"></select>'
+                        +'<select class="form-control level" id="level1" onchange="getCategoryInfo(this.value,2);"></select>'
+                        +'<select class="form-control level" id="level2"></select>'
+                        +'</div>'
+                        +'</div>'
+                        +'</div>';
+            }
+            var editPanel = '<div class="editPanel panel panel-primary">'
+                        +'<div class="panel-heading">编辑</div>'
+                        +'<div class="panel-body">'
+                            + selectCategory
+                            // +'<form class="form-horizontal">'
+                                +'<div class="form-group">'
+                                    +'<label class="col-sm-3 control-label">分类名称</label>'
+                                    +'<div class="col-sm-9">'
+                                        +'<input type="text" class="form-control" id="categoryName"/>'
+                                    +'</div>'
+                                +'</div>'
+                                // +'<div class="form-group">'
+                                //     +'<label class="col-sm-3 control-label">App名称</label>'
+                                //     +'<div class="col-sm-9">'
+                                //         +'<input type="text" class="form-control" id="appName"/>'
+                                //     +'</div>'
+                                // +'</div>'
+                                // +'<div class="form-group">'
+                                // +'<label class="col-sm-3 control-label">排序号</label>'
+                                // +'<div class="col-sm-9">'
+                                // +'<input type="text" class="form-control" id="rankNum" oninput="checkDecimal(this);" onpropertychange="checkDecimal(this);"/>'
+                                // +'</div>'
+                                // +'</div>'
+                            // +'</form>'
+                            // +'<form class="form-horizontal" id="submitForm1" method="POST" enctype="multipart/form-data">'
+                            // +'<div class="form-group ">'
+                            // +'<label class="col-sm-3 control-label" >分类图片</label>'
+                            // +'<div class="col-sm-9 upload-container">'
+                            // +'<input type="file" class="upload-input" name="file" onchange="showFileNameandPreview(this);" />'
+                            // +'<div class="tips">图片比例不受限制</div>'
+                            // +'<div class="upload-simulate">'
+                            // +'<input type="text" class="file-name form-control" readonly="readOnly" title="" />'
+                            // +'<div class="btn btn-default upload-btn">浏览</div>'
+                            // +'<div class="nailDiv">'
+
+                            // +'</div>'
+                            // +'</div>'
+                            // +'</div>'
+                            // +'</div>'
+                            // +'</form>'
+                            // +'<form class="form-horizontal" id="submitForm2" method="POST" enctype="multipart/form-data">'
+                            // +'<div class="form-group ">'
+                            // +'<label class="col-sm-3 control-label" >app图片</label>'
+                            // +'<div class="col-sm-9 upload-container">'
+                            // +'<input type="file" class="upload-input" name="file" onchange="showFileNameandPreview(this);"　/>'
+                            // +'<div class="tips">图片比例不受限制</div>'
+                            // +'<div class="upload-simulate">'
+                            // +'<input type="text" class="file-name form-control" readonly="readOnly" title="" />'
+                            // +'<div class="btn btn-default upload-btn">浏览</div>'
+                            // +'<div class="nailDiv">'
+
+                            // +'</div>'
+                            // +'</div>'
+                            // +'</div>'
+                            // +'</div>'
+                            // +'</form>'
+                            +'<div class="submitDiv form-group">'
+                                +'<label class="col-sm-3 control-label" ></label>'
+                                +'<div class="col-sm-9">'
+                                    +'<input type="button" class="btn btn-primary saveBtn" value="保存"/>'
+                                    +'<input type="button" class="btn btn-default cancelBtn" value="取消"/>'
+                                +'</div>'
+                            +'</div>'
+                            +'<div class="imgPreviewDiv"><img id="imgPreview" /></div>'
+                        +'</div>'
+                    +'</div>';
+            $('.fixedContainer').html(editPanel);
+            if(nowLevel==4){
+                $('.editPanel').css('width','400px').css('height','560px');
+                $('.imgPreviewDiv').css({
+                         'height':'560px',
+                         "line-height":"560px"});
+                $('.file-name').css('width','185px');
+                getCategoryInfo(0,0,function(){
+                    editForthValue();
+                });
+            }
+            if(rowData){
+                // setDefaultEditValue(rowData);
+            }
+            $('.submitDiv .saveBtn').on('click',function(){
+                if(!checkNull($('#categoryName').val(),'请填写分类名称')) return;
+                // if(!checkNull($('#appName').val(),'请填写app名称')) return;
+                // if(!checkNull($('#rankNum').val(),"请填写排序号！")) return;
+
+                upInfo.name = $('#categoryName').val();
+                upInfo.appName = $('#appName').val();
+                upInfo.orderIndex = $('#rankNum').val();
+                changeBind(this,true);
+                // checkCategory();
+            });
+            $('.submitDiv .cancelBtn').on('click',function(){
+                $('.fixedContainer').html('');
+                $('.fixedLayer').css('display','none');
+                upInfo = {};
+            });
+            setPanelSize();
+            hideRightPreimg();
+            $('.fixedLayer').css('display','block');
+        }
+
+        function setPanelSize(){
+            var orgWidth = $('.editPanel').width()+'px' ;
+            var orgHeight = $('.editPanel').height()+'px';
+            $('.fixedContainer').removeAttr('style');
+            $('.fixedContainer').css('width',orgWidth).css('height',orgHeight);
+        }
+
+        function checkCategory(){
+            submitFiles('submitForm1',0);
+            submitFiles('submitForm2',1);
+            var $input1 = $('#submitForm1 [type = "file"]');
+            var $input2 = $('#submitForm2 [type = "file"]');
+            var fileStatus1=checkNull($input1.val());
+            var fileStatus2 = checkNull($input2.val());
+            if(fileStatus1){
+                $input1.attr('data-uploading',1)   //标明input1即将上传
+                       .attr('data-uploaded',0);    //标明input1文件上传成功状态
+                $('#submitForm1').submit();
+            }else{
+                $input1.attr('data-uploading',0)  //标明input1没上传
+                       .attr('data-uploaded',0);
+            }
+            if(fileStatus2){
+                $input2.attr('data-uploading',1)   //标明input2即将上传
+                       .attr('data-uploaded',0);    //标明input1文件上传成功状态
+                $('#submitForm2').submit();
+            }else{
+                $input2.attr('data-uploading',0)  //标明input2没上传
+                       .attr('data-uploaded',0);
+            }
+
+            //判断图片上传状态
+            var upTimer = setInterval(function () {
+                var con1 = $input1.attr('data-uploaded')==$input1.attr('data-uploading');
+                var con2 = $input2.attr('data-uploaded')==$input2.attr('data-uploading');
+                if(con1&&con2){
+                    $input1.removeAttr('data-uploading data-uploaded');
+                    $input2.removeAttr('data-uploading data-uploaded');
+                    if(editType==1)  //添加状态
+                        saveCategory();
+                    else if(editType==2)  //修改状态
+                        modifyCategory();
+                    clearInterval(upTimer);
+                }
+            }, 500);
+        }
+
+        function setDefaultEditValue(data){
+            $('#categoryName').val(data.name);
+            $('#appName').val(data.appName);
+            $('#rankNum').val(data.orderIndex);
+            upInfo.webPicId = data.webPicId;
+            upInfo.appPicId = data.appPicId;
+            upInfo.orderIndex = data.orderIndex;
+            var appPicUrl = data.appPicUrl;
+            var webPicUrl = data.webPicUrl;
+            setImgDefaultStatus(appPicUrl,$('#submitForm1 .file-name'),$('#submitForm1 .nailDiv'));
+            setImgDefaultStatus(webPicUrl,$('#submitForm2 .file-name'),$('#submitForm2 .nailDiv'));
+        }
+
+        // 获取限制预览的参数
+        function setParameters(uploadConst,formId){
+            var parameters;
+            var appConst = {
+                "checkFormatErrMsg":"分类图片格式错误！",
+                "scaleValue":''
+            };
+            var webConst = {
+                "checkFormatErrMsg":"app图片格式错误！",
+                "scaleValue":''
+            };
+            var uploadConst1={};
+            var uploadConst2={};
+            $.extend(uploadConst1,uploadConst,appConst);
+            $.extend(uploadConst2,uploadConst,webConst);
+            if(formId=='submitForm1'){
+                parameters = uploadConst1;
+            }else{
+                parameters = uploadConst2;
+            };
+            return parameters;
+        }
+        function showModify(data){
+            showAdd(data);
+            editType = 2;
+            upInfo.id = data.id;
+        }
+
+        function saveCategory(){
+            if(nowLevel==4){
+                upInfo.parentId = $('#level2').val();
+            }else{
+                upInfo.parentId = $('#category-nav .active').attr('nowId');
+            }
+            var oId = upInfo.parentId;
+            ajaxAction(
+                'POST',
+                apiPath('/api/category/create'),
+                upInfo,
+                true,
+                function (data,textStatus){
+                    alert('添加成功！');
+                    $('.submitDiv .cancelBtn').click();
+                    getCategoryList(false,{"id":oId});
+                },
+                function (errno,errmsg){
+                    alert(errmsg);
+                }
+            );
+        }
+
+        function modifyCategory(){
+            if(nowLevel==4){
+                var category1Id = $('#level0').val();
+                var category1Text = $('#level0 option:selected').text();
+                var category2Id = $('#level1').val();
+                var category2Text = $('#level1 option:selected').text();
+                var category3Id = $('#level2').val();
+                var category3Text = $('#level2 option:selected').text();
+                upInfo.parentId = $('#level2').val();
+                $($('#category-nav span')[1]).attr('nowId',category1Id).text('>'+category1Text);
+                $($('#category-nav span')[2]).attr('nowId',category2Id).attr('navId',category1Id).text('>'+category2Text);
+                $($('#category-nav span')[3]).attr('nowId',category3Id).attr('navId',category2Id).text('>'+category3Text);
+            }else{
+                upInfo.parentId = $('#category-nav .active').attr('nowId');
+            }
+            var oId = upInfo.parentId;
+            ajaxAction(
+                'PUT',
+                apiPath('/api/category/update'),
+                upInfo,
+                true,
+                function (data,textStatus){
+                    alert('修改成功！');
+                    $('.submitDiv .cancelBtn').click();
+                    upInfo={};
+                    fileNum=0;
+                    getCategoryList(true,{"id":oId});
+                },
+                function (errno,errmsg){
+                    alert(errmsg);
+                }
+            );
+        }
+
+        function submitFiles(element,index){
+            $('#'+element).form({
+                url:'/api/file/upload',
+                success:function(data){
+                    data = $.evalJSON(data);
+                    if(data.errno == 0){
+                        var $obj1 = $('#submitForm1 input[type="file"]');
+                        var $obj2 = $('#submitForm2 input[type="file"]');
+                        if(index){
+                            $obj2.attr('data-uploaded',1);
+                            upInfo.webPicId = data.id;
+                        }else{
+                            $obj1.attr('data-uploaded',1);
+                            upInfo.appPicId = data.id;
+                        }
+                    }
+                },
+                error:function(error,errmsg){
+                    alert(errmsg);
+                    console.log(errmsg);
+                }
+            });
+        }
+
+        function addNav(value,parentId,nowId){
+            var navs = $('#category-nav span');
+            navs.removeClass('active');
+            $(navs[navs.length - 1]).after('<span class="active" nowId="'+nowId+'" navId="'+parentId+'"> > '+value+'</span>');
+            nowLevel++;
+            $('#doReturn').show();
+            $('#doAdd').show();
+        }
+
+        function deleteNav(){
+            if(nowLevel <= 2){
+                $('#doReturn').hide();
+            }
+            var navs = $('#category-nav span');
+            $(navs[navs.length - 1]).remove();
+            $(navs[navs.length - 2]).addClass('active');
+            nowLevel--;
+            if(nowLevel==1) $('#doAdd').hide();
+            else $('#doAdd').show();
+        }
+
+        function returnLevel(){
+            var navs = $('#category-nav span');
+            var returnId = $(navs[navs.length - 1]).attr('navId');
+            deleteNav();
+            searchCategory({"id":returnId});
+        }
+
+        function deleteCategory(dataId){
+            ajaxAction(
+                    'DELETE',
+                    apiPath('/api/category/delete'),
+                    {"id":dataId},
+                    true,
+                    function (data,textStatus){
+                        var oId=$('#category-nav .active').attr('nowId');
+                        getCategoryList(true,{"id":oId});
+                    },
+                    function (errno,errmsg){
+                        alert(errmsg);
+                    });
+        }
+        function loadDefaultInfo(){
+            $('#updateCache').off('click').on('click',function(){
+                updateCache();
+            });
+        }
+        //更新缓存
+        function updateCache(){
+            if(!myConfirm('确定更新缓存？')) return;
+            ajaxAction(
+                    'POST',
+                    apiPath('/api/category/update/memcache'),
+                    {},
+                    true,
+                    function (data,textStatus){
+                        var nowId = $('#category-nav span.active').attr("nowId");
+                        alert('缓存更新成功！');
+                        getCategoryList(false,{"id":nowId});
+                    },
+                    function (errno,errmsg){
+                        alert(errmsg);
+                    });
+        }
+    </script>
+
+{% endblock %}

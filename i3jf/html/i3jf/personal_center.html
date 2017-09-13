@@ -1,0 +1,1378 @@
+{% extends "i3jf/base.html" %}
+		
+		{% block css%}
+		<link rel="stylesheet" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/presonal_center.css">
+		{% endblock %}
+
+
+		{% block content %}
+		<div id="pageHead">
+			<div class="pageheadContent">
+				<div class="leftHead">
+					<div class="mainTittle left">
+						<a href="/"><img src="{{static_url}}images/logo.png" alt=""></a>
+					</div>
+					<div class="separateD" style="border-right: 4px solid rgb(102, 102, 102);"></div>
+					<div class="subTittle left" style="display: inline-block;">
+						<span class="subWord" style="color: rgb(39, 39, 36);">个人中心</span>
+					</div>
+				</div>
+				<div class="searchOverall">
+					<input type="text" placeholder="请输入搜索内容" class="left searchInput">
+					<span class="left searchBtn">搜&nbsp;&nbsp;索</span>
+				</div>
+			</div>
+		</div>
+		 <div id="containerBox">
+			<div id="container" class="">
+				<!-- 个人中心 -->
+				<div class="main">
+					<p class="main_list">基本信息</p>
+					<div class="basic_info">
+					    <span id="change" class="change" onclick="change_basic_info(true);">修改</span>
+					    <table class="basic_info_table show_table">
+					    	<tbody><tr>
+					    		<td class="float_right">真实姓名：</td>
+					    		<td><span class="name"></span></td>
+					    	</tr>
+					    	<tr>
+					    		<td class="float_right" style="line-height:30px;">昵称：</td>
+					    		<td><span class="nickname"></span></td>
+					    	</tr>
+					    	<tr>
+					    		<td class="float_right">性别：</td>
+					    		<td><span class="sex" data-value="0"></span></td>
+					    	</tr>
+					    </tbody></table>
+					    <!--修改基本信息-->
+					    <table class="basic_info_table change_table">
+					    	<tbody><tr>
+					    		<td class="float_right">真实姓名：</td>
+					    		<td><input id="name" class="input" type="text" maxlength="12" onkeyup="chekKey(event);"></td>
+				                <td class="notnull"></td>
+					    	</tr>
+					    	<tr>
+					    		<td class="float_right" style="line-height:30px;">昵称：</td>
+					    		<td><input id="nickname" class="input" type="text" maxlength="10" onkeyup="chekKey(event);"></td>
+				                <td class="notnull"></td>
+					    	</tr>
+					    	<tr>
+					    		<td class="float_right">性别：</td>
+					    		<td class="input_td"><input type="radio" name="sex" value="1"><span>男</span><input type="radio" name="sex" value="2"><span>女</span><input type="radio" name="sex" value="0"><span>保密</span></td>
+					    	</tr>
+					    </tbody></table>
+					    <button class="cancel_button" onclick="change_basic_info(false);">取消</button>
+					    <button class="save" onclick="save_info(this);">保存</button>
+					    <div style="clear:both;"></div>
+					</div>
+				    <!-- 安全设置 -->
+					<p class="main_list">安全设置</p>
+					<div class="safe">
+					    <table class="safe_table">
+					        <tbody><tr>
+					    		<td class="state">
+					    		    <span class="low">低</span><span class="middle">中</span><span class="high">高</span>
+					    		</td>
+					    		<td class="safe_list_td">
+					    		    <span class="safe_list">登录密码</span>
+					    		</td>
+					    		<td>
+					    			<span class="describe">安全性高的密码可以使账户更安全，建议您定期更换密码。</span>
+					    		</td>
+					    		<td width="100">
+					    			<span class="change"><a href="/api/user/password/set">修改</a></span>
+					    		</td>
+					    	</tr>
+					    	<tr>
+					    		<td class="state">
+					    		    <span class="low">低</span><span class="middle">中</span><span class="high">高</span>
+					    		</td>
+					    		<td class="safe_list_td">
+					    		    <span class="safe_list">支付密码</span>
+					    		</td>
+					    		<td>
+					    			<span class="describe">安全性高的密码可以使账户更安全，建议您定期更换密码。</span>
+					    		</td>
+					    		<!-- <td>
+					    			<span class="change"><a href="/super/personalCenter/pay/password">修改</a></span>
+					    		</td> -->
+				                <td id="payPassword_td">
+
+				                <!-- <a href="http://192.168.1.68:8080/static/payment_modification/index.html"><button class="bind cfff">设置</button></a> -->
+				                </td>
+					    	</tr>
+					    	<tr>
+					    		<td class="state">
+					    			<img src="{{static_url}}images/state_ok.png"><span class="state_span">&nbsp;已绑定</span>
+					    		</td>
+					    		<td class="safe_list_td">
+					    			<span class="safe_list">绑定手机</span>
+					    		</td>
+					    		<td>
+					    			<span class="describe">绑定后可用于手机找回密码、接受手机动态验证码等，使您的账户更加安全。</span>
+					    		</td>
+					    		<td>
+					    			<span class="change"><a href="/api/user/phone">修改</a></span>
+					    		</td>
+					    	</tr>
+					    </tbody></table>
+					</div>
+				    <div class="address">
+				        <p class="main_list">地址管理</p>
+				        <ul class="address_ul_title">
+				            <li class="width_name">
+				                收货人
+				            </li>
+				            <li class="width_address">
+				                收货地址
+				            </li>
+				            <li class="width_phone">
+				                联系电话
+				            </li>
+				            <li class="width_operate">
+				                操作
+				            </li>
+				        </ul>
+				    </div>
+					<!-- 新增地址按钮 -->
+					<button class="add_address" onclick="add_address();">新增收货地址</button>
+				</div>
+				<!--添加地址弹出框-->
+				<div id="bg"></div>
+				<div class="address_div">
+				    <p id="address_title"></p>
+				    <div class="item item_first">
+				    	<span class="tip">*</span><span>收货人</span><br>
+				    	<input id="address_name" class="margin-top" data-value="contact" maxlength="12">
+				        <p class="c0a2a" id="error_add" style="display: none;">请填写收货人！</p>
+				    </div>
+				    <div class="item">
+				    	<span class="tip">*</span><span>所在地区</span><br>
+				        <select id="address_province" class="margin-top">北京</select>
+				        <select id="address_city" class="margin-top">北京</select>
+				        <select id="address_district" class="margin-top">朝阳区</select>
+				        <select id="address_town" class="margin-top"></select>
+				    </div>
+				    <div class="item">
+				    	<span class="tip">*</span><span>详细地址</span><br>
+				        <div class="item_address">
+				            <span class="item_province"></span>
+				            <span class="item_city"></span>
+				            <span class="item_district"></span>
+				            <span class="item_town"></span>
+				        </div>
+				        <div class="item_address_detail">
+				            <input id="address_detail" class="margin-top" data-value="addressDetail" maxlength="50">
+				            <p>请您填写收货人详细地址(50字以内)</p>
+				        </div>
+				    </div>
+				    <div class="item">
+				    	<div class="item_">
+				    		<span class="tip">*</span><span>手机号</span><br>
+				    		<input id="item_telephone" class="margin-top" data-value="telephone" maxlength="11">
+				            <p class="c0a2a" id="error_tel" style="display: none;">请填写手机号码！</p>
+				            <p class="c0a2a" id="error_tel2" style="display: none;">手机号码格式不正确！</p>
+				    	</div>
+				    	<span class="or">或</span>
+				    	<div class="item_">
+				    		<span>固定电话</span><br>
+				    	    <input id="item_phone" class="margin-top" data-value="phone" maxlength="13">
+				            <p class="c0a2a" id="error_tel3" style="display: none;">请根据固话格式输入：当地区号-电话号码(电话号码是6-8位)！</p>
+				    	</div>
+
+				    </div>
+				    <div class="item">
+				        <span style="opacity:0; filter:alpha(opacity=0); -moz-opacity:0;">*</span>
+				    	<span>邮箱</span><br>
+				    	<input id="address_email" class="margin-top" data-value="email">
+				        <p class="c0a2a" id="error_email" style="display: none;">请填写正确的邮箱地址！</p>
+				    </div>
+				    <div class="item">
+				    	<span class="tip">*</span><span>地址别名</span><br>
+				    	<input id="address_bieming" class="margin-top" data-value="name" onkeyup="chekKeyAddr(event);" maxlength="10">&nbsp;&nbsp;
+				    	<span>设置一个易记的名称，如“送到家里”、“送到公司”</span>
+				        <p class="c0a2a" id="error_addaliases" style="display: none;">请填写地址别名！</p>
+				    </div>
+				    <div class="item">
+				        <button onclick="save_address(this);">保存</button>
+				        <button onclick="cancel_address();">取消</button>
+				    </div>
+				</div>
+			</div>
+		</div>
+		{% endblock %}
+
+		{% block js %}
+		<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+		<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+		<script type="text/javascript">
+			var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+                logged_in(); //已登陆
+            }else{
+                not_logged_in(); //未登录
+                window.location.href = '/api/user/login/';
+            }
+            //未登录可以执行的方法
+            function not_logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+            };
+            //已登录执行的方法
+            function logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+                cartAmount();//购物车数量
+            };
+
+		    var changeAddr='编辑收货地址';
+		    var addAddr='新增收货地址';
+		    var isMobile=/^1[3-5 7-8]\d{9}$/;
+		    var isPhone=/^0(((10)|(2[1-3]))|([3-9]\d{2}))\-\d{6,8}$/;
+		    $(function (){
+		        alertNone();
+		        changeProvince();    //换省分
+		        changeCity();    //换市
+		        changeDistrict();   //换地区
+		        setCheckAction();
+		        doSomething();  //获取用户信息
+		    })
+		    function doSomething(){
+		        getInfo();   //获取用户信息
+		        getAddressList();   //获取地址列表
+		    }
+		    /*限制输入整数和-*/
+		    function checkNaN2(target){
+		        target.value=target.value.replace(/[^\d^\-]/g,'');
+		    }
+		    //获取用户信息
+		    function getInfo(){
+		    	$.ajax({
+		    		url:'/api/user/retrieve',
+		    		type:'GET',
+		    		typedata:'json',
+		    		data:{
+
+		    		},
+		    		success:function(data){
+
+		    			var data = JSON.parse(data);
+
+		    			var errno = data.errno;
+
+		    			if (errno == 0) {
+
+		    				if (data.realname==null || data.realname=='') {
+		                    	$(".name").text('超级积分用户');
+			                } else{
+			                    $(".name").text(data.realname);
+			                };
+
+			                if (data.nickname==null) {
+			                    $(".nickname").text('超级积分用户');
+			                } else{
+			                    $(".nickname").text(data.nickname);
+			                };
+
+			                if (data.gender==1) {
+			                    $(".sex").text('男');
+			                    $(".sex").attr('data-value','1');
+			                };
+			                if (data.gender==2) {
+			                    $(".sex").text('女');
+			                    $(".sex").attr('data-value','2');
+			                };
+			                if (data.gender==0) {
+			                    $(".sex").text('保密');
+			                    $(".sex").attr('data-value','0');
+			                };
+			                // console.log('支付密码'+data.pay_password_status);
+			                if(data.pay_password_status == '' && data.pay_password_status==false)
+			                {
+			                    $('#payPassword_td').append('<a href="/api/user/pay/password/set"><button class="bind cfff">设置</button></a>');
+			                }
+			                else
+			                {
+			                    $('#payPassword_td').append('<span class="change"><a href="/api/user/pay/password/change">修改</a></span>');
+			                }
+
+		    			}else{
+		    				// console.log("用户信息失败");
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("获取用户信息失败,,请刷新...");
+		    		}
+		    	})
+		    }
+
+		    //逐行验证
+		    function checkFilter(target){
+		        var value = target.val();
+		        var pname = target.attr('id');
+		        var errmsgItem = target.parents('tr');
+		        switch(pname){
+		            case 'name':
+		                if ( $.trim(value).length <=0 ) {
+		                    errmsgItem.find('.notnull').text('真实姓名不能为空！');
+		                    return false;
+		                }
+		            break;
+
+		            case 'nickname':
+		                if ( $.trim(value).length <=0 ) {
+		                    errmsgItem.find('.notnull').text('昵称不能为空！');
+		                    return false;
+		                }
+		            break;
+		        }
+		        errmsgItem.find('.notnull').text('');
+		        return true;
+		    }
+		    //失去焦点事件
+		    function setCheckAction(){
+		        $('.change_table input').unbind('blur');
+		        $('.change_table input').bind('blur',function(){
+		            checkFilter($(this));
+		        });
+		    }
+
+		    //修改个人信息
+		    function change_basic_info(bool){
+		        if(bool){
+		            var name=$('.name').text();
+		            var nickname=$(".nickname").text();
+
+		            $('.show_table').hide();
+		            $('#change').hide();
+		            $('.change_table').show();
+		            $('.save,.cancel_button').show();
+
+		            $('#name').val($.trim(name));
+		            $('#nickname').val($.trim(nickname));
+		            checkFilter($('#name'));
+		            checkFilter($('#nickname'))
+
+		            var sex=$('.sex').attr('data-value');
+
+		            var input_td=$('input[type="radio"]');
+
+		            $.each(input_td,function(index,item) {
+		            	var hoo=$(item).val();
+		            	if ( hoo==sex ) {
+		            	    $(this).prop('checked',true);
+		            	};
+		            });
+		        }else{
+		            $('.change_table').hide();
+		            $('.save,.cancel_button').hide();
+		            $('.show_table').show();
+		            $('#change').show();
+		        }
+		    }
+		    //保存个人信息
+		    function save_info(target){
+		        var name=$('#name');
+		        var nickname=$("#nickname");
+		        var sex=$('input[type="radio"]:checked+span').text();
+		        var sex_int=$('input[type="radio"]:checked').val();
+
+		        var flag = true;
+
+		        if(!checkFilter(name)) flag = false;
+		        if(!checkFilter(nickname)) flag = false;
+		        if(!flag) return;
+		        $('.save').attr("disabled",false);
+		        $('.name').text($.trim(name.val()));
+		        $('.nickname').text($.trim(nickname.val()));
+		        $('.sex').text(sex);
+		        $('.sex').attr('data-value',sex_int);
+		        // changeBind(target,true);
+
+		        $.ajax({
+		        	url:'/api/user/update',
+		        	type:'POST',
+		        	typedata:'json',
+		        	data:{
+		        		'realname': name.val(),
+		                'nickname': nickname.val(),
+		                'gender': sex_int
+		        	},
+		        	success:function(data){
+		        		var data = JSON.parse(data);
+		        		var errno = data.errno;
+		        		if (errno == 0) {
+		        			$(".change_table").hide();
+		        			$(".cancel_button").hide();
+		        			$(".save").hide();
+		        			$(".show_table").show();
+		        			$("#change").show();
+		        		}else{
+		        			// console.log("用户信息修改异常");
+		        		}
+		        	},
+		        	error:function(error){
+		        		alert("用户信息修改失败,请刷新...");
+		        	}
+		        })
+		    }
+		    //回车确认修改个人信息
+		    function chekKey(e){
+		        if(e.keyCode == 13){
+		            save_info();
+		        }
+		    }
+
+		    //自动回填数据
+		    function setBindJson(target,data){
+		        $.each(data,function(index,content){
+		        	// console.log('回填index：'+index);
+		            var item = target.find('[data-value = "'+index+'"]');
+		            if(!item[0]) return;
+		            if(matchTag(item)){
+		                item.val(content);
+		            };
+		        })
+		    }
+
+		    //判断标签类型
+		    function matchTag(target){
+		        var tag = target[0].localName;
+		        var flag = true;
+		        switch(tag){
+		            case 'span':
+		            case 'p':
+		            case 'div':
+		                flag = false;
+		            break;
+		        }
+		        return flag;
+		    }
+
+		    //获取地址列表
+		    function getAddressList(){
+		    	$.ajax({
+		    		url:'/api/user/address/list',
+		    		type:'GET',
+		    		typedata:'json',
+		    		data:{
+
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			// console.log(data);
+
+		                $('.address_ul_info').remove();
+		                $.each(data,function(index,content){
+		                    var provinceId = content.province_id;
+		                    var cityId = content.city_id;
+		                    var countyId = content.district_id;
+		                    var townId = content.town_id;
+
+		                    if (content.is_default==true) {
+		                        var Default='默认地址';
+		                        var onclick = '';
+		                        var defaultClass = 'isDefault_address';
+		                    } else{
+		                        var Default='设为默认地址';
+		                        var onclick = 'onclick="default_address(this);"';
+		                        var defaultClass = 'default_address';
+		                    };
+
+		                    var id = content.id;
+		                    var contact = content.contact;
+		                    var fullAddress = content.fullAddress;
+		                    var addressDetail = content.address_detail;
+		                    // var telephone = (!content.telephone) ? content.phone : content.telephone;
+		                    var telephone = content.telephone;
+		                    var name = content.name;
+
+		                    $(".address").append(
+		                        '<ul class="address_ul_info" id="'+id+'" isdefault="'+content.is_default+'">'+
+		                            '<li class="width_name">'+'<span>'+contact+'</span>'+
+		                            '</li>'+
+		                            '<li class="width_address">'+
+		                                '<div>'+'<span addressId="'+id+'" shengID="'+provinceId+'" sid="'+content.province_Id+'" shiID="'+cityId+'" cid="'+content.city_Id+'" quID="'+countyId+'" qid="'+content.district_Id+'" townId="'+townId+'" tid="'+content.town_Id+'" detail="'+addressDetail+'" remarks="'+name+'">'+provinceId+cityId+countyId+townId+addressDetail+'</span></div>'+
+		                            '</li>'+
+		                            '<li class="width_phone">'+'<span>'+telephone+'</span>'+
+		                            '</li>'+
+		                            '<li class="width_operate">'+
+		                                '<span class="'+defaultClass+'" '+onclick+'>'+Default+'</span>'+
+		                                '<span class="edit bianji_address" onclick="bianji_address(this);">编辑</span>'+
+		                                '<span class="delete shanchu_address">删除</span>'+
+		                            '</li>'+
+		                            '<div style=" clear:both; visibility:hidden;">'+
+		                        '</ul>'
+		                    );
+		                });
+		                $(".address .shanchu_address").bind('click',function(){
+		                    var target = $(this);
+		                    // console.log("删除");
+		                    // var json = {
+		                    //     'mainMsg':'确认删除此地址信息？',
+		                    //     'subMsg':'删除后无法恢复',
+		                    //     'sureFun':function(){
+		                    //         var address_id=target.parents('.address_ul_info').attr('id');
+		                    //         delete_address(address_id,target[0]);
+		                    //     }
+		                    // }
+		                    var address_id=target.parents('.address_ul_info').attr('id');
+		                    delete_address(address_id,target[0]);
+
+		                    // diyAlert(json,true);
+		                });
+		                //matchAddres(info);//匹配全部地址
+
+		    		},
+		    		error:function(error){
+		    			// console.log("获取地址列表接失败---"+error);
+		    		}
+		    	})
+		    }
+		    // function matchAddres(info){
+		    // 	$.ajax({
+		    // 		url:''
+		    // 	})
+		    //     ajaxAction(
+		    //         'GET',
+		    //         apiPath('/api/province'),
+		    //         {},
+		    //         true,
+		    //         function(data,textStatus){
+		    //             $.each(info,function(index,content){
+		    //                 var provinceId = content.provinceId;
+		    //                 var id = content.id;
+		    //                 var addressDetail = content.addressDetail;
+		    //                 var a = '';
+		    //                 $.each(data.province,function(index,content){
+		    //                     var name=content.name;
+		    //                     var code=content.code;
+		    //                     if (code==provinceId) {
+		    //                         a=name;
+		    //                         return false;
+		    //                     };
+		    //                 });
+		    //                 hhh(id,a,addressDetail);
+		    //             });
+		    //         },
+		    //         function(errno,errmsg) {
+		    //             alert(errmsg);
+		    //     });
+		    // }
+
+		    // function hhh(addressId,provinceName,addressDetail){
+		    //     var that=$('.address #'+addressId).find('[addressId="'+addressId+'"]');
+		    //     var sheng=that.attr('shengID');
+		    //     var shi=that.attr('shiID');
+		    //     var qu=that.attr('quID');
+		    //     var town=that.attr('townId');
+		    //     var setName = provinceName;
+
+		    //     ajaxAction(
+		    //         'GET',
+		    //         apiPath('/api/city?provinceId='+sheng),
+		    //         {},
+		    //         true,
+		    //         function(data,textStatus){
+		    //             $.each(data.city, function(index, content) {
+		    //                 var name=content.name;
+		    //                 var code=content.code;
+		    //                 if (code==shi) {
+		    //                     setName+=name;
+		    //                     return false;
+		    //                 };
+		    //             });
+		    //             ajaxAction(
+		    //                 'GET',
+		    //                 apiPath('/api/district?cityId='+shi),
+		    //                 {},
+		    //                 true,
+		    //                 function(data,textStatus){
+		    //                     $.each(data.district, function(index, content) {
+		    //                         var name2=content.name;
+		    //                         var code2=content.code;
+		    //                         if (code2==qu) {
+		    //                             setName+=name2;
+		    //                             //that.append(setName+addressDetail);
+		    //                             return false;
+		    //                         };
+		    //                     });
+		    //                     ajaxAction(
+		    //                         'GET',
+		    //                         apiPath('/api/town?cityId='+shi+'&countyId='+qu),
+		    //                         {},
+		    //                         true,
+		    //                         function(data,textStatus){
+		    //                             $.each(data.town, function(index, content) {
+		    //                                 var name2=content.name;
+		    //                                 var code2=content.code;
+		    //                                 if (code2==town) {
+		    //                                     setName+=name2;
+		    //                                     return false;
+		    //                                 }
+		    //                             });
+		    //                             that.append(setName+addressDetail);
+		    //                         },
+		    //                         function(errno,errmsg){
+		    //                             $('.item_address .item_town').html('');
+		    //                             alert(errmsg);
+		    //                     });
+		    //                 },
+		    //                 function(errno,errmsg){
+		    //                     alert(errmsg);
+		    //             });
+		    //         },
+		    //         function(errno,errmsg) {
+		    //             alert(errmsg);
+		    //     });
+		    // }
+
+
+		    //编辑地址
+		    function bianji_address(target){
+		        cancel_address();
+		        $("#bg").css({
+		            display: "block", height: $(document).height()
+		        });
+		        $(".address_div").css('display', 'block');
+		        getAddr();
+		        //编辑地址滚到顶部
+		        $('html, body').animate({scrollTop:0}, 'slow');
+		        var ul_id=$(target).parents('.address_ul_info').attr('id');
+		        var ul_isdefault=$(target).parents('.address_ul_info').attr('isdefault');
+		        $("#address_title").addClass('bianji_p').text(changeAddr);
+		        $(".address_div").attr('id', ul_id);
+		        $(".address_div").attr('is_default',ul_isdefault);
+		        var htdata = {};
+		        htdata.name = $(target).parents('.address_ul_info').find('.width_address span').attr('remarks');
+		        htdata.addressDetail = $(target).parents('.address_ul_info').find('.width_address span').attr('detail');
+		        htdata.contact = $(target).parents('.address_ul_info').find('.width_name span').text();
+		        htdata.telephone = $(target).parents('.address_ul_info').find('.width_phone span').text();
+		 		setBindJson($('.address_div'),htdata);   //自动回填数据
+
+		 		var provinceId = $(target).parents('.address_ul_info').find('.width_address span').attr('sid');
+                var cityId = $(target).parents('.address_ul_info').find('.width_address span').attr('cid');
+                var countyId = $(target).parents('.address_ul_info').find('.width_address span').attr('qid');
+                var townId = $(target).parents('.address_ul_info').find('.width_address span').attr('tid');
+                // console.log(typeof(provinceId));
+                getAdd(provinceId,cityId,countyId,townId); //点击编辑地址循环省市区
+
+		 		// $.ajax({
+		 		// 	url:'/api/user/address/update/',
+		 		// 	type:'POST',
+		 		// 	datatype:'json',
+		 		// 	data:{
+
+		 		// 	},
+		 		// 	success:function(data){
+		 		// 		alert("编辑收货地址回调");
+		 		// 		var data = JSON.parse(data);
+		 		// 		// console.log(data);
+		 		// 		var errno = data.errno;
+		 		// 		if (errno == 0) {
+		 		// 			var info=data.addressList;
+			  //               $.each(info,function(index,content){
+			  //                   if (content.id==ul_id) {
+			  //                       var data=content;
+			  //                       setBindJson($('.address_div'),data);   //自动回填数据
+
+			  //                       var provinceId = data.province_id;
+			  //                       var cityId = data.city_id;
+			  //                       var countyId = data.county_id;
+			  //                       var townId = content.town_id;
+
+			  //                       getAdd(provinceId,cityId,countyId,townId); //点击编辑地址循环省市区
+			  //                   }
+			  //               });
+		 		// 		}
+		 		// 	},
+		 		// 	error:function(error){
+		 		// 		alert("编辑地址接口失败---"+error);
+		 		// 	}
+		 		// })
+		    }
+
+		    function getAdd(province_id,city_id,county_id,town_id){
+		    	// console.log("sheng",province_id,city_id,county_id,town_id);
+		        $.ajax({
+		        	url:'/api/area/province/list',
+		        	type:'GET',
+		        	datatype:'json',
+		        	data:{
+
+		        	},
+		        	success:function(data){
+		        		var data = JSON.parse(data);
+		        		// console.log(data);
+		        		$("#address_province").html('');
+		    			$.each(data.province,function(index,content){
+		                    var name=content.name;
+		                    var code=content.id;
+		                    $("#address_province").append('<option code="'+code+'" nid="'+content.nid+'" value="'+name+'">'+name+'</option>');
+		                });
+		                $("#address_province").find("option[code='"+province_id+"']").attr("selected",true);  //选择
+		                var province=$("#address_province option:selected").val();
+		                var provinceId = $("#address_province option:selected").attr("code");
+			            $(".item_province").text(province);
+
+				    	getAddShi(provinceId,city_id,county_id,town_id);//市
+		        	},
+		        	error:function(error){
+		        		alert("编辑省份失败，请刷新...");
+		        	}
+		        })
+		    }
+
+		    //点击编辑地址获取市
+		    function getAddShi(province_id,city_id,county_id,town_id){
+		    	// console.log("shi",province_id,city_id,county_id,town_id);
+		    	$.ajax({
+		    		url:'/api/area/city/list',
+		    		type:'GET',
+		    		datatype:'json',
+		    		data:{
+		    			'id':province_id
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			// console.log(data);
+	    				$("#address_city").empty();
+		                $.each(data.city,function(index,content){
+		                	var name=content.name;
+			                // var code=content.pid;
+			                var code=content.id;
+			                $("#address_city").append('<option code="'+code+'" nid="'+content.nid+'">'+name+'</option>');
+		                });
+		                $("#address_city").find("option[code='"+city_id+"']").attr("selected",true);
+		                var city=$("#address_city option:selected").val();
+		                //alert(city);
+		                var cityId = $("#address_city option:selected").attr("code");
+		                $(".item_city").text(city);
+				    	getAddQu(province_id,cityId,county_id,town_id);  //区县
+		    		},
+		    		error:function(error){
+		    			alert("编辑市失败，请刷新...")
+		    		}
+		    	})
+		    }
+
+		    //点击编辑地址获取区
+		    function getAddQu(province_id,city_id,county_id,town_id){
+		    	console.log("区",city_id);
+		    	$.ajax({
+		    		url:'/api/area/district/list',
+		    		type:'GET',
+		    		datatype:'json',
+		    		data:{
+		    			'id':city_id
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			console.log(data);
+
+
+	    				$("#address_district").empty();
+		                $.each(data.district,function(index,content){
+		                    var name=content.name;
+		                    var code=content.id;
+		                    var pid=content.pid;
+		                   $("#address_district").append('<option code="'+code+'" pid="'+pid+'" nid="'+content.nid+'">'+name+'</option>');
+
+
+		                });
+		                $("#address_district").find("option[code='"+county_id+"']").attr("selected",true);
+		                var district=$("#address_district option:selected").val();
+		                $(".item_district").text(district);
+		                var countyId = $("#address_district option:selected").attr("code");
+		                var countyPid = $("#address_district option:selected").attr("pid");
+				    	getAddXian(province_id,city_id,countyId,town_id,countyPid); //乡镇
+		    		},
+		    		error:function(error){
+		    			alert("编辑区县失败，请刷新...");
+		    		}
+		    	})
+		    }
+
+		    //编辑乡镇
+		    function getAddXian(province_id,city_id,county_id,town_id,countyPid){
+		    	console.log("乡镇",county_id,countyPid);
+		    	$.ajax({
+		    		url:'/api/area/town/list',
+		    		type:'GET',
+		    		datatype:'json',
+		    		data:{
+		    			'nid':county_id,
+		    			'pid':countyPid
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			var errno = data.errno;
+		    			console.log(data);
+	    				$("#address_town").empty();
+		                $.each(data.town,function(index,content){
+		                    var name=content.name;
+		                    var code=content.id;
+		                    $("#address_town").append('<option code="'+code+'" nid="'+content.nid+'">'+name+'</option>');
+		                });
+		                $("#address_town").find("option[code='"+town_id+"']").attr("selected",true);
+		                var town=$("#address_town option:selected").val();
+		                $(".item_town").text(town);
+		    		},
+		    		error:function(error){
+		    			alert("编辑乡镇失败，请刷新...");
+		    		}
+		    	})
+		    }
+		    //添加地址
+		    function add_address(){
+		        cancel_address();
+		        $("#bg").css({
+		            display: "block", height: $(document).height()
+		        });
+		        $("#address_title").removeClass('bianji_p').text(addAddr);
+		        $(".address_div").css('display', 'block');
+		        getAddr();
+		        //编辑地址滚到顶部
+		        $('html, body').animate({scrollTop:0}, 'slow');
+
+		        //获取省份
+		        getProvince();
+
+		    }
+		    //邮箱格式验证
+		    function isEmail(str){
+		        var reg = /^(\w)+(\.\w+)*@(.)+((\.\w+)+)$/;
+		        return reg.test(str);
+		    }
+		    //保存地址
+		    function save_address(target){
+		    	// console.log(target);
+		        var id = $(".address_div").attr('id');
+		        var isdefault = $(".address_div").attr('is_default');
+		        var contact=$("#address_name").val();
+		        var telephone=$("#item_telephone").val();
+		        var provinceId=$("#address_province option:selected").attr('nid');
+		        var cityId=$("#address_city option:selected").attr('nid');
+		        var countyId=$("#address_district option:selected").attr('nid');
+		        var townId=$("#address_town option:selected").attr('nid');
+		        var name=$("#address_bieming").val();
+		        var email=$("#address_email").val();
+		        var addressDetail=$("#address_detail").val();
+		        addressDetail = addressDetail.replace(/\s+/g,'');
+		        var phone=$("#item_phone").val();
+		        var provinceName=$("#address_province option:selected").val();
+		        var cityName=$("#address_city option:selected").val();
+		        var countyName=$("#address_district option:selected").val();
+		        var townName=$("#address_town option:selected").val();
+
+		        // console.log(provinceId,cityId,countyId,townId);
+		        if ( $.trim(contact).length<=0 ) {
+		            $('#error_add').show();
+		            return;
+		        }
+		        if ( $.trim(addressDetail).length<=0 ) {
+		            // var mainMsg = '请填写详细地址！';
+		            // var msgInfo = {
+		            //     'mainMsg': mainMsg,
+		            //     'alertType': true
+		            // };
+		            // diyAlert(msgInfo,true);
+		            return;
+		        }
+		        if($.trim(addressDetail).length>50 )
+		        {
+		            return;
+		        }
+		        if ( $.trim(telephone).length <= 0 && $.trim(phone).length <= 0) {
+		            $('#error_tel').show();
+		            return;
+		        }
+		        if($.trim(telephone).length > 0){
+		            $('#error_tel').hide();
+		            if (!isMobile.test(telephone)) {
+		                $('#error_tel2').show();
+		                return;
+		            }
+		            else
+		            {
+		                $('#error_tel2').hide();
+		            }
+		        }
+		        else
+		        {
+		            $('#error_tel').show();
+		            $('#error_tel2').hide();
+		            return;
+		        }
+		        if($.trim(phone).length > 0){
+		            $('#error_tel').hide();
+		            if (!isPhone.test(phone)) {
+		                $('#error_tel3').show();
+		                return;
+		            }
+		            else
+		            {
+		                $('#error_tel3').hide();
+		            }
+		        }
+		        else
+		        {
+		            $('#error_tel3').hide();
+		        }
+		        if ( $.trim(email).length>0 ) {
+		            if ( !isEmail(email)) {
+		                $('#error_email').show();
+		                return;
+		            }
+		            else
+		            {
+		                $('#error_email').hide();
+		            }
+		        }
+		        if ( $.trim(name).length<=0 ) {
+		            $('#error_addaliases').show();
+		            return;
+		        }
+		        else
+		        {
+		            $('#error_addaliases').hide();
+		        }
+		        // changeBind(target,true);
+		        //如果是编辑地址
+		        // console.log(id);
+		        if ($("#address_title").hasClass('bianji_p')) {
+		        	// console.log(id,isdefault,contact,telephone,provinceId,cityId,countyId,townId,name,email,addressDetail);
+		        	$.ajax({
+		        		url:'/api/user/address/update/',
+		        		type:'POST',
+		        		datatype:'json',
+		        		data:{
+		        			'id':id,
+		        			'is_default':isdefault,
+		        			'contact': contact,
+		                    'telephone': telephone,
+		                    'province_id': provinceId,
+		                    'city_id': cityId,
+		                    'county_id': countyId,
+		                    'town_id':townId,
+		                    'name': name,
+		                    'email': email,
+		                    'address_detail': addressDetail
+		        		},
+		        		success:function(data){
+		        			// console.log("修改收获地址接口进入");
+		        			// var data = JOSN.parse(data);
+		        			// console.log(data);
+	        				$("#bg,.address_div").css('display', 'none');    //关闭弹出层
+		                    $("#address_title").removeClass('bianji_p');
+		                    $(".address_div").attr('id', '');
+		                    contact=$("#address_name").val('');
+		                    telephone=$("#item_telephone").val('');
+		                    name=$("#address_bieming").val('');
+		                    email=$("#address_email").val('');
+		                    addressDetail=$("#address_detail").val('');
+		                    phone=$("#item_phone").val('');
+		                    $(".address_ul_info").remove();
+		                    getAddressList();
+
+		        		},
+		        		error:function(error){
+		        			alert("修改收获地址接口失败，请刷新...");
+		        			// changeBind(target,false);
+		                    // alert(errmsg);
+		        		}
+		        	})
+		        } else {
+		        	//新增收获地址
+		        	// console.log("新增收获地址接口进入");
+		        	$.ajax({
+		        		url:'/api/user/address/create/',
+		        		type:'POST',
+		        		datatype:'json',
+		        		data:{
+		        			'contact': contact,
+		                    'telephone': telephone,
+		                    'province_id': provinceId,
+		                    'city_id': cityId,
+		                    'county_id': countyId,
+		                    'town_id':townId,
+		                    'name': name,
+		                    'email': email,
+		                    'address_detail': addressDetail
+		        		},
+		        		success:function(data){
+		        			var data = JSON.parse(data);
+		        			// console.log(data);
+		        			var errno = data.errno;
+		        			if (errno == 0) {
+		        				// console.log("新增收获地址接口回调成功");
+		        				cancel_address();
+			                    $(".address_ul_info").remove();
+			                    getAddressList();
+			                    // changeBind(target,false);
+		        			}else{
+		        				// console.log("新增收获地址接口回调成功异常");
+		        			}
+		        		},
+		        		error:function(error){
+		        			alert("新增收获地址失败,请刷新...");
+		        			// changeBind(target,false);
+		                    // alert(errmsg);
+		        		}
+		        	})
+		        }
+		    }
+		    function getAddr()
+		    {
+		        $("#address_name").blur(function() {
+		            var code = $("#address_name").val();
+		            if ( $.trim(code).length<=0 ) {
+		                $('#error_add').show();
+		                return;
+		            }
+		            else
+		            {
+		               $('#error_add').hide();
+		            }
+		        });
+		        $("#item_telephone").blur(function() {
+		            var code = $("#item_telephone").val();
+		            var phone=$("#item_phone").val();
+		            if ( $.trim(code).length <= 0 && $.trim(phone).length <= 0) {
+		                $('#error_tel').show();
+		                $('#error_tel2').hide();
+		                $('#error_tel3').hide();
+		                return;
+		            }
+		            if($.trim(code).length > 0){
+		                $('#error_tel').hide();
+		                if (!isMobile.test(code)) {
+		                    $('#error_tel2').show();
+		                    return;
+		                }
+		                else
+		                {
+		                    $('#error_tel2').hide();
+		                }
+		            }
+		            else
+		            {
+		                $('#error_tel').show();
+		                $('#error_tel2').hide();
+		                return;
+		            }
+		        });
+		        $("#item_phone").blur(function() {
+		            var phone = $("#item_telephone").val();
+		            var code=$("#item_phone").val();
+		            if ( $.trim(code).length <= 0 && $.trim(phone).length <= 0) {
+		                $('#error_tel').show();
+		                $('#error_tel2').hide();
+		                $('#error_tel3').hide();
+		                return;
+		            }
+		            if($.trim(code).length > 0){
+		                $('#error_tel').hide();
+		                if (!isPhone.test(code)) {
+		                    $('#error_tel3').show();
+		                    return;
+		                }
+		                else
+		                {
+		                    $('#error_tel3').hide();
+		                }
+		            }
+		            else
+		            {
+		                $('#error_tel3').hide();
+		            }
+		        });
+		        $("#address_email").blur(function() {
+		            var code = $("#address_email").val();
+		            if ( $.trim(code).length>0 ) {
+		                if ( !isEmail(code)) {
+		                    $('#error_email').show();
+		                    return;
+		                }
+		                else
+		                {
+		                    $('#error_email').hide();
+		                }
+		            }
+		            else
+		            {
+		                $('#error_email').hide();
+		            }
+		        });
+		        $("#address_bieming").blur(function() {
+		            var code = $("#address_bieming").val();
+		            if ( $.trim(code).length<=0 ) {
+		                $('#error_addaliases').show();
+		                return;
+		            }
+		            else
+		            {
+		                $('#error_addaliases').hide();
+		            }
+		        });
+		    }
+		    function alertNone(){
+		        $('#error_add').hide();
+		        $('#error_tel').hide();
+		        $('#error_tel2').hide();
+		        $('#error_tel3').hide();
+		        $('#error_email').hide();
+		        $('#error_addaliases').hide();
+		    }
+		    //取消保存、修改地址
+		    function cancel_address(){
+		        //关闭弹出层
+		        $("#bg,.address_div").css('display', 'none');
+		        contact=$("#address_name").val('');
+		        telephone=$("#item_telephone").val('');
+		        name=$("#address_bieming").val('');
+		        email=$("#address_email").val('');
+		        addressDetail=$("#address_detail").val('');
+		        phone=$("#item_phone").val('');
+		        alertNone();
+		    }
+		    //删除地址
+		    function delete_address(a,item){
+		    	$.ajax({
+		    		url:'/api/user/address/remove/',
+		    		type:'POST',
+		    		datatype:'json',
+		    		data:{
+		    			'id':a
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				$(item).parents('.address_ul_info').remove();
+		    			}else{
+		    				// console.log("删除地址接口回调成功异常");
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("删除地址失败,请刷新...");
+		    		}
+		    	})
+		    }
+
+		    //设置为默认地址
+		    function default_address(a){
+		        var address=$(a).text();
+		        var id=$(a).parents('.address_ul_info').attr('id');
+		        $.ajax({
+		        	url:'/api/user/address/set_default/',
+		        	type:'POST',
+		        	datatype:'json',
+		        	data:{
+		        		'id':id
+		        	},
+		        	success:function(data){
+		        		var data = JSON.parse(data);
+		        		var errno = data.errno;
+		        		// console.log(data);
+		        		if (errno == 0) {
+		        			$('.address_ul_info').find('.isDefault_address').attr('onclick','default_address(this);');
+			                $('.address_ul_info').find('.isDefault_address').removeClass('isDefault_address').addClass('default_address').text('设为默认地址');
+			                $(a).attr('onclick','');
+			                $(a).removeClass('default_address').addClass('isDefault_address').text('默认地址');
+		        		}else{
+		        			// console.log("设置为默认地址接口回调成功异常");
+		        		}
+		        	},
+		        	error:function(error){
+		        		alert("设置为默认地址失败,请刷新...");
+		        	}
+		        })
+		    }
+		    /*----获取省----*/
+		    function getProvince(){
+		    	// console.log("获取省份接口进入");
+		    	$.ajax({
+		    		url:'/api/area/province/list',
+		        	type:'GET',
+		        	datatype:'json',
+		        	data:{
+
+		        	},
+		        	success:function(data){
+		        		var data = JSON.parse(data);
+
+		    			$("#address_province").html('');
+		    			$.each(data.province,function(index,content){
+		                    var name=content.name;
+		                    var code=content.id;
+		                    var nid=content.nid;
+
+		                    $("#address_province").append('<option code="'+code+'" value="'+name+'" nid="'+nid+'">'+name+'</option>');
+		                });
+
+
+		    		},
+		    		error:function(error){
+		    			alert("获取省份失败,请刷新...");
+		    		}
+		    	})
+
+		    }
+		    function changeProvince(){
+		        $("#address_province").change(function(){
+		            var code=$('#address_province option:selected').attr('code');
+		            // console.log(code);
+		            getCity(code);
+		            province=$("#address_province option:selected").val();
+		            //alert(province);
+		            $(".item_province").text(province);
+		        })
+		    }
+
+		    //城市编码
+		    function getCity(code){
+		    	$.ajax({
+		    		url:'/api/area/city/list',
+		    		type:'GET',
+		    		datatype:'json',
+		    		data:{
+		    			'id':code
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			// console.log(data);
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				$("#address_city").empty();
+			                $.each(data.city,function(index,content){
+			                    var name=content.name;
+			                    var code=content.id;
+			                    var nid=content.nid;
+			                	$("#address_city").append('<option code="'+code+'" nid="'+nid+'">'+name+'</option>');
+			                });
+
+			                var code=$("#address_city option:selected").attr('code');
+			                getDistrict(code);
+			                var city=$("#address_city option:selected").val();
+			                $(".item_city").text(city);
+
+		    			}else{
+		    				// console.log("城市接口回调异常");
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("城市失败,请刷新...");
+		    		}
+		    	})
+		    }
+		    //换市
+		    function changeCity(){
+		        $("#address_city").change(function(){
+		            var code=$('#address_city option:selected').attr('code');
+		            // console.log(code);
+		            getDistrict(code);
+		            city=$("#address_city option:selected").val();
+		            //alert(city);
+		            $(".item_city").text(city);
+		        })
+		    }
+
+		    //地区编码
+		    function getDistrict(code){
+		    	$.ajax({
+		    		url:'/api/area/district/list',
+		    		type:'GET',
+		    		datatype:'json',
+		    		data:{
+		    			'id':code
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			// console.log(data);
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				$("#address_district").empty();
+			                $.each(data.district,function(index,content){
+			                    var name=content.name;
+			                    var code=content.id;
+			                    var pid=content.pid;
+			                    var nid=content.nid;
+			                    $("#address_district").append('<option code="'+code+'" pid="'+pid+'" nid="'+nid+'">'+name+'</option>');
+			                });
+			                var district=$("#address_district option:selected").val();
+			                var code=$("#address_district option:selected").attr('code');
+			                var pid=$("#address_district option:selected").attr('pid');
+			                getTown(code,pid);
+		                	$(".item_district").text(district);
+		    			}else{
+		    				// console.log("地区接口回调异常");
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("地区失败,请刷新...");
+		    		}
+		    	})
+
+		    }
+		    function changeDistrict(){
+		        $("#address_district").change(function(){
+		            district=$("#address_district option:selected").val();
+		            var code=$("#address_district option:selected").attr('code');
+		            var pid=$("#address_district option:selected").attr('pid');
+		            // console.log(code,pid);
+		            getTown(code,pid);
+		            $(".item_district").text(district);
+		        })
+		    }
+
+		    //乡镇编码
+		    function getTown(code,pid){
+		    	console.log("新增乡镇"+code,pid);
+		        var cityCode=$("#address_city option:selected").attr('code');
+		        $.ajax({
+					url:'/api/area/town/list',
+					type:'GET',
+					datatype:'json',
+					data:{
+						'nid':code,
+						'pid':pid
+					},
+		        	success:function(data){
+		        		var data = JSON.parse(data);
+		        		console.log(data);
+		        		var errno =data.errno;
+		        		if (errno == 0) {
+		        			$("#address_town").empty();
+			                $.each(data.town,function(index,content){
+			                    var name=content.name;
+			                    var code=content.code;
+			                    var nid=content.nid;
+			                    $("#address_town").append('<option code="'+code+'" nid="'+nid+'">'+name+'</option>');
+			                });
+			                var town=$("#address_town option:selected").val();
+			                $(".item_town").text(town);
+		        		}else{
+		        			// console.log("乡镇接口回调异常");
+		        		}
+		        	},
+		        	error:function(error){
+		        		alert("乡镇失败,请刷新...");
+		        	}
+		        })
+		    }
+
+		    $("#address_town").change(function(){
+		        town=$("#address_town option:selected").val();
+		        $(".item_town").text(town);
+		    })
+		    //编辑收货地址处回车登录
+		    function chekKeyAddr(e){
+		        if(e.keyCode == 13){
+		            save_address();
+		        }
+		    }
+		</script>
+		{% endblock %}

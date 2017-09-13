@@ -1,0 +1,244 @@
+{% extends "i3jf/public.html" %}
+
+		{% block css%}
+
+		<link rel="stylesheet" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" href="{{static_url}}css/product.css">
+
+		<style type="text/css">
+			.contRight{
+				width: 958px;
+				min-height: 550px;
+			}
+		</style>
+
+		{% endblock %}
+
+
+		{% block content%}
+
+		<div id="banner">
+        <div id="topList" type="public">
+        <div class="topMenu">
+            <div class="menuNav">
+                <div class="sortMenu">
+                    <img src="{{static_url}}images/menu.png" alt="">
+                    <span>全部商品分类</span>
+                </div>
+                <div class="sortListContainer" style="">
+                    <div class="sortListBox">
+                        <div class="sortList">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="topListBox">
+                <ul class="topList ">
+<!--
+                    <li class="left">
+                        <a href="http://fin.i3jf.com" target="_blank">积分金融</a>
+                    </li>
+-->
+                    <!-- <li class="left">积分理财</li> -->
+                    <!-- <li class="left">积分数码</li>
+                    <li class="left">积分超市</li>
+                    <li class="left">积分时尚</li>
+                    <li class="left">积分娱乐</li> -->
+                    <!-- <li class="left">积分酷品</li> -->
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+</div>
+		<div id="containerBox">
+			<div id="container" class="">
+				<div class="order">
+	<div class="contTit clearFix">
+		<span class="left" title="首页">首页</span><i class="left">&gt;</i><span class="gCheck left"></span><span id="faCheck" class="left"></span><span id="check" class="left">全部</span>
+	</div>
+	<div class="orderCont clearFix">
+		<div class="contLeft left">
+			<div class="leftTit">
+				<h3>全部搜索分类</h3>
+			</div>
+			<div class="leftClassify"></div>
+			<div class="hotSale">
+				<h2 class="hotST w180 ellipsis">热卖商品</h2>
+				<div class="goodsDisplay w200" id="hotSales">
+					<!-- 热卖商品列表 -->
+					<ul class="displayList w200 clearFix"></ul>
+				</div>
+			</div>
+		</div>
+		<div class="contRight left">
+			<div class="goodsRule">
+				<div class="goodsRank same clearFix">
+					<div class="goodsRnav left clearFix">
+						<a href="javascript:;" class="active" data-type="default" data-order="">
+							<span>默认</span>
+						</a>
+						<!-- <a href="javascript:;" class="prices" data-type="amount" data-order="asc">
+							<span>价格</span>
+							<i style="background-image: url(&quot;/bundles/main/images/priceSU.png&quot;); transform: rotate(180deg);"></i>
+						</a> -->
+					</div>
+					<div class="goodsPage right clearFix">
+						<div class="showPage left clearFix">
+							<span class="page1 left ellipsis"></span><i class="left">/</i><span class="page2 left ellipsis"></span>
+						</div>
+<!-- 						<div class="pageBtn left clearFix">
+							<a href="javascript:;" class="lBtn left"><i></i></a>
+							<a href="javascript:;" class="rBtn right active"><i></i></a>
+						</div> -->
+					</div>
+				</div>
+				<div class="goodsSend same clearFix">
+					<div class="goodsAddress left clearFix">
+						<span class="left">送至</span>
+						<a href="javascript:;" id="city" class="left clearFix wholeCitys">
+							<em class="left ellipsis"><span class="pName">北京</span><span class="cName">北京市</span></em>
+							<i></i>
+						</a>
+						<!-- 写城市名称的地方 -->
+						<div class="cityName" style="display: none;">
+
+							<span id="closed"></span>
+
+							<div class="upDown">
+								<a href="javascript:;" class="active clearFix"><span>北京</span><i></i></a>
+								<a href="javascript:;" class="clearFix"><span>请选择市</span><i></i></a>
+								<a href="javascript:;" class="clearFix" style="display:none"><span>请选择县区</span><i></i></a>
+								<a href="javascript:;" class="clearFix" style="display:none"><span>请选择乡镇</span><i></i></a>
+							</div>
+
+							<ul class="clearFix active" id="provices">
+
+							</ul>
+
+							<ul class="clearFix" id="citys">
+								<li title="北京市"><span city-code="010" class="active">北京市</span></li>
+							</ul>
+
+							<ul class="clearFix" id="districts" style="display:none">
+
+							</ul>
+
+							<ul class="clearFix" id="towns" style="display:none">
+
+							</ul>
+
+						</div>
+					</div>
+					<div class="goodsActive left">
+						<ul class="clearFix">
+							<li class="haveGoods displayNone">
+								<a href="javascript:;"><i></i>有货商品</a>
+							</li>
+							<li class="displayNone">
+								<a href="javascript:;"><i></i>直降</a>
+							</li>
+							<li class="displayNone">
+								<a href="javascript:;"><i></i>返券</a>
+							</li>
+							<li class="displayNone">
+								<a href="javascript:;"><i></i>大聚惠</a>
+							</li>
+							<li class="displayNone">
+								<a href="javascript:;"><i></i>海外购</a>
+							</li>
+							<li class="displayNone">
+								<a href="javascript:;"><i></i>抢购</a>
+							</li>
+							<li class="displayNone">
+								<a href="javascript:;"><i></i>团购</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="goodsDisplay w960">
+				<!-- 商品列表 -->
+				<ul class="displayList w1000 clearFix" id="dataList">
+
+				</ul>
+				<div class="loading" style="display: none;">
+					<div class="imgLoad">
+					    <div class="outer"></div>
+					    <div class="inner"></div>
+					</div>
+				</div>
+				<div class="tcdPageCode" page="1" style="display: block;">
+					<button id="prev" class="page-button" disabled="disabled" style="background: rgb(245, 245, 245); color: rgb(51, 51, 51);">上一页</button>
+
+					<button id="next" class="page-button" style="background: rgb(255, 255, 255);">下一页</button>
+					<span class="page-info">1/1</span>
+				</div>
+			</div>
+			<div class="goodsEmpty clearFix" style="display: none;">
+				<img src="{{static_url}}images/magnifier.png" class="left">
+				<div class="left">
+					<p>抱歉，没有找到<span class="skuName"></span>的搜索结果~</p>
+					<a href="/">去首页看看</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+			</div>
+		</div>
+{% endblock %}
+
+{% block js%}
+<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+<script type="text/javascript" src="{{static_url}}js/jquery.page.js"></script>
+<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+<script type="text/javascript">
+	//从URL里面获取的关键字和商品分类
+	// var keywords=decodeURIComponent('');
+	var categoryId='-1';
+	var subCategoryId='';
+	var keywordId='';
+
+	keywords=decodeURIComponent(keyword);
+	var rows='';
+	var pages='';
+	var sort='';
+	var order='';
+
+    var checkLogin = new checkLogin();//判断登录
+    if (checkLogin.flag) {
+        logged_in(); //已登陆
+    }else{
+        not_logged_in(); //未登录
+        // window.location.href = '/static/login/index.html';
+    }
+
+    //未登录可以执行的方法
+    function not_logged_in(){
+        getCategoryList();//获取分类导航
+        setSortListHover();//分类导航hover
+    };
+    //已登录执行的方法
+    function logged_in(){
+        getCategoryList();//获取分类导航
+        setSortListHover();//分类导航hover
+        cartAmount();//购物车数量
+    };
+    //需要登录后的点击
+    function check_login(target){
+        if (checkLogin.flag) {
+            location.href = $(target).attr('data-href');
+        }else{
+            location.href = '/api/user/login'
+        }
+    }
+
+</script>
+<script src="{{static_url}}js/classDetail.js"></script>
+{% endblock %}
+

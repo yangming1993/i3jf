@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	    <meta charset="utf-8">
+	    <link rel="shortcut icon" href="{{static_url}}admin/images/browserLogo.png">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <title>超级积分</title>
+	    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	</head>
+	{% block css %}
+	{% endblock %}
+    <body class="skin-blue sidebar-mini">
+	    <div class="wrapper">
+	      <header class="main-header">
+	        <a class="logo">
+	          <span class="logo-mini"><img src="{{static_url}}admin/images/browserLogo.png" width="40"></span>
+	          <span class="logo-lg"><logo><span>超</span>级积分</logo></span>
+	        </a>
+	        <nav class="navbar navbar-static-top" role="navigation">
+	          <a href="javascript:void(0)" data-toggle="offcanvas" role="button">
+	            <span style="color: #fff;margin: 10px 20px;font-size: 20px;" class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+	          </a>
+	          <div class="navbar-custom-menu">
+	            <ul class="nav navbar-nav">
+	              <li class="dropdown user user-menu">
+	                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+	                  <span class="hidden-xs"></span>
+	                </a>
+	                <ul class="dropdown-menu">
+	                  <li class="user-header mirror-header">
+	                    <p>
+	                      
+	                      <small>
+	                       普通管理员
+	                      </small>
+	                    </p>
+	                  </li>
+	                  <li class="user-footer">
+	                    <div class="pull-left">
+	                      <a href="javascript:void(0)" onclick="showPassword();" class="btn btn-default btn-flat">修改密码</a>
+	                    </div>
+	                    <div class="pull-right">
+	                      <a href="javascript:vi" onclick="logout(this);" class="btn btn-default btn-flat">退出登录</a>
+	                    </div>
+	                  </li>
+	                </ul>
+	              </li>
+	            </ul>
+	          </div>
+	        </nav>
+	      </header>
+	      <aside class="main-sidebar">
+	        <section class="sidebar">
+	          <div class="user-panel">
+	            <div class="pull-left image">
+	            </div>
+	            <div class="info mirror-info">
+	              <p></p>
+	              <p>普通管理员</p>
+	            </div>
+	          </div>
+
+	    {% block content %}
+	    {% endblock %}
+
+	    <div class="daterangepicker dropdown-menu show-calendar opensright">
+		     <div class="calendar left">
+		      <div class="daterangepicker_input">
+		         <input class="input-mini" name="daterangepicker_start" type="text">
+		         <i class="fa fa-calendar glyphicon glyphicon-calendar"></i>
+		         <div class="calendar-time" style="display: none;">
+		            <div></div>
+		            <i class="fa fa-clock-o glyphicon glyphicon-time"></i>
+		         </div>
+		      </div>
+		      <div class="calendar-table"></div>
+		     </div>
+		     <div class="calendar right">
+		       <div class="daterangepicker_input">
+		         <input class="input-mini" name="daterangepicker_end" type="text">
+		         <i class="fa fa-calendar glyphicon glyphicon-calendar"></i>
+		         <div class="calendar-time" style="display: none;">
+		            <div></div>
+		            <i class="fa fa-clock-o glyphicon glyphicon-time"></i>
+		         </div>
+		       </div>
+		       <div class="calendar-table"></div>
+		     </div>
+		     <div class="ranges">
+		       <div class="range_inputs">
+		           <button class="applyBtn btn btn-sm btn-success" disabled="disabled" type="button">确认</button>
+		           <button class="cancelBtn btn btn-sm btn-default" type="button">取消</button>
+		       </div>
+		    </div>
+		</div>
+
+		{% block js %}
+    	{% endblock %}
+
+    </body>
+</html>

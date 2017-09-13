@@ -1,0 +1,188 @@
+html,body > .header .navbar{
+    min-width:991px;
+}
+body{
+	overflow-x:auto;
+	overflow-y:auto;
+}
+/*left-userInfo*/
+.user-panel>.mirror-info{
+	position:relative;
+	left:0px;
+	z-index:999;
+}
+
+/*slide-userInfo*/
+.navbar-nav>.user-menu>.dropdown-menu>li.mirror-header{
+	height:auto;
+}
+
+/*datatables-td-verticalMiddle*/
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+	vertical-align:middle;
+}
+
+.btn-group-sm>.btn, .btn-sm{
+	padding: 0px 10px;
+}
+/*datatables 列表内容位置*/
+.dataTable thead .th-center{
+	padding:10px 20px;
+	text-align:center;
+}
+
+.dataTable tbody .td-center{
+	text-align:center;
+}
+
+.fixedLayer{
+	position:fixed;
+	left:0;
+	top:0;
+	width: 100%;
+	height: 100%;
+	z-index: 1099;
+	background-color: rgba(0,0,0,0.3);
+	display:none;
+}
+.fixedContainer{
+	position: absolute;
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.8);
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	background-color: #fff;
+}
+.fixedContainer .image-prev{
+	position: relative;
+    display: table;
+    margin: 0px auto;
+}
+.closeBtn{
+	position: absolute;
+	top: 0px;
+	display:none;
+}
+/* help */
+#help{
+	float:right;
+}
+#help img{
+	width: 20px;
+}
+#helpMsg{
+	position:absolute;
+	left: 360px;
+	top:0px;
+	background-color: #fff;
+	display:none;
+	width:480px;
+	height:400px;
+	border-radius: 8px;
+}
+/*editPanel 编辑层*/
+.editPanel{
+	position:absolute;
+	background-color: #fff;
+}
+
+.fileDiv{
+	height:34px;
+}
+.fileDiv div{
+	padding-top:7px;
+}
+.submitDiv{
+	margin-top:40px;
+}
+.submitDiv input{
+	width:80px;
+	margin-right:20px;
+}
+.form-horizontal{
+	margin-top:10px;
+}
+
+#gotoListsDiv{
+	/*position: relative;*/
+	/*width:776px;*/
+	/*margin: 1.5%;*/
+	/*height: 460px;*/
+	margin: 10px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+/* 跳转Btn*/
+.actPart{
+	margin:10px 0px 10px 10px;
+}
+.actPart input{
+	margin-right: 10px;
+}
+.sureGoto,.cancelGoto{
+	display: block;
+	width: 60px;
+}
+.actPart:after{
+	display:block;
+	content:"clear";
+	height:0;
+	clear:both;
+	overflow:hidden;
+	visibility:hidden;
+}
+
+/* 图片上传 */
+.upload-container{
+	position: relative;
+
+}
+.upload-input{
+	width: 52px;
+	height: 32px;
+	position: absolute;
+	right:55px;
+	top: 0px;
+	display: none;
+	opacity: 0;
+	filter:alpha(opacity=0);
+	cursor:pointer;
+	overflow: hidden;
+	z-index:10;
+}
+.file-name{
+	height:34px;
+	position: absolute;
+	left: 15px;
+	top: 0px;
+}
+.snimg-btn{
+	position:absolute;
+	left:135px;
+	top:0px;
+}
+.upload-btn{
+	position: absolute;
+	right: 55px;
+	top: 0px;
+	cursor:pointer;
+}
+
+.imgPreviewDiv img,.nailDiv img{
+	vertical-align:middle;
+}
+.nailDiv{
+	width: 34px;
+	height: 34px;
+	position:absolute;
+	right: 15px;
+	top: 0px;
+	line-height: 34px;
+	text-align: center;
+	font-size: 0px;
+}
+.form-control{
+	line-height:28px;
+}

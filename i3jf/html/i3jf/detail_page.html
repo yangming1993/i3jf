@@ -1,0 +1,342 @@
+{% extends "i3jf/public.html" %}
+
+{% block css%}
+
+		<link rel="stylesheet" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/detail.css">
+{% endblock %}
+{% block title %}
+商品详情
+{% endblock %}
+{% block content%}
+		<div id="banner">
+        <div id="topList" type="public">
+        <div class="topMenu">
+            <div class="menuNav">
+                <div class="sortMenu">
+                    <img src="{{static_url}}images/menu.png" alt="">
+                    <span>全部商品分类</span>
+                </div>
+                <div class="sortListContainer" style="">
+                    <div class="sortListBox">
+                        <div class="sortList">
+                            <ul class="categoryUl">
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="topListBox">
+                <ul class="topList ">
+
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+</div>
+		<div id="containerBox">
+			<div id="container" class="">
+				<div class="shopCar">
+					<div class="success">
+						<h2></h2>
+						<a href="/api/user/mycart" class="calculate">去购物车结算</a>
+						<div class="goOn">
+							<span>您还可以&nbsp;</span>
+							<a href="javascript:;">继续购物</a>
+						</div>
+					</div>
+				</div>
+				<div class="order">
+	<div class="contTit clearFix">
+		<span>首页</span>&nbsp;&gt;&nbsp;
+		<span class="fCheck"></span>&nbsp;&gt;&nbsp;
+		<span class="faCheck"></span>&nbsp;&gt;&nbsp;
+		<span class="fbCheck"></span>
+		<span class="orName cEd"></span>
+	</div>
+	<!-- 商品订购等部分  开始 -->
+	<div class="mainCont clearFix">
+		<div class="mainContLeft left">
+		<!-- 商品展示部分 开始 -->
+			<div class="majorImg">
+				<div class="majorShow">
+					<span class="block" style="display: none; left: 207px; top: 86.5px;"></span>
+					<a href="javascript:;" class="active">
+						<img src="" placepic="true">
+					</a>
+				</div>
+				<div class="imgEnlarge" style="display: none;">
+					<img src="">
+					<img src="" style="">
+				</div>
+			</div>
+				<!-- 商品展示下面的列表部分 开始 -->
+			<div class="productsList">
+				<div class="productSmall">
+					<ul class="clearFix">
+
+					</ul>
+				</div>
+				<a href="javascript:;" class="productL"></a>
+				<a href="javascript:;" class="productR"></a>
+			</div>
+		<!-- 商品展示下面的列表部分 结束 -->
+		<!-- 商品展示部分 结束 -->
+		</div>
+		<div class="mainContRight left">
+			<h3><span class="sales-promotion c0a2a" style="display: none;">【促销】</span><span class="gName"></span></h3>
+			<span class="shelf ccc0a2a"></span>
+			<div class="score">
+				<div class="allScore clearFix" style="display: none;">
+					<div class="getScore left mr10">
+						<b>积分价：</b><strong class="ccc0a2a"></strong>
+					</div>
+					<div class="saleScore left">
+						<b class="f16">原积分价：</b><strong class="f16 lineT"></strong>
+					</div>
+				</div>
+				<span class="stockInt" style="display: inline;">该地区暂不销售</span>
+				<div class="nowscore" style="display: none;">
+					<span>等&nbsp;&nbsp;&nbsp;价&nbsp;&nbsp;&nbsp;：</span>
+					<strong></strong>
+				</div>
+				<div class="promo">
+					<span>促&nbsp;&nbsp;&nbsp;销&nbsp;&nbsp;&nbsp;：</span>
+					<div class="cuTit"></div>
+				</div>
+			</div>
+			<div class="goodsAddress clearFix">
+				<span class="left w85">送&nbsp;至</span>
+				<a href="javascript:;" id="city" class="left clearFix wholeCitys">
+					<!-- <em class="left ellipsis">上海 上海市 </em> -->
+					<em class="left ellipsis"><span class="pName">北京</span><span class="cName">北京市</span><span class="dName">东城区</span><span class="tName">全境</span></em>
+					<i></i>
+				</a>
+				<span id="warn" data-state="" class="left" style="color: red;"></span>
+				<div id="cu-inventory" data-state="" class="left" style="display: none;">
+					，仅剩<strong id="cu-number" class="ccc0a2a"></strong>件
+				</div>
+				<!-- 写城市名称的地方 -->
+				<div class="cityName" style="display: none;">
+					<span id="closed"></span>
+					<div class="upDown">
+						<a href="javascript:;" class="active clearFix"><span>请选择省</span><i></i></a>
+						<a href="javascript:;" class="clearFix"><span>请选择市</span><i></i></a>
+						<a href="javascript:;" class="clearFix"><span>东城区</span><i></i></a>
+						<a href="javascript:;" class="clearFix"><span>请选择乡镇</span><i></i></a>
+					</div>
+					<ul class="clearFix" id="provices"></ul>
+					<ul class="clearFix" id="citys"></ul>
+					<ul class="clearFix" id="districts"></ul>
+					<ul class="clearFix" id="towns"></ul>
+
+				</div>
+			</div>
+			<div class="goodsAddress clearFix">
+				<span class="left w85">服&nbsp;务</span>
+				<span class="left c33">由"<span class="saleUnit">苏宁供货</span>"并提供售后服务</span>
+			</div>
+			<div class="goodsAddress h42 displayNone clearFix">
+				<span class="left w85">颜色</span>
+				<ul class="gColor clearFix">
+					<li class="active">
+						<a href="javascript:;">
+							<img src="{{static_url}}images/productA.jpg">
+						</a>
+					</li>
+					<li>
+						<a href="javascript:;">
+							<img src="{{static_url}}images/productA.jpg">
+						</a>
+					</li>
+					<li>
+						<a href="javascript:;">
+							<img src="{{static_url}}images/productA.jpg">
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="goodsAddress h42 displayNone clearFix">
+				<span class="left w85">尺寸</span>
+				<ul class="gSize clearFix">
+					<li class="active">
+						<a href="javascript:;">S</a>
+					</li>
+					<li>
+						<a href="javascript:;">M</a>
+					</li>
+					<li>
+						<a href="javascript:;">L</a>
+					</li>
+					<li>
+						<a href="javascript:;">XL</a>
+					</li>
+				</ul>
+			</div>
+			<div class="goodsAddress h42 clearFix">
+				<span class="left w85">数&nbsp;量</span>
+				<div id="goods-amount" class="left clearFix">
+					<a class="minus-num left">
+						<img class="minus" src="{{static_url}}images/p-minus.png">
+					</a>
+					<input type="text" id="item-number" class="left" value="1" onkeyup="checkNaN(this,true);checkNum(this,true)">
+					<a class="plus-num left">
+						<img class="plus" src="{{static_url}}images/p-plus.png">
+					</a>
+				</div>
+			</div>
+			<div class="shop">
+				<button class="byNow" data-saleid="">立即购买</button>
+				<button class="joinCart">加入购物车</button>
+				<button class="follow w70">关注</button>
+			</div>
+		</div>
+	</div>
+	<!-- 商品订购等部分  结束 -->
+
+	<!-- 热卖商品和产品详情部分 开始 -->
+	<div class="orderCont clearFix">
+		<!-- 热卖商品部分  开始 -->
+		<div class="contLeft left">
+			<div class="hotSale">
+				<h2 class="hotST w180 ellipsis">热卖商品</h2>
+				<!-- 热卖商品部分循环  开始 -->
+				<div class="goodsDisplay w200">
+					<ul class="displayList w200 clearFix">
+						<!-- <li>
+							<div class="g-pic w198">
+								<a href="javascript:;">
+									<img src="/bundles/main/images/goods2.jpg" class="size1" />
+								</a>
+							</div>
+							<div class="g-name">
+								<a href="javascript:;">
+									<p>时尚大牌中长款羊毛呢子大衣女羊毛呢子大衣女</p>
+								</a>
+							</div>
+							<div class="g-price clearFix">
+								<strong class="left ellipsis">1365</strong>
+								<span class="unit">积分</span>
+							</div>
+						</li> -->
+					</ul>
+				</div>
+				<!-- 热卖商品部分循环  结束 -->
+			</div>
+		</div>
+		<!-- 热卖商品部分  结束 -->
+
+		<!-- 产品详情部分  开始 -->
+		<div class="contRight right">
+			<ul class="tab-nav">
+				<li class="tab-li">
+					<a name="pShows" href="javascript:void(0);" class="tab-item chose-item">产品详情</a>
+				</li>
+				<li class="tab-li">
+					<a name="paramShows" href="javascript:void(0);" class="tab-item">产品参数</a>
+				</li>
+			</ul>
+			<div class="pShows showItem" style="display: block;"></div>
+			<div class="paramShows showItem" style="display: none;">
+				<div class="param-panel">
+
+				<table class="param-table"></table></div>
+			</div>
+			<div class="loading" style="display: none;">
+				<div class="imgLoad">
+				    <div class="outer"></div>
+				    <div class="inner"></div>
+				</div>
+			</div>
+		</div>
+		<!-- 产品详情部分  结束 -->
+	</div>
+	<!-- 热卖商品和产品详情部分 结束 -->
+
+	<!-- 猜你喜欢部分   开始 -->
+	<div class="seller displayNone">
+		<h2 class="hotST w1198">猜你喜欢</h2>
+		<!-- 商品部分循环  开始 -->
+		<div class="goodsDisplay w1140">
+			<ul class="displayList w1180 clearFix">
+			<!-- 每个商品部分 开始 -->
+				<!-- <li>
+					<div class="g-pic w198">
+						<a href="javascript:;">
+							<img src="/bundles/main/images/goods2.jpg" class="size1" />
+						</a>
+					</div>
+					<div class="g-name">
+						<a href="javascript:;">
+							<p>时尚大牌中长款羊毛呢子大衣女羊毛呢子大衣女</p>
+						</a>
+					</div>
+					<div class="g-price clearFix">
+						<strong class="left ellipsis">1365分</strong>
+					</div>
+				</li> -->
+			<!-- 每个商品部分 结束 -->
+			</ul>
+			<div class="loading">
+				<div class="imgLoad">
+				    <div class="outer"></div>
+				    <div class="inner"></div>
+				</div>
+			</div>
+		</div>
+		<!-- 商品部分循环  开始 -->
+	</div>
+	<!-- 猜你喜欢部分   结束 -->
+</div>
+
+</div>
+</div>
+	{% endblock %}
+
+	{% block js%}
+		<script type="text/javascript" src="{{ static_url }}js/jquery.js"></script>
+		<script type="text/javascript" src="{{ static_url }}js/publics.js"></script>
+
+		<script type="text/javascript">
+
+
+			var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+                logged_in(); //已登陆
+            }else{
+                not_logged_in(); //未登录
+                // window.location.href = '/static/login/index.html';
+            }
+            //未登录可以执行的方法
+            function not_logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+            };
+            //已登录执行的方法
+            function logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+                cartAmount();//购物车数量
+            };
+            //需要登录后的点击
+            function check_login(target){
+                if (checkLogin.flag) {
+                    location.href = $(target).attr('data-href');
+                }else{
+                    location.href = '/static/i3jf/login.html'
+                }
+            }
+
+
+		</script>
+		<script type="text/javascript" src="{{static_url}}js/pageDetails.js"></script>
+	{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="./css/dataTables.css">
+</head>
+<body>
+<div class="container">
+	<div class="col-md-12">
+		<div class="row">
+			<table id="tables"></table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="./js/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript" src="./js/dataTables.min.js"></script>
+
+<script type="text/javascript">
+		$.fn.dataTable.ext.errMode = 'none';
+		$('#tables').dataTable({
+                "paging": true,//分页
+                "ordering": true,//是否启用排序
+                "searching": true,//搜索
+                "paginationType":"full_numbers",
+                "autoWidth":true,
+                "processing":true, //加载开启
+                // "ajax": {
+                //     "url":"/api/oam/product/list",
+                //     "dataSrc":"productlist"
+                // },
+                "ajax": function (data,callback,settings) {
+                    //封装请求参数
+                    var param = {};
+                    param.rows = 15;//页面显示记录条数，在页面显示每页显示多少项的时候
+                    // param.start = data.start;//开始的记录序号
+                    param.page = 1;//当前页码
+                    console.log(param);
+                    //ajax请求数据
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/oam/product/list_text",
+                        cache: false,  //禁用缓存
+                        data: param,  //传入组装的参数
+                        dataType: "json",
+                        success: function (result) {
+                        	callback(result.productlist);
+                            console.log(result);
+                            setTimeout仅为测试延迟效果
+                            setTimeout(function () {
+                                //封装返回数据
+                                // var returnData = {};
+                                // returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                                // returnData.recordsTotal = result.total;//返回数据全部记录
+                                // returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
+                                // returnData.data = result.data;//返回的数据列表
+                                console.log(result.productlist.length);
+                                //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                                //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                                console.log(data);
+                                console.log(callback);
+                                console.log(settings);
+                                callback(result.productlist);
+                            }, 200);
+                        }
+                    })
+                },
+
+                "language": {
+                  lengthMenu: '<select class="form-control input-xsmall">' + '<option value="1">1</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="30">30</option>' + '<option value="40">40</option>' + '<option value="50">50</option>' + '</select>条记录',//左上角的分页大小显示。
+                  search: '<span>关键字搜索：</span>',
+                  paginate: {//分页的样式内容。
+                    previous: "上一页",
+                    next: "下一页",
+                    first: "第一页",
+                    last: "最后"
+                  },
+                  processing : "载入中...<img src='./images/loading.gif' style='width:100px;height:100px;' />",
+                  zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
+                  //下面三者构成了总体的左下角的内容。
+                  info: "总共_PAGES_ 页，显示第_START_ 到第 _END_ ，筛选之后得到 _TOTAL_ 条，初始_MAX_ 条 ",//左下角的信息显示，大写的词为关键字。
+                  infoEmpty: "0条记录",//筛选为空时左下角的显示。
+                  infoFiltered: ""//筛选之后的左下角筛选提示，
+                },
+                 "mData":"acceptId",
+                            "mRender":function(data,type,full){
+                                if(data !=null){
+                                    if(full.acceptUser !=null){
+                                        return full.acceptUser.userName;
+                                    }
+                                }else{
+                                    return "";
+                                }
+                            },
+
+                "columns": [
+                    {
+                      "title":'',
+                      "class":'th-center td-center',
+                      "width":"3%"
+                    },
+                    {
+                      "data":"sku",
+                      "title":'sku',
+                      "class":'th-center td-center',
+                      "width":"4.7%"
+                    },
+                    {
+                      "data":"name",
+                      "title":'产品名称',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"image",
+                      "title":'图片',
+                      "class":'th-center td-center',
+                      "width":"8.0%"
+                    },
+                    {
+                      "data":"credit_amount",
+                      "title":'积分价格',
+                      "class":'th-center td-center',
+                      "width":"5.4%"
+                    },
+                    // {
+                    //   "data":"adminId",
+                    //   "title":'最后修改管理员id',
+                    //   "class":'th-center td-center',
+                    //   "width":"6.0%"
+                    // },
+                    // {
+                    //   "data":"category__name",
+                    //   "title":'管理员名称',
+                    //   "class":'th-center td-center',
+                    //   "width":"4.7%"
+                    // },
+                    {
+                      "data":"last_sync",
+                      "title":'最后同步时间',
+                      "class":'th-center td-center',
+                      "width":"5.0%"
+                    },
+                    // {
+                    //   "data":"updateTime",
+                    //   "title":'最后修改时间',
+                    //   "class":'th-center td-center',
+                    //   "width":"5.0%"
+                    // },
+                    {
+                      "data":"category_d1__id",
+                      "title":'所属一级分类id',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },
+                    {
+                      "data":"category_d1__name",
+                      "title":'所属一级分类名称',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },
+                    {
+                      "data":"category_d2__id",
+                      "title":'所属二级分类id',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },
+                    {
+                      "data":"category_d2__name",
+                      "title":'所属二级分类名称',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },
+                    {
+                      "data":"categoryD3Id",
+                      "title":'所属三级分类id',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },
+                    {
+                      "data":"categoryD3Name",
+                      "title":'所属三级分类名称',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },
+                    /*{
+                      "data":"tag",
+                      "title":'标签',
+                      "class":'th-center td-center',
+                      "width":"5.5%"
+                    },*/
+                    {
+                      "title":'操作',
+                      "class":'th-center td-center',
+                      "width":"7.2%"
+                    }
+                ],
+                "columnDefs": [
+                  {
+                      "render": function(data,type,row){
+                          var inputDiv = '<input type="checkbox" class="table-checkbox" name="showLists" data-name="'+row.name+'" data-id="'+row.id+'"/>';
+                          return inputDiv;
+                      },
+                      "targets":0
+                  },{
+                      "render":function(data,type,row){
+                          var imgs = '<img class="pic" src="'+row.image+'">';
+                          return imgs;
+                      },
+                      "targets":3
+                  },{
+                      "render": function(data,type,row){
+                          return '<a target="_blank" href="/static/i3jf/detail_page.html?sku='+row.sku+'" class="btn btn-sm checkInfo">查看详情</a><br><a href="javascript:void(0);" class="btn btn-sm modify">编辑</a><br><a href="javascript:void(0);" class="btn btn-sm delInfo">删除</a>';
+                      },
+                      "targets":12
+                  },
+                ],
+                "createdRow":function(row,data,index){
+                    function showOrgImg(url){
+                        var oImg = $('<img style="max-height:600px;max-width:800px;">');
+                        oImg.load(function() {
+                            var oWidth = $(oImg)[0].width+'px';
+                            var oHeight = $(oImg)[0].height+'px';
+                            $('.fixedContainer').html('<div class="image-prev"></div>')
+                            $('.fixedContainer .image-prev').html(oImg);
+                            $('.fixedContainer').css({
+                                'width':oWidth,
+                                'height':oHeight,
+                                'max-width':'800px',
+                                'max-height':'600px',
+                                'box-shadow':'0px 0px 10px rgba(0,0,0,0)',
+                                'background-color':'rgba(0,0,0,0)'
+                            });
+                            $('.fixedContainer img').after('<div class="closeBtn"><img src="./images/close.png" alt=""/></div>');
+                            $('.closeBtn').css('right','-30px');
+                            $('.fixedLayer').css('display','block');
+                            $('.closeBtn').css('display','block');
+                        });
+                        oImg.attr('src',url);
+                    }
+                    $('.fixedContainer').on('click','.closeBtn',function(){
+                        $('.fixedLayer').css('display','none');
+                        $('.fixedContainer').html('');
+                    });
+                    $('td',row).eq(3).on('click',function(){
+                        showOrgImg(data.image);
+                    });
+                    $('td',row).eq(12).find('.modify').off('click').on('click',function(){
+                        upInfo.sku = data.sku;
+                        showModify(data);
+                    });
+                    $('td',row).eq(12).find('.delInfo').off('click').on('click',function(){
+                        console.log("删除");
+                        delData(data);
+                    });
+                }
+            });
+</script>
+</body>
+</html>

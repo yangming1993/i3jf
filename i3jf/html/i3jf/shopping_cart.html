@@ -1,0 +1,1916 @@
+{% extends "i3jf/base.html" %}
+
+		{% block css %}
+		<link rel="stylesheet" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" href="{{static_url}}css/center.css">
+		<link rel="stylesheet" href="{{static_url}}css/cart.css">
+		{% endblock %}
+
+
+
+		{% block content %}
+		<div id="pageHead">
+			<div class="pageheadContent">
+				<div class="leftHead">
+					<div class="mainTittle left">
+						<a href="/">
+							<img src="{{static_url}}images/logo.png" alt="">
+						</a>
+					</div>
+					<div class="separateD" style="border-right: 4px solid rgb(102, 102, 102);"></div>
+					<div class="subTittle left" style="display: inline-block;">
+						<span class="subWord">购物车</span>
+					</div>
+				</div>
+				<div class="searchOverall">
+					<div class="order-bar">
+					    <ul>
+					        <li class="tag-done"><span class="tag-circle-done">1</span><span class="tag-content">我的购物车</span></li>
+					        <li><img src="{{static_url}}images/menu-arrow-grey.png"></li>
+					        <li class="tag-not"><span class="tag-circle-not">2</span><span class="tag-content">确认订单</span></li>
+					        <li><img src="{{static_url}}images/menu-arrow-white.png"></li>
+					        <li class="tag-not"><span class="tag-circle-not">3</span><span class="tag-content">付款</span></li>
+					        <li><img src="{{static_url}}images/menu-arrow-white.png"></li>
+					        <li class="tag-not"><span class="tag-circle-not">4</span><span class="tag-content">支付成功</span></li>
+					    </ul>
+					</div>
+					<input type="text" placeholder="请输入搜索内容" class="left searchInput">
+					<span class="left searchBtn">搜&nbsp;&nbsp;索</span>
+				</div>
+			</div>
+		</div>
+		<div id="containerBox">
+			<div id="container" class="">
+				<div class="cart-body">
+				    <div class="cart-body-load hidden" id="loading">
+				        <div class="imgLoad">
+				            <div class="outer"></div>
+				            <div class="inner"></div>
+				        </div>
+				    </div>
+				    <div class="allItems" id="itemCart">
+				        <div class="goodsAddress clearFix">
+				            <a href="javascript:void(null);" id="city" class="right clearFix wholeCitys">
+				                <em class="left ellipsis">
+				                	<span class="pName">北京</span>
+				                	<span class="cName">北京市</span>
+				                	<span class="dName">东城区</span>
+				                	<span class="tName">全境</span>
+				                </em>
+				                <i></i>
+				            </a>
+				            <span class="right mr40">配送至</span>
+				            <!-- 弹出地址选框 -->
+				            <div class="cityName">
+				                <span id="closed"></span>
+				                <div class="upDown">
+				                    <a href="javascript:void(null);" class="active clearFix"><span>请选择省</span><i></i></a>
+				                    <a href="javascript:void(null);" class="clearFix"><span>请选择市</span><i></i></a>
+				                    <a href="javascript:void(null);" class="clearFix"><span>东城区</span><i></i></a>
+				                    <a href="javascript:void(null);" class="clearFix"><span>请选择乡镇</span><i></i></a>
+				                </div>
+				                <ul class="active clearFix" id="provices">
+
+				                </ul>
+				                <ul class="clearFix" id="citys">
+
+				                </ul>
+				                <ul class="clearFix" id="districts">
+
+				                </ul>
+				                <ul class="clearFix" id="towns">
+
+				                </ul>
+				            </div>
+				        </div>
+				        <div class="clear"></div>
+				        <div class="cart-content">
+				            <ul class="cart-head">
+				                <li class="cart-list-1 cart-h-1">
+				                    <div class="cart-checkbox">
+				                        <input type="checkbox" value="1" id="selAll" class="select-all select">
+				                        <label for="selAll"></label>
+				                    </div>
+				                    全选
+				                </li>
+				                <li class="cart-list-2 cart-h-2">商品信息</li>
+				                <li class="cart-list-3 cart-h-3">单价（分）</li>
+				                <li class="cart-list-4 cart-h-4">库存</li>
+				                <li class="cart-list-5 cart-h-5">数量</li>
+				                <li class="cart-list-6 cart-h-6">小计（分）</li>
+				                <li class="cart-list-7 cart-h-7">操作</li>
+				            </ul>
+				            <div class="cartStore">
+				                <ul class="cart-store cart-head">
+				                    <li class="cart-list-1 cart-h-1">
+				                        <div class="cart-checkbox">
+				                            <input class="item-checkbox select-store select" prostore="liangren" type="checkbox" id="selStore1">
+				                            <label for="selStore1"></label>
+				                        </div>
+				                        苏宁易购
+				                    </li>
+				                    <li style="display: block;">
+				                        <div class="cart-sale">
+				                            <label>凑单</label>
+				                            <p>订单满<span id="freePoint">95</span>分，可免运费</p>
+				                        </div>
+				                    </li>
+				                </ul>
+				                <div class="cart-list" id="listRow1" style="border-top: 0px solid rgb(255, 255, 255);">
+
+				                </div>
+				                <div class="clear"></div>
+				            </div>
+				            <div class="clear"></div>
+
+				            <div class="cart-info-sum">
+				                <div class="info-left">
+				                    <label>
+				                        <div class="cart-checkbox">
+				                            <input type="checkbox" id="selAll2" class="select-all select">
+				                            <label for="selAll2"></label>
+				                        </div>
+				                        全选
+				                    </label>
+				                    <a href="javascript:void(0);" onclick="deleSel();">删除选中商品</a>
+				                    <a href="javascript:void(0);" onclick="deleAll();">清空购物车</a>
+				                </div>
+				                <div class="info-right">
+				                    <p><label>商品总积分：</label><span id="pointTotal"></span></p>
+				                    <p><label>运费（以结算页为准）：</label><span id="expressFee"></span></p>
+				                </div>
+				            </div>
+				            <div class="to-pay">
+				                <button class="btn" id="toConfirm" onclick="toConfirm();">去结算</button>
+				                <div class="to-pay-should">商品应付积分：<span class="to-pay-num" id="settleAccount"></span></div>
+				                <div class="to-pay-selected">已选中<span id="selectedTotal">1</span>件商品</div>
+				            </div>
+				        </div>
+				    </div>
+
+				    <div class="cart-emp hidden" id="emptyCart">
+				        <p class="cat-img"><img src="{{static_url}}images/cat-emp.png" alt="" title=""></p>
+				        <div class="emp-tips">
+				            <p>购物车里空空的，赶快去挑选心仪的商品吧~</p>
+				            <h4><a class="return-index" href="/">去首页看看</a></h4>
+				        </div>
+				    </div>
+
+				    <div class="cart-emp hidden" id="unLoginCart">
+				        <p class="unlogin-panel">您尚未<a href="/api/user/login/" class="return-index">登录</a></p>
+				    </div>
+				    <div class="mart-selection hidden">
+					    <div class="select-title">猜你喜欢</div>
+					    <div class="select-items">
+					        <div class="imgPreLoad">
+					            <div class="wrap">
+					                <div class="outer"></div>
+					                <div class="inner"></div>
+					            </div>
+					        </div>
+<!-- 					        <ul class="hidden">
+					            <li>
+					                <a href="javascript:void(null);"><img src="https://www.i3jf.com/super/orderList/myCart" alt="" title="">
+					                <p><span></span></p>
+					                <div class="select-item-price"><span class="pointValue"></span><span class="unit">积分</span></div></a>
+					            </li><li>
+					                <a href="javascript:void(null);"><img src="https://www.i3jf.com/super/orderList/myCart" alt="" title="">
+					                <p><span></span></p>
+					                <div class="select-item-price"><span class="pointValue"></span><span class="unit">积分</span></div></a>
+					            </li><li>
+					                <a href="javascript:void(null);"><img src="https://www.i3jf.com/super/orderList/myCart" alt="" title="">
+					                <p><span></span></p>
+					                <div class="select-item-price"><span class="pointValue"></span><span class="unit">积分</span></div></a>
+					            </li><li>
+					                <a href="javascript:void(null);"><img src="https://www.i3jf.com/super/orderList/myCart" alt="" title="">
+					                <p><span></span></p>
+					                <div class="select-item-price"><span class="pointValue"></span><span class="unit">积分</span></div></a>
+					            </li><li>
+					                <a href="javascript:void(null);"><img src="https://www.i3jf.com/super/orderList/myCart" alt="" title="">
+					                <p><span></span></p>
+					                <div class="select-item-price"><span class="pointValue"></span><span class="unit">积分</span></div></a>
+					            </li>
+					        </ul> -->
+					    </div>
+					</div>
+    				<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+		{% endblock %}
+
+		{% block js %}
+		<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+		<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+		<script type="text/javascript">
+			var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+                logged_in(); //已登陆
+            }else{
+                not_logged_in(); //未登录
+                window.location.href = '/api/user/login/';
+            };
+            //未登录可以执行的方法
+            function not_logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+            };
+            //已登录执行的方法
+            function logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+                cartAmount();//购物车数量
+            };
+
+		    var json = {};  //保存商品信息
+		    var timeoutList = {};
+		    var area={};//存放code和内容
+		    var list = {};    //保存选中的商品参数
+
+		    function doSomething(){
+		        var selectedTotal = $('#selectedTotal');
+		        var pointTotal = $('#pointTotal');
+		        var expressFee = $('#expressFee');
+		        var settleAccount = $('#settleAccount');
+
+		        showProvince();
+		        stopPropagation();
+		        getFreePoint();
+		        showCartList(); //购物车列表
+		    };
+		    doSomething()
+		    //调用购物车列表的接口
+		    function showCartList() {
+		    	// console.log("购物车列表接口进入");
+		    	$.ajax({
+		    		url:'/api/user/cart/list',
+		    		type:'GET',
+		    		datatype:'json',
+		    		data:{
+
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			var errno = data.errno;
+		    			// console.log(data);
+		    			if (errno == 0) {
+		    				var allValue = data.list;
+		                    $('#listRow1').html('');
+		                    if(allValue.length > 0){
+		                        var html = '';
+		                        var n = 1;
+		                        var itemSku = [];
+		                        $.each(allValue, function (index, content) {    //商品的html
+		                            html = '<div class="clear"></div>' +
+		                                    '<div class="cart-item cart-i" index="' + index + '" content="' + content.id + '">' +
+		                                        '<div class="cart-list-1">' +
+		                                            '<div class="cart-checkbox">' +
+		                                                '<input class="item-checkbox select-item select" id="" proItem="liangren" type="checkbox"/>' + '<label></label>' +
+		                                            '</div>' +
+		                                            '<a href="/static/i3jf/detail_page.html?sku='+content.sku+'" target="_blank"><img placepic = "true" src="' + content.image + '" /></a>' +
+		                                        '</div>' +
+		                                        '<div class="cart-list-2">' +
+		                                            '<a title="' + content.name + '" href="/static/i3jf/detail_page.html?sku='+content.sku+'" target="_blank" sale="' + content.saleId + '">'+ content.name + '</a>' +
+		                                        '</div>' +
+		                                        '<div class="cart-list-3" data-sku = '+content.sku+'><span class="load-price">'+content.price+'</span></div>' +
+		                                        '<div class="cart-list-4"></div>' +
+		                                        '<div class="cart-list-5">' +
+		                                            '<a class="minus-num">' +
+		                                                '<img class="minus" src="{{static_url}}images/decrease.png"/>' +
+		                                            '</a>' +
+		                                            '<input type="text" class="item-number" value="' + content.amount + '" />' +
+		                                            '<a class="plus-num"><img class="plus" src="{{static_url}}images/add.png"/></a>' +
+		                                        '</div>' +
+		                                        '<div class="cart-list-6">'+content.price*content.amount+'</div>' +
+		                                        '<div class="cart-list-7">' +
+		                                            '<a class="delete-the-item" href="javascript:void(0);">删除</a>' +
+		                                            '<a class="remove-to-follow" href="javascript:void(0);">移到我的关注</a>' +
+		                                        '</div>' +
+		                                        '<div class="cart-list-8 hidden">' + content.sku + '</div>' +
+		                                    '</div>';
+		                            $('#listRow1').append(html);
+
+		                            var isku = content.sku;
+		                            itemSku.push(isku);
+
+		                            if(index==allValue.length-1){
+		                                var timer = setInterval(function(){
+		                                    $('#loading').addClass('hidden');
+		                                    $('#itemCart').removeClass('hidden');
+		                                    clearInterval(timer);
+		                                },500);
+		                            }
+
+		                        });
+
+		                        json.skus = itemSku;    //商品加载后直接调用库存
+		                        $('#listRow1').first('.cart-i').css('border-top','0 solid #FFF');   //去掉第一个商品的上边框
+
+		                        //给选择框加上勾选效果
+		                        var selectItem = $('.select-item');
+		                        var itemNumber = $('.item-number');
+		                        for (i = 0; i < selectItem.length; i++) {
+		                            $(selectItem[i]).attr('id', 'selItem' + n); //给选择框动态添加id
+		                            var id = $(selectItem[i]).attr('id');
+		                            $(selectItem[i]).next('label').attr('for',id);  //给对应label动态添加for
+		                            n++;
+		                        }
+
+		                        //限制数量input只能输入数字
+		                        for(i = 0; i < itemNumber.length; i++) {
+		                            $(itemNumber[i]).keyup(function(){
+		                                var input = $(this);
+		                                if(/[^\d]/.test(input.val())) {
+		                                    var content = input.val().replace(/\D|^0/g,'');
+		                                    $(this).val(content);
+		                                }
+		                            }).bind("paste",function(){
+		                                var tmptxt=$(this).val();
+		                                $(this).val(tmptxt.replace(/\D|^0/g,''));
+		                            }).css("ime-mode", "disabled");
+		                        }
+		                        selectInputs();         //更新选择框
+		                        if(json.cityId) stocks();
+		                        var items = $('.cart-item');
+		                        checkSkuList(allValue);
+		                        checkStocks(allValue);
+		                        getTotal();             //更新总价
+		                        clickRowEvent(items,itemSku);
+
+		                    } else {
+		                        $('#loading, .allItems').addClass('hidden');
+		                        $('#emptyCart').removeClass('hidden');
+		                    }
+		    			}else{
+		    				// console.log("购物车列表接口回调成功但数据异常");
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("购物车列表请求失败,请刷新...");
+		    			// var mainMsg = errmsg;
+		                // var msgInfo = {
+		                //     'mainMsg': mainMsg,
+		                //     'alertType': true
+		                // };
+		                // diyAlert(msgInfo,true);
+		    		}
+		    	})
+		    }
+
+		    //获取满减积分
+		    function getFreePoint() {
+		    	// // console.log("获取满减积分接口进入");
+		    	// $.ajax({
+		    	// 	url:'/api/',
+		    	// 	type:'GET',
+		    	// 	datatype:'json',
+		    	// 	data:{
+
+		    	// 	},
+		    	// 	success:function(data){
+		    	// 		alert("获取满减积分接口成功进入");
+		    	// 		var errno = data.errno;
+		    	// 		if (errno == 0) {
+		    	// 			// console.log("获取满减积分接口成功调用---"+data);
+		    	// 			var point = data.freightLine;
+		     //                $('#freePoint').text(point);
+		    	// 		}else{
+		    	// 			// console.log("获取满减积分接口成功调用但数据异常---"+data)
+		    	// 		}
+		    	// 	},
+		    	// 	error:function(error){
+		    	// 		alert("获取满减积分接口调用失败---"+error);
+		    	// 	}
+		    	// })
+		    }
+
+		    //为每行商品添加点击事件
+		    function clickRowEvent(items,itemSku) {
+		    	// console.log(items,itemSku);
+		        for (var i = 0; i < items.length; i++) {
+		            //将点击事件绑定到商品行
+		            items[i].onclick = function (e) {
+		                var e = e || window.event;
+		                var el = e.target || e.srcElement; //通过事件对象的target属性获取触发元素（复选框）
+		                var cls = el.className; //触发元素的class
+		                var countInout = $(this).find('input[type="text"]'); // 数目input
+		                var itemNum = parseInt($(countInout).val()); //数目
+		                var itemId = $(this).attr('content');
+		                //通过判断触发元素的class确定用户点击了哪个元素
+		                switch (cls) {
+		                    case 'plus': //点击了加号
+		                        $(countInout).val(itemNum + 1);
+		                        getRowTotal();
+		                        //多次点击调用一次接口
+		                        clearTimeout(timeoutList[itemId]);
+		                        timeoutList[itemId] = setTimeout(function(){
+		                            var changeInfo = {
+		                                'id':itemId,
+		                                'amount':itemNum + 1
+		                            };
+		                            getTotal();
+		                            changeCart(changeInfo);
+		                            // getCartNum();
+		                            changeBtn();
+		                        },500);
+		                        break;
+		                    case 'minus': //点击了减号
+		                        if (itemNum > 1) {
+		                            $(countInout).val(itemNum - 1);
+		                            getRowTotal();
+		                            clearTimeout(timeoutList[itemId]);
+		                            timeoutList[itemId] = setTimeout(function(){
+		                                var changeInfo = {
+		                                    'id':itemId,
+		                                    'amount':itemNum - 1
+		                                };
+		                                getTotal();
+		                                changeCart(changeInfo);
+		                                // getCartNum();
+		                                changeBtn();
+		                            },500);
+		                        }
+		                        break;
+		                    case 'delete-the-item': //点击了删除
+		                        var mainMsg = '确定删除此商品吗？';
+		                        var msgInfo = {
+		                            'mainMsg': mainMsg,
+		                            'sureFun': function() {
+		                                doDeleThe(itemId);
+		                            }
+		                        };
+		                        // doDeleThe(itemId);
+		                        diyAlert(msgInfo,true);
+		                        break;
+		                    case 'remove-to-follow':    //点击了移到关注
+		                        var thisSku = $(this).find('.cart-list-8').html();
+		                        var mainMsg = '确定移动此商品到我的关注吗？';
+		                        var subMsg = '移动后您可在“我的关注”页找到它';
+		                        var msgInfo = {
+		                            'mainMsg': mainMsg,
+		                            'subMsg': subMsg,
+		                            'sureFun': function() {
+		                                doRemoveThe(itemId,thisSku);
+		                            }
+		                        };
+		                        // doRemoveThe(itemId,thisSku);
+		                        diyAlert(msgInfo,true);
+		                        break;
+		                }
+		            };
+
+		            // 给数目输入框绑定keyup事件
+		            var putNum = $(items[i]).find('input[type="text"]');
+		            for(j = 0; j < putNum.length; j++) {
+		                putNum[j].onkeyup = function(){
+		                    var number = parseInt($(this).val());
+		                    if (isNaN(number) || number <= 0) {
+		                        number = 1;
+		                    }
+		                    if ($(this).val() != number) {
+		                        $(this).val(number);
+		                    }
+		                    //多次点击调用一次接口
+		                    var itemId = $(this).parent().parent('.cart-item').attr('content');
+		                    clearTimeout(timeoutList[itemId]);
+		                    timeoutList[itemId] = setTimeout(function(){
+		                        var changeInfo = {
+		                            'id':itemId,
+		                            'amount': number
+		                        };
+		                        changeCart(changeInfo);
+		                    },500);
+		                    getRowTotal(); //更新小计
+		                    getTotal(); //更新总价
+		                }
+		            }
+		        }
+		    }
+
+		    // 计算单行价格
+		    function getRowTotal() {
+		        var items = $('.cart-item');
+		        for(i = 0; i < items.length; i++) {
+		            var point = $(items[i]).find('.cart-list-3').text();    //单价
+		            var countInput = $(items[i]).find('input[type="text"]');  //数量input
+		            var subtotal = $(items[i]).find('.cart-list-6');     //小计
+		            var rowPoint = (parseInt($(countInput).val()) * parseFloat(point)).toFixed(2);
+		            // console.log(subtotal+'------'+rowPoint);
+		            //写入HTML
+		            if(isNaN(rowPoint)){
+		                $(subtotal).html('— —');
+		            } else {
+		                $(subtotal).html(Number(rowPoint));
+		            }
+		        }
+		    }
+
+		    //确认删除一条商品后
+		    function doDeleThe(itemId) {
+		        var idArray = [];
+		        idArray.push(itemId);
+		        delSel(idArray);
+		    }
+
+		    //点击删除一条商品
+		    function delSel(idArray) {
+		    	// console.log("删除购物车接口进入---"+idArray);
+		    	$.ajax({
+		    		url:'/api/user/cart/batch_remove/',
+		    		type:'POST',
+		    		datatype:'json',
+		    		data:{
+		    			'id_list':idArray
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				// console.log("删除购物车接口回调成功---"+data);
+		    				showCartList();
+		    			}else{
+		    				// console.log("删除购物车接口回调异常");
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("删除购物车失败,请刷新...");
+		    			// var mainMsg = errmsg;
+		                var msgInfo = {
+		                    'mainMsg': mainMsg,
+		                    'alertType': true
+		                };
+		                // diyAlert(msgInfo,true);
+		    		}
+		    	})
+		    }
+
+		    //确认移动到关注后
+		    function doRemoveThe(itemId,thisSku) {
+		        var idArray = [];
+		        idArray.push(itemId);
+		        delSelFav(idArray,thisSku);
+		    }
+
+		    //点击移动到我的关注
+		    function delSelFav(idArray,thisSku) {
+		    	console.log("点击关注",thisSku,typeof(thisSku));
+		    	$.ajax({
+		    		url:'/api/user/favourite/create/',
+		    		type:'POST',
+		    		datatype:'json',
+		    		data:{
+		    			'sku':thisSku
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			// console.log(data);
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				followProduct(thisSku,function(){
+		                        var mainMsg = '关注成功!';
+		                        var msgInfo = {
+		                            'mainMsg': mainMsg,
+		                            'alertType': true,
+		                            'sureFun': function() {
+		                                showCartList();
+		                            }
+		                        };
+		                        showCartList();
+		                        // diyAlert(msgInfo,true);
+		                    });
+		    			}else{
+		    				alert("此商品已关注！");
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("添加关注失败,请刷新...");
+		    			// var mainMsg = errmsg;
+		       //          var msgInfo = {
+		       //              'mainMsg': mainMsg,
+		       //              'alertType': true
+		       //          };
+		                // diyAlert(msgInfo,true);
+		    		}
+		    	})
+		    }
+
+		    //修改购物车商品数量
+		    function changeCart(json){
+		    	// console.log("修改购物车商品数量进入");
+		    	// console.log(json);
+		    	$.ajax({
+		    		url:'/api/user/cart/update/',
+		    		type:'POST',
+		    		datatype:'json',
+		    		data:{
+		    			'id':json.id,
+		    			'amount':json.amount
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			// console.log(data);
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				// console.log("修改购物车商品数量接口成功---"+data);
+		    				// getCartNum();
+		    				showCartList();  //修改成功重新渲染列表
+		    			}else{
+		    				// console.log("修改购物车商品数量接口异常");
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("修改购物车商品数量失败,请刷新...");
+		    			var mainMsg = errmsg;
+		                var msgInfo = {
+		                    'mainMsg': mainMsg,
+		                    'alertType': true
+		                };
+		                diyAlert(msgInfo,true);
+		    		}
+		    	})
+		    }
+
+		    //上传商品Sku到我的关注
+		    function followProduct(value,callback){
+		    	// console.log("上传商品Sku到我的关注进入"+value,callback);
+		    	$.ajax({
+		    		url:'/api/',
+		    		type:'POST',
+		    		datatype:'json',
+		    		data:{
+
+		    		},
+		    		success:function(data){
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				// console.log("上传商品Sku到我的关注回调成功---"+data);
+		    				callback();
+		    			}else{
+		    				// console.log("上传商品Sku到我的关注回调成功但数据异常");
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("上传商品Sku到我的关注接口失败,请刷新...");
+		    			var mainMsg = errmsg;
+		                var msgInfo = {
+		                    'mainMsg': mainMsg,
+		                    'alertType': true
+		                };
+		                diyAlert(msgInfo,true);
+		    		}
+		    	})
+		    }
+
+		    //全选
+		    function selectInputs() {
+		        var selectInputs = $('.select');
+		        var selectAllInputs = $('.select-all');
+		        var selectStoreInputs = $('.select-store');
+		        for (i = 0; i < selectInputs.length; i++) {
+		            selectInputs[i].onclick = function () {
+		                //如果是全选
+		                if ($(this).hasClass('select-all')) {
+		                    for (i = 0; i < selectInputs.length; i++) {
+		                        selectInputs[i].checked = this.checked;
+		                    }
+		                    clearTimeout(timeoutList[selectInputs]);
+		                    timeoutList[selectInputs] = setTimeout(function(){
+		                        getTotal();    //更新总价
+		                        changeBtn();
+		                    },500);
+		                }
+		                //如果是店铺
+		                if ($(this).hasClass('select-store')) {
+		                    if (!this.checked) {
+		                        var selectItemInputs = $(this).closest('ul').siblings().find('.select');
+		                        for (i = 0; i < selectItemInputs.length; i++) {
+		                            selectItemInputs[i].checked = false;
+		                        }
+		                        for (i = 0; i < selectAllInputs.length; i++) {
+		                            selectAllInputs[i].checked = false;
+		                        }
+		                    } else {                        var selectItemInputs = $(this).closest('ul').siblings().find('.select');
+		                        for (j = 0; j < selectItemInputs.length; j++) {
+		                            selectItemInputs[j].checked = true;
+		                        }
+
+		                        var storeNum = $(selectStoreInputs).length;
+		                        var c = 0;
+		                        for (i = 0; i < selectStoreInputs.length; i++) {
+		                            var selectStores = $(selectStoreInputs[i]).prop('checked');
+		                            if (selectStores) {
+		                                c++;
+		                            }
+		                        }
+		                        if (storeNum == c) {
+		                            for (i = 0; i < selectAllInputs.length; i++) {
+		                                selectAllInputs[i].checked = true;
+		                            }
+		                        }
+		                    }
+		                    clearTimeout(timeoutList[selectInputs]);
+		                    timeoutList[selectInputs] = setTimeout(function(){
+		                        getTotal();    //更新总价
+		                        changeBtn();
+		                    },500);
+		                }
+		                //如果是商品
+		                if ($(this).hasClass('select-item')) {
+		                    var selectStoreInput = $(this).closest('.cart-list').prev('ul').find('.select-store');
+		                    if (!this.checked) {
+		                        selectStoreInput[0].checked = false;
+		                        for (j = 0; j < selectAllInputs.length; j++) {
+		                            selectAllInputs[j].checked = false;
+		                        }
+		                    } else {
+		                        var proItems = $(this).attr('proItem');
+		                        var selectItems = $('.select-item');
+		                        var a = 0;
+		                        var b = 0;
+		                        var d = 0;
+		                        for (i = 0; i < selectItems.length; i++) {
+		                            var selectItem = $(selectItems[i]).attr('proItem');
+		                            if (selectItem == proItems) {
+		                                a++;
+
+		                                var checkedItem = $(selectItems[i]).prop('checked');
+		                                if (checkedItem) {
+		                                    b++;
+		                                }
+		                            }
+		                            var selectChecked = $(selectItems[i]).prop('checked');
+		                            if (selectChecked) {
+		                                d++;
+		                            }
+		                        }
+		                        if (a == b) {    //勾选店铺
+		                            selectStoreInput[0].checked = true;
+		                        }
+		                        if (d == selectItems.length) {   //勾选全选
+		                            for (i = 0; i < selectAllInputs.length; i++) {
+		                                selectAllInputs[i].checked = true;
+		                            }
+		                        }
+		                    }
+		                    clearTimeout(timeoutList[selectInputs]);
+		                    timeoutList[selectInputs] = setTimeout(function(){
+		                        getTotal();    //更新总价
+		                        changeBtn();
+		                    },500);
+		                }
+		            }
+		        }
+		        selectInputs[0].checked = true;
+		        selectInputs[0].onclick();
+		    }
+
+		    //更新总积分和已选数量
+		    function getTotal() {
+		        var productLis = [];
+		        var selected = 0;
+		        var items = $('.cart-item');
+		        for (var i = 0; i < items.length; i++) {
+		            if ($(items[i]).find('input')[0].checked) {
+		                var onePro = {};
+		                var input = $(items[i]).find('input')[1];
+		                var sku = $(items[i]).find('.cart-list-8')[0].innerHTML;
+		                var saleId = $(items[i]).find('.cart-list-2 a').attr('sale');
+		                onePro.sku = sku;
+		                onePro.saleId = saleId;
+		                onePro.num = parseInt($(input).val());
+		                productLis.push(onePro);
+		                selected += parseInt($(input).val()); //计算已选商品数目
+		            }
+		        }
+		        list.productList = productLis;
+		        $(selectedTotal).html(selected); // 已选数目
+		        getPoint();    //总积分
+		        changeBtn();
+		    }
+
+		    //总积分
+		    function getPoint(){
+		    	//商品总积分
+		 		var sum = 0;
+		 		$('.cartStore .cart-list-6').each(function(){
+		 			sum += $(this).text() * 1;
+
+		 		});
+		 		$('#pointTotal').text(sum);
+		 		if (sum > 95) {
+		 			$('#expressFee').text(0);
+		 		}else{
+		 			$('#expressFee').text(8);
+		 		}
+
+
+
+		 		// $.ajax({
+		 		// 	url:'http://192.168.1.68:8080/api/order/get_ship_carriage?skuId=121344835',
+		 		// 	type:'GET',
+		 		// 	data:freight,
+		 		// 	datatype:'json',
+		 		// 	success:function(data){
+
+		 		// 		var data = JSON.parse(data);
+		 		// 		// console.log(data);
+		 		// 	}
+		 		// })
+
+		 		//应付积分
+		 		var cope = 0;
+		 		$('#listRow1 .select-item[type=checkbox]').each(function(){
+		 			var aa = $(this).is(':checked');
+		 			// console.log(aa);
+		 			if (aa) {
+		 				cope += $(this).parents('.cart-item').find('.cart-list-6').text()*1;
+		 			}
+		 		})
+		 		$('#settleAccount').text(cope);
+
+
+
+		 		//本地缓存订单需要的数据
+		 		// var arrsku = [];
+
+		 		// localStorage.setItem(gDetails,productLists);
+		 		// // console.log(aa.length);
+
+		 		// var freight = {
+		 		// 	'list':,
+		 		// 	'cityId':,
+		 		// 	'districtId':,
+		 		// 	'townId':
+		 		// }
+		 		// // console.log('运费接口进入');
+		 		// // console.log(freight);
+
+		    	// $.ajax({
+		    	// 	url:'/api/user/get_credit',
+		    	// 	type:'GET',
+		    	// 	datatype:'json',
+		    	// 	data:{
+
+		    	// 	},
+		    	// 	success:function(data){
+		    	// 		// console.log("总积分接口成功");
+		    	// 		var data = JSON.parse(data);
+		    	// 		// console.log(data);
+		    	// 		var errno = data.errno;
+		    	// 		if (errno == 0) {
+		    	// 			// console.log("总积分接口回调成功---"+data);
+		    	// 			var point = data.credit;
+		     //                var freight = data.freight;
+		     //                var tPoint = data.totalAmount;
+		     //                $(pointTotal).html(point); // 总积分
+		     //                $(expressFee).html(freight);  //运费
+		     //                $(settleAccount).html(tPoint);    //结算积分
+		    	// 		}else{
+		    	// 			// console.log("总积分接口回调成功但数据异常");
+		    	// 		}
+		    	// 	},
+		    	// 	error:function(error){
+		    	// 		alert("总积分接口失败");
+		    	// 		// var mainMsg = errmsg;
+		     //   //          var msgInfo = {
+		     //   //              'mainMsg': mainMsg,
+		     //   //              'alertType': true
+		     //   //          };
+		     //   //          diyAlert(msgInfo,true);
+		    	// 	}
+		    	// })
+		    }
+
+		    //删除所有选中的商品
+		    function deleSel() {
+		        if ($(selectedTotal).html() != 0) {
+		            var mainMsg = '确定删除所选商品吗？';
+		            // var msgInfo = {
+		            //     'mainMsg': mainMsg,
+		            //     'sureFun': function() {
+		            //         doDeleSel();
+		            //     }
+		            // };
+		            doDeleSel();
+		            // diyAlert(msgInfo,true);
+		        } else {
+		            var mainMsg = '请选择商品！';
+		            var msgInfo = {
+		                'mainMsg': mainMsg,
+		                'alertType': true
+		            };
+		            // diyAlert(msgInfo,true);
+		        }
+		    }
+		    function doDeleSel() {
+		        var items = $('.cart-item');
+		        var idArray = [];
+		        for (var i = 0; i < items.length; i++) {
+		            var checkedItem = $(items[i]).find('input')[0].checked;
+		            //如果被选中，就删除相应的行
+		            if (checkedItem) {
+		                var itemId = $(items[i]).attr('content');
+		                $(items[i]).addClass('selectDel');
+		                idArray.push(itemId);
+		            }
+		        }
+		        delSel(idArray);
+		    }
+		    function delSel(idArray,callback) {
+		    	// console.log(idArray);
+		    	// console.log("删除商品接口进入");
+		    	$.ajax({
+		    		url:'/api/user/cart/batch_remove/',
+		    		type:'POST',
+		    		datatype:'json',
+		    		data:{
+		    			'id_list':idArray
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			// console.log(data);
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				// console.log("删除商品接口回调成功---"+data);
+		    				showCartList();
+		    			}else{
+		    				// console.log("删除商品接口回调成功但数据异常");
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("删除商品失败,请刷新...");
+		    			// var mainMsg = errmsg;
+		                // var msgInfo = {
+		                //     'mainMsg': mainMsg,
+		                //     'alertType': true
+		                // };
+		                // diyAlert(msgInfo,true);
+		    		}
+		    	})
+		    }
+
+		    function checkCartNum(){
+		        var items = $('.cart-item');
+		        if(items.length <= 0){
+		            $('#loading').addClass('hidden');
+		            $('#emptyCart').removeClass('hidden');
+		        }
+		    }
+
+		    //清空购物车
+		    function deleAll() {
+		        var mainMsg='确定要清空购物车吗？';
+		        // var msgInfo={
+		        //     'mainMsg':mainMsg,
+		        //     'sureFun':function (){
+		        //         doDeleteAll();
+		        //     }
+		        // };
+		        doDeleteAll();
+		        // diyAlert(msgInfo,true);
+		    }
+
+		    //确认清空购物车后执行
+		    function doDeleteAll() {
+		        var items = $('.cart-item');
+
+
+
+		        var idArray = [];
+
+		        for (var i = 0; i < items.length; i++) {
+		            var itemId = $(items[i]).attr('content');
+		            $(items[i]).addClass('selectDel');
+		            idArray.push(itemId);
+
+
+		            delSel(idArray,function(){
+		                $('.allItems').addClass('hidden');
+		                $('#emptyCart').removeClass('hidden');
+		            });
+		        }
+		        // getCartNum();
+		    }
+
+		    //结算
+		    function toConfirm() {
+		        // matchLogin(function(){
+		            var items = $('.select-item');
+
+			        var cartArr = [];  //push到里面 //缓存本地数据
+
+		            for (i = 0; i < items.length; i++) {
+		                var selected = $(items[i]).prop('checked');
+		                if (selected) {
+		                    $(items[i]).closest('.cart-item').addClass('addArray');
+		                }
+		                // console.log(i);
+		            };
+		            // if (addArray.length > 0) {
+		            // 	$(items).each(function(index,content){
+			           //  	var selected = $(this).prop('checked');
+			           //      if (selected) {
+			           //         	var localname = $(this).parents('#addArray').find('.cart-list-2').text();  //name
+					        	// var localpoint = $(this).parents('#addArray').find('.cart-list-3').text();   //point
+					        	// var localnum = $(this).parents('#addArray').find('.item-number').val();   //数量
+					        	// var localsku = $(this).parents('#addArray').find('.cart-list-8').text();  //sku
+					        	// // console.log(localpoint);
+			           //          var aa = {
+					         //    	'name':localname,
+					         //    	'sku':localsku,
+					         //    	'number':localnum,
+					         //    	'point':localpoint
+					         //    };
+					         //    cartArr.push(aa);
+			           //      }
+			           //  });
+		            // }
+
+
+		            if($(".addArray").length > 0) {
+		                var gDetails = {};
+		                var array = [];
+		                $(".addArray").each(function (index, content) {
+		                	var selected = $(this).find('.item-checkbox').prop('checked');
+		                	if (selected) {
+		                		var itemSku = $(this).find('.cart-list-8').html();
+			                    var saleId = $(this).find('.cart-list-2 a').attr('sale');
+			                    var itemName = $(this).find('.cart-list-2 a').html();
+			                    var itemPoint = $(this).find('.cart-list-3').text();
+			                    var itemNum = $(this).find('.item-number').val();
+			                    var itemStock = $(this).find('.cart-list-4').html();
+			                    var json = {
+			                        'sku': itemSku,
+			                        'name': itemName,
+			                        'point': itemPoint,
+			                        'number': itemNum
+			                    };
+			                    array.push(json);
+		                	}
+
+
+			                //离线缓存订单需要数据
+
+			                var detaildata = {
+			                	"productLists":array
+			                };
+			                var detaildata = JSON.stringify(detaildata);
+			                localStorage.setItem('gDetails',detaildata);
+			                location.href = '/api/order/confirm'
+
+		                });
+		                // gDetails.productLists = array;
+		                // setLocalStroge('gDetails',$.toJSON(gDetails));
+		                // location.href = "/super/orderList/confirm";   //跳登录
+
+		            }
+
+		        // });
+		    }
+
+		    //选择城市部分，如果点击其他地方，选择城市的区域会关闭
+		    function stopPropagation(){
+		        $('body').bind('click',function(e){
+		            var e = e || window.event;
+		            var elem = e.target || e.srcElement;
+		            while (elem) {
+		                if ((elem.className && elem.className.indexOf('wholeCitys')>-1) || (elem.className && elem.className.indexOf('cityName')>-1)) {
+		                    return;
+		                }
+		                elem = elem.parentNode;
+		            }
+		            $('.cityName').hide();
+		            $('.cityName ul').removeClass('active');
+		            $('.cityName ul').eq(0).addClass('active');
+		        });
+		    }
+
+		    //页面加载完执行显示省份
+		    function showProvince(){
+		        // var defaultAddr=getCookie('area');
+		        // //有cookie的话，从cookie中获取数据
+		        // if(defaultAddr)
+		        // {
+		        //     defaultAddr = $.evalJSON(defaultAddr);
+		        //     var defaultCityId = defaultAddr.city.code;
+		        //     getrecommendList(defaultCityId);
+		        // }
+		        provice(function (pCode){
+		            // 省d份的 data-code
+		            city(pCode, function (cCode){
+		                district(cCode,function (dCode){
+		                    $('#city em').html('');
+		                    showCartList();
+		                    stocks();
+		                    getPoint();    //总积分
+		                    changeBtn();
+		                    //判断cityID和districtID是否同时存在
+		                    town(cCode,dCode,function (tCode){
+		                        //如果乡镇不为空
+		                        if($('#towns').html()!='')
+		                        {
+		                            //判断有没有cookie
+		                            // var wholeAddress=getCookie('area');
+		                            //有cookie的话，从cookie中获取数据
+		                            if(wholeAddress)
+		                            {
+		                                wholeAddress = $.evalJSON(wholeAddress);
+		                                $.each($('#provices li span'),function (){
+		                                    if($(this).attr('data-code')==wholeAddress.provice.code)
+		                                    {
+		                                        $('.upDown a:eq(0) span').html($(this).html());
+		                                        $('#provices li span').removeClass('active');
+		                                        $(this).addClass('active');
+		                                    }
+		                                });
+		                                $.each($('#citys li span'),function (){
+		                                    if($(this).attr('city-code')==wholeAddress.city.code)
+		                                    {
+		                                        $('#citys li span').removeClass('active');
+		                                        $(this).addClass('active');
+		                                    }
+		                                });
+		                                $.each($('#districts li span'),function (){
+		                                    if($(this).attr('district-code')==wholeAddress.district.code)
+		                                    {
+		                                        $('#districts li span').removeClass('active');
+		                                        $(this).addClass('active');
+		                                    }
+		                                });
+		                                $.each($('#towns li span'),function (){
+		                                    if($(this).attr('town-code')==wholeAddress.town.code)
+		                                    {
+		                                        $('#towns li span').removeClass('active');
+		                                        $(this).addClass('active');
+		                                    }
+		                                });
+		                                pinAddr(true);
+		                            }
+		                            else
+		                            {
+		                                $('.upDown a:eq(0) span').html($('#provices li:eq(0) span').html());
+		                                $('#provices li:eq(0) span').addClass('active');
+		                                $('#citys li:eq(0) span').addClass('active');
+		                                $('#districts li:eq(0) span').addClass('active');
+		                                $('#towns li:eq(0) span').addClass('active');
+		                                pinAddr(true);
+		                            }
+		                        }
+		                        else
+		                        {
+		                            //当乡镇为空时
+		                            $('.cityName').hide();
+		                            $('.upDown a:eq(3)').hide();
+		                            $('#towns').hide();
+		                            //判断是否有cookie
+		                            // var wholeAddress=$.evalJSON(getCookie('area'));
+		                            //有cookie的话获取cookie中的值
+		                            if(wholeAddress)
+		                            {
+		                                $.each($('#provices li span'),function (){
+		                                    if($(this).attr('data-code')==wholeAddress.provice.code)
+		                                    {
+		                                        $('.upDown a:eq(0) span').html($(this).html());
+		                                        $('#provices li span').removeClass('active');
+		                                        $(this).addClass('active');
+		                                    }
+		                                });
+		                                $.each($('#citys li span'),function (){
+		                                    if($(this).attr('city-code')==wholeAddress.city.code)
+		                                    {
+		                                        $('#citys li span').removeClass('active');
+		                                        $(this).addClass('active');
+		                                    }
+		                                });
+		                                $.each($('#districts li span'),function (){
+		                                    if($(this).attr('district-code')==wholeAddress.district.code)
+		                                    {
+		                                        $('#districts li span').removeClass('active');
+		                                        $(this).addClass('active');
+		                                    }
+		                                });
+		                                pinAddr(false);
+		                            }
+		                            else
+		                            {
+		                                $.each($('#provices li span'),function (){
+		                                    if($(this).attr('data-code')==pCode)
+		                                    {
+		                                        $('.upDown a:eq(0) span').html($(this).html());
+		                                        $('#provices li span').removeClass('active');
+		                                        $(this).addClass('active');
+		                                    }
+		                                });
+		                                $.each($('#citys li span'),function (){
+		                                    if($(this).attr('city-code')==cCode)
+		                                    {
+		                                        $('#citys li span').removeClass('active');
+		                                        $(this).addClass('active');
+		                                    }
+		                                });
+		                                $.each($('#districts li span'),function (){
+		                                    if($(this).attr('district-code')==dCode)
+		                                    {
+		                                        $('#districts li span').removeClass('active');
+		                                        $(this).addClass('active');
+		                                    }
+		                                });
+		                                pinAddr(false);
+		                            }
+		                        }
+		                    });
+		                });
+		                if(!defaultAddr)
+		                {
+		                    var defaultCityId = $('#citys span.active').attr("city-code");
+		                    getrecommendList(defaultCityId);
+		                }
+		            });
+		        });
+		        function pinAddr(bool)
+		        {
+		            var pWords=$('#provices span.active').text();
+		            var cWords=$('#citys span.active').text();
+		            var dWords=$('#districts span.active').text();
+		            if(bool)
+		            {
+		                var tWords=$('#towns span.active').text();
+		                $('#city em').html('<span class="pName">'+pWords+'</span>'+
+		                        '<span class="cName">'+cWords+'</span>'+
+		                        '<span class="dName">'+dWords+'</span>'+
+		                        '<span class="tName">'+tWords+'</span>'
+		                );
+		            }
+		            else
+		            {
+		                $('#city em').html('<span class="pName">'+pWords+'</span>'+
+		                        '<span class="cName">'+cWords+'</span>'+
+		                        '<span class="dName">'+dWords+'</span>'
+		                );
+		            }
+		        }
+		        //点击关闭按钮（城市右侧的X的时候）的时候
+		        $('#closed').on('click',function (){
+		            $('.cityName').hide();
+		            $('.upDown a').removeClass('active');
+		            $('.cityName ul').removeClass('active');
+		            $('#provices').addClass('active');
+		        });
+
+		        //点击选择地区下的选择省份、市、区、乡镇
+		        $('.upDown a').on('click',function (){
+		            $('.upDown a').removeClass('active');
+		            $(this).addClass('active');
+		            $('.cityName ul').removeClass('active');
+		            $('.cityName ul').eq($(this).index()).addClass('active');
+		        });
+
+		        //点击送至的地址，显示全部的地址信息
+		        $('#city').on('click',function (){
+		            $('.cityName').show(function (){
+		                //省份、区、县内容可点
+		                proClick();
+		                cityClick();
+		                districtClick();
+		                if($('#towns').html()!='')
+		                {
+		                    townClick();
+		                }
+		                else
+		                {
+		                    $('.upDown a').eq(3).hide().removeClass('active');
+		                }
+		                $('.upDown a:eq(1) span').html('请选择市');
+		                $('.upDown a:eq(2) span').html('请选择县区');
+		                $('.upDown a:eq(3) span').html('请选择乡镇');
+		            });
+		            $('.upDown a').removeClass('active');
+		            $('.upDown a').eq(0).addClass('active');
+		            $('#provices').addClass('active');
+		        });
+		    }
+
+		    //省份列表接口调用
+		    function provice(fn){
+		    	// console.log("省份列表接口进入");
+		    	$.ajax({
+		    		url:'/api/area/province/list',
+		    		type:'GET',
+		    		data:{
+
+		    		},
+		    		datatype:'json',
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			// console.log(data);
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				// console.log("省份列表接口调用回调成功");
+
+		    				var allValue=data.province;
+		                    if(allValue)
+		                    {
+		                        var aLi='';
+		                        $.each(allValue,function (index,content){
+		                            aLi+='<li title="'+content.name+'"><span title='+content.name+' data-code='+content.id+'>'+content.name+'</span></li>';
+		                        });
+		                        $('#provices').html(aLi);
+		                        // var whole=getCookie('area');
+		                        // if(whole)
+		                        // {
+		                        //     // whole = $.evalJSON(getCookie('area'));
+		                        //     proviceCode=whole.provice.code;
+		                        //     area.provice={
+		                        //         'code':proviceCode
+		                        //     };
+		                        //     fn(whole.provice.code);
+		                        //     $('.upDown a:eq(0) span').html($('#provices span.active').html());
+		                        // }
+		                        // else
+		                        // {
+		                        //     area.provice={
+		                        //         'code':$('#provices li:eq(0) span').attr('data-code')
+		                        //     };
+		                        //     proviceCode=$('#provices li:eq(0) span').attr('data-code');
+		                        //     fn(area.provice.code);
+		                        //     $('.upDown a:eq(0) span').html($('#provices li:eq(0) span').html());
+		                        // }
+		                    }
+		                    else
+		                    {
+		                        // console.log('地址获取失败，请稍后再试');
+		                    }
+		    			}else{
+		    				// console.log("省份列表接口调用成功但数据异常")
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("省份失败,请刷新...")
+		    		}
+		    	})
+		    }
+
+		    //点击省份名后显示要选择的市
+		    function proClick()
+		    {
+		        $('#provices li span').off('click');
+		        $('#provices li span').on('click',function (){
+		            proviceCode=$(this).attr('data-code');
+		            city(proviceCode,cityClick);
+		            $('#provices li span').removeClass('active');
+		            $(this).addClass('active');
+		            area.provice={
+		                'code':proviceCode
+		            };
+		            $('.upDown a').removeClass('active');
+		            $('.upDown a').eq(1).addClass('active');
+		            $('.cityName ul').removeClass('active');
+		            $('#citys').addClass('active');
+		            $('.upDown a:eq(0) span').text($(this).text());
+		        });
+		    }
+
+		    //城市列表调用接口
+		    function city(code,fn){
+		    	// console.log("城市列表接口进入---"+code);
+		    	$.ajax({
+		    		url:'/api/area/city/list',
+		    		type:'GET',
+		    		data:{
+		    			'id':code
+		    		},
+		    		datatype:'json',
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			// console.log(data);
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				// console.log("城市列表接口调用成功---"+data);
+		    				var allValue=data.city;
+		                    if(allValue)
+		                    {
+		                        var aLi='';
+		                        $.each(allValue,function (index,content){
+		                            aLi+='<li title="'+content.name+'"><span city-code='+content.id+'>'+content.name+'</span></li>';
+		                        });
+		                        $('#citys').html(aLi);
+		                        $('#citys li:eq(0) span').addClass('active');
+		                        // var whole=getCookie('area');
+		                        // if(whole)
+		                        // {
+		                        //     // whole = $.evalJSON(getCookie('area'));
+		                        //     cityCode=whole.city.code;
+		                        //     area.city={
+		                        //         'code':whole.city.code
+		                        //     };
+		                        //     fn(whole.city.code);
+		                        // }
+		                        // else
+		                        // {
+		                        //     cityCode=$('#citys li:eq(0) span').attr('city-code');
+		                        //     area.city={
+		                        //         'code':cityCode
+		                        //     };
+		                        //     fn(area.city.code);
+		                        // }
+		                        // json.cityId = area.city.code;
+		                        // list.cityId = area.city.code;
+		                    }
+		                    cityClick();
+		    			}else{
+		    				// console.log("城市列表接口调用成功但数据异常---");
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("城市失败,请刷新...");
+		    		}
+		    	})
+		    }
+
+		    //点击市名显示县区
+		    function cityClick(){
+		        $('.cityName ul:eq(1) li span').on('click',function (){
+		            $('.cityName ul:eq(1) li span').removeClass('active');
+		            $(this).addClass('active');
+		            cityCode=$(this).attr('city-code');
+		            area.city={
+		                'code':cityCode
+		            };
+		            $('.cityName ul').removeClass('active');
+		            $('#districts').addClass('active');
+		            $('.upDown a').removeClass('active');
+		            $('.upDown a').eq(2).addClass('active');
+		            $('.upDown a:eq(1) span').html($(this).html());
+		            district(cityCode,districtClick);
+		            json.cityId = area.city.code;
+		            list.cityId = area.city.code;
+		        });
+		    }
+
+		    //县区列表调用接口
+		    function district(code,fn){
+		    	// console.log("县区列表接口进入");
+		    	$.ajax({
+		    		url:'/api/area/district/list',
+		    		type:'GET',
+		    		datatype:'json',
+		    		data:{
+		    			'id':code
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			// console.log(data);
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				// console.log("县区列表接口调用成功---"+data);
+		    				var allValue=data.district;
+		                    if(allValue)
+		                    {
+		                        var aLi='';
+		                        $.each(allValue,function (index,content){
+		                            aLi+='<li title="'+content.name+'">'+'<span district-code='+content.id+' pid-code='+content.pid+'>'+content.name+'</span>'+'</li>';
+		                        });
+		                        $('#districts').html(aLi);
+		                        $('#districts li:eq(0) span').addClass('active');
+		                        // var whole=getCookie('area');
+		                        // if(whole)
+		                        // {
+		                        //     // whole = $.evalJSON(getCookie('area'));
+		                        //     districtCode=whole.district.code;
+		                        //     area.district={
+		                        //         'code':districtCode
+		                        //     };
+		                        //     fn(whole.district.code);
+		                        //     $('.upDown a:eq(2) span').html($('#districts li span.active').text());
+		                        // }
+		                        // else
+		                        // {
+		                        //     districtCode=$('#districts li:eq(0) span').attr('district-code');
+		                        //     area.district={
+		                        //         'code':districtCode
+		                        //     };
+		                        //     fn(area.district.code);
+		                        //     $('.upDown a:eq(2) span').html($('#districts li:eq(0) span').html());
+		                        // }
+		                        districtClick()
+		                    }
+
+		    			}else{
+		    				// console.log("县区列表接口调用成功回调但数据异常---"+data);
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("县区失败,请刷新...");
+		    		}
+		    	})
+		    }
+
+		    //点击区显示乡镇
+		    var districtCode='';
+		    function districtClick(){
+		        $('#districts li span').on('click',function (){
+		            $('#districts li span').removeClass('active');
+		            $(this).addClass('active');
+		            nid=$(this).attr('district-code');
+		            pid=$(this).attr('pid-code');
+
+		            var pWords=$('#provices span.active').text();
+		            var cWords=$('#citys span.active').text();
+		            $('.upDown a:eq(2) span').html($(this).html());
+		            $('.cityName ul').removeClass('active');
+		            $('#towns').addClass('active');
+		            $('.upDown a').removeClass('active');
+		            $('.upDown a').eq(3).addClass('active');
+		            town(nid,pid,function (){
+		                if($('#towns').html()!='')
+		                {
+		                    $('.upDown a').eq(3).show().addClass('active');
+		                    $('#towns').show();
+		                    townClick();
+		                }
+		                else
+		                {
+		                    showCartList();
+		                    stocks();
+		                    getPoint();    //总积分
+		                    changeBtn();
+		                    $('.cityName ul').removeClass('active');
+		                    $('.cityName').hide();
+		                    $('#city em').html('');
+		                    $('#city em').html('<span class="pName">'+pWords+'</span>'+
+		                            '<span class="cName">'+pWords+'</span>'+
+		                            '<span class="dName">'+targetCont+'</span>'
+		                    );
+		                    var defaultCityId = $('#citys span.active').attr("city-code");
+		                    getrecommendList(defaultCityId);
+		                    setCookie('area',$.toJSON(area),3);
+		                }
+		            });
+		        });
+		    }
+
+		    //乡镇接口调用
+		    function town(nid,pid,fn){
+		    	// console.log("乡镇接口进入");
+		    	$.ajax({
+		    		url:'/api/area/town/list',
+		    		type:'GET',
+		    		datatype:'json',
+		    		data:{
+		    			'nid':nid,
+		    			'pid':pid
+		    		},
+		    		success:function(data){
+		    			var data = JSON.parse(data);
+		    			// console.log(data);
+		    			var errno = data.errno;
+		    			if (errno == 0) {
+		    				// console.log("乡镇接口调用成功回调---"+data);
+		    				var allValue=data.town;
+		                    if(allValue!=null)
+		                    {
+		                        var aLi='';
+		                        $.each(allValue,function (index,content){
+		                            aLi+='<li title="'+content.name+'">'+
+		                                    '<span town-code='+content.id+' pid='+content.pid+' nid='+content.nid+'>'+
+		                                    content.name+
+		                                    '</span>'+
+		                                    '</li>';
+		                        });
+		                        $('#towns').html(aLi);
+		                        $('#towns li span').removeClass('active');
+		                        $('#towns li:eq(0) span').addClass('active');
+		                        area.town={
+		                            'code':$('#towns li:eq(0) span').attr('town-code')
+		                        };
+		                        // var whole=getCookie('area');
+		                        // if(whole)
+		                        // {
+		                        //     // whole = $.evalJSON(getCookie('area'));
+		                        //     fn(whole.town.code);
+		                        // }
+		                        // else
+		                        // {
+		                        //     fn(area.town.code);
+		                        // }
+		                        townClick()
+		                    }
+		    			}else{
+		    				// console.log("乡镇接口调用成功回调但数据异常---"+data)
+		    			}
+		    		},
+		    		error:function(error){
+		    			alert("乡镇失败,请刷新...")
+		    		}
+		    	});
+		    }
+
+		    //点击乡镇列表
+		    var townCode='';
+		    function townClick()
+		    {
+		        $('#towns li span').on('click',function (){
+		            $('#towns li span').removeClass('active');
+		            $('.cityName ul').removeClass('active');
+		            $(this).addClass('active');
+		            var targetCont=$(this).text();
+		            $('.cityName').hide();
+		            $('.upDown a span').eq(3).html($(this).html());
+		            var pWords=$('#provices span.active').text();
+		            var cWords=$('#citys span.active').text();
+		            var dWords=$('#districts span.active').text();
+		            area.town={
+		                'code':$(this).attr('town-code')
+		            };
+		            $('#city em').html('<span class="pName">'+pWords+'</span>'+
+		                    '<span class="cName">'+cWords+'</span>'+
+		                    '<span class="dName">'+dWords+'</span>'+
+		                    '<span class="tName">'+targetCont+'</span>'
+		            );
+		            var defaultCityId = $('#citys span.active').attr("city-code");
+		            // getrecommendList(defaultCityId);
+		            // setCookie('area',$.toJSON(area),3);
+		            showCartList();
+		            stocks();
+		            getPoint();    //总积分
+		            changeBtn();
+		        });
+		    }
+
+		    //调用库存批量查询接口
+		    function checkStocks(list){
+		    	// console.log("库存");
+		        var eachList;
+		        var skuList = [];
+		        var bool = true;
+
+		        if(list.length>=50) {
+		            bool=false;
+		            eachList=list.slice(0,49);
+		        } else {
+		            bool=true;
+		            eachList = list;
+		        }
+		        $.each(eachList,function(index,content){
+		            var list = content.sku;
+		            skuList.push(list);
+		        });
+		        getStocks(skuList,'010');
+		        if(!bool){
+		            var newList = list.slice(49);
+		            checkStocks(newList);
+		        }
+		    }
+
+		    //库存
+		    function getStocks(skuList,city) {
+		    	// console.log('库存接口进入');
+		        // if(!skuList || !cityId) {
+		        //     setTimeout(function() {
+		        //         getStocks(skuList);
+		        //     })
+		        // } else {
+		        	// console.log("库存接口进入");
+		        	$.ajax({
+		        		url:'/api/product/batch_get_stock',
+		        		type:'GET',
+		        		datatype:'json',
+		        		data:{
+		        			'sku':skuList,
+		        			'city_id':city
+		        		},
+		        		success:function(data){
+		        			var data = JSON.parse(data);
+		        			// console.log(data);
+		        			var errno = data.errno;
+		        			// console.log(errno);
+		        			if (errno == 0) {
+		        				// console.log("库存接口调用成功回调---"+data);
+		        				// if(!SNajaxCheck(data.productInventory,'库存查询失败，请稍后再试')) return;
+		                        var allValue = data.productInventory;
+		                        var iSku = $('.cart-item').find('.cart-list-8');
+		                        for(i = 0; i < iSku.length; i++) {
+		                            var skuText = $(iSku[i]).html();
+		                            $.each(allValue, function (index, content) {
+		                                var itemSku = content.sku;
+		                                if(itemSku == skuText) {
+		                                    var itemState = content.state;
+		                                    if(itemState == 0) {
+		                                        itemState = '现货';
+		                                    }
+		                                    if(itemState == 1) {
+		                                        itemState = '在途';
+		                                    }
+		                                    if(itemState == 2) {
+		                                        itemState = '无货';
+		                                    }
+		                                    $(iSku[i]).closest('.cart-item').find('.cart-list-4').attr('numtype',content.state);
+		                                    $(iSku[i]).closest('.cart-item').find('.cart-list-4').html(itemState);
+		                                }
+		                            });
+		                        }
+		                        changeBtn();
+		        			}else{
+		        				// console.log("库存接口调用成功但数据异常");
+		        			}
+		        		},
+		        		error:function(error){
+		        			alert("库存失败,请刷新...");
+		        		}
+		        	})
+		        // }
+		    }
+
+		    function stocks() {
+		        /*var iSku = $('.cart-item').find('.cart-list-8');
+		        checkStocks(iSku);*/
+		    }
+
+
+		    //获取产品单价
+		    function checkSkuList(list){
+		        var eachList;
+		        var skuList = [];
+		        var bool=true;
+		        if(list.length>=16)
+		        {
+		            bool=false;
+		            eachList=list.slice(0,15);
+		        }
+		        else
+		        {
+		            bool=true;
+		            eachList = list;
+		        }
+		        $.each(eachList,function(index,content){
+		            var list = {
+		                sku : content.sku,
+		                saleId : content.saleId
+		            };
+		            skuList.push(list);
+		        });
+		        getProductAmount(skuList);
+		        if(!bool){
+		            var newList = list.slice(15);
+		            checkSkuList(newList);
+		        }
+		    }
+
+		    //积分价格
+		    function getProductAmount(skuList){
+		        // var whole = getCookie('area');
+		        // var nowCode = $('#citys .active').attr('city-code');
+		        // if(!nowCode && !whole){
+		        //     setTimeout(function(){
+		        //         getProductAmount(skuList);
+		        //     },1000);
+		        // }else{
+		        //     var json = {
+		        //         'skuList':skuList,
+		        //         'cityId':(!nowCode) ? $.evalJSON(whole).city.code : nowCode
+		        //     };
+		        //     // console.log("积分价格接口进入");
+		        //     $.ajax({
+		        //     	url:'/api/',
+		        //     	type:'POST',
+		        //     	datatype:'json',
+		        //     	data:{
+
+		        //     	},
+		        //     	success:function(data){
+		        //     		alert("积分价格接口进入成功");
+		        //     		var data = JSON.parse(data);
+		        //     		var errno = data.errno;
+		        //     		if (errno == 0) {
+		        //     			// console.log("积分价格接口回调成功---"+data);
+
+		        //     			if(!data.priceList || data.priceList.length <= 0){
+		        //                     $('.cart-list-3 .load-price').text('该地区暂不销售');
+		        //                 }else{
+		        //                     var amountList = data.priceList;
+		        //                     $.each(skuList,function(key,showValue) {
+		        //                         var nowSku = showValue.sku;
+		        //                         var forSale = '<p class="for-sale">【促销】</p>';
+		        //                         var mask = '<div class="mask-list-5"></div>';
+		        //                         var hasMatch = false;
+		        //                         $.each(amountList, function (index, content) {
+		        //                             try {
+		        //                                 if(nowSku == content.skuId) {
+		        //                                     var amountItem = '';
+		        //                                     var sid = content.saleId;
+		        //                                     var sInvent = content.inventory;
+		        //                                     var sTime = content.stime;
+		        //                                     var date = new Date(sTime*1000);
+		        //                                     var sDate = '' + date.getFullYear() +
+		        //                                             (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) +
+		        //                                             (date.getDate() < 10 ? '0'+(date.getDate()) : date.getDate()) +
+		        //                                             (date.getHours() < 10 ? '0'+(date.getHours()) : date.getHours()) +
+		        //                                             (date.getMinutes() < 10 ? '0'+(date.getMinutes()) : date.getMinutes()) +
+		        //                                             (date.getSeconds() < 10 ? '0'+(date.getSeconds()) : date.getSeconds());
+		        //                                     var nowdate = new Date();
+		        //                                     var nDate = '' + nowdate.getFullYear() +
+		        //                                             (nowdate.getMonth()+1 < 10 ? '0'+(nowdate.getMonth()+1) : nowdate.getMonth()+1) +
+		        //                                             (nowdate.getDate() < 10 ? '0'+(nowdate.getDate()) : nowdate.getDate()) +
+		        //                                             (nowdate.getHours() < 10 ? '0'+(nowdate.getHours()) : nowdate.getHours()) +
+		        //                                             (nowdate.getMinutes() < 10 ? '0'+nowdate.getMinutes() : nowdate.getMinutes()) +
+		        //                                             (nowdate.getSeconds() < 10 ? '0'+nowdate.getSeconds() : nowdate.getSeconds());
+		        //                                     if (!content.amount || content.amount <= 0) {
+		        //                                         amountItem = '<span class="unit">该地区暂不销售</span>';
+		        //                                         if(sid == 0) {
+		        //                                             return;
+		        //                                         } else {
+		        //                                             $('div[data-sku =' + nowSku + ']').prev('.cart-list-2').find('a').before(forSale);
+		        //                                             $('div[data-sku =' + nowSku + ']').next('div').next('.cart-list-5').find('.minus-num').before(mask);
+		        //                                         }
+		        //                                     } else {
+		        //                                         if(sid == 0) {
+		        //                                             amountItem = '<span>' + content.amount + '</span>';
+		        //                                         } else {
+		        //                                             $('div[data-sku =' + nowSku + ']').prev('.cart-list-2').find('a').before(forSale);
+		        //                                             $('div[data-sku =' + nowSku + ']').next('div').next('.cart-list-5').find('.minus-num').before(mask);
+
+		        //                                             if(nDate < sDate) {
+		        //                                                 amountItem = '<span>' + content.amount + '</span>';
+		        //                                             } else {
+		        //                                                 if(sInvent == 0 || sInvent == '') {
+		        //                                                     amountItem = '<span>' + content.amount + '</span>';
+		        //                                                 }
+		        //                                                 if(sInvent == 1) {
+		        //                                                     amountItem = '<span>' + content.saleAmount + '</span>';
+		        //                                                 }
+		        //                                             }
+		        //                                         }
+		        //                                         $('div[data-sku = ' + content.skuId +']').attr('hasamount',true);
+		        //                                     }
+		        //                                     $('div[data-sku = ' + content.skuId + ']').html(amountItem);
+		        //                                     hasMatch = true;
+		        //                                 }
+		        //                             } catch (e) {
+		        //                                 // console.log(e);
+		        //                             }
+		        //                             getRowTotal();     //更新每行商品信息
+		        //                         });
+		        //                         if(!hasMatch){
+		        //                             var amountItem = '<span class="unit">该地区暂不销售</span>';
+		        //                             $('div[data-sku =' + nowSku + ']').html(amountItem);
+		        //                             getRowTotal();     //更新每行商品信息
+		        //                         }
+		        //                     });
+		        //                 }
+		        //                 changeBtn();
+		        //     		}else{
+		        //     			// console.log("积分价格接口回调成功但数据异常");
+		        //     		}
+		        //     	},
+		        //     	error:function(error){
+		        //     		alert("积分价格接口失败---"+error);
+		        //     		$('.cart-list-3 .load-price').text('该地区暂不销售');
+		        //     	}
+		        //     })
+		        // }
+		    }
+
+		    //结算按钮
+		    function changeBtn() {
+		        var items = $('.cart-item');
+		        var checkNum = 0;
+		        for (var i = 0; i < items.length; i++) {
+		            var checkIt = $(items[i]).find('.cart-list-1 input').prop('checked');
+		            if(checkIt) {
+		                checkNum++;
+		            }
+		        }
+		        if(checkNum > 0) {
+		            for (var j = 0; j < items.length; j++) {
+		                var uniPrice = $(items[j]).find('.cart-list-3').attr('hasamount');  //单价
+		                var uniInven = $(items[j]).find('.cart-list-4').attr('numtype');    //库存
+		                var uniCheck = $(items[j]).find('.cart-list-1 input').prop('checked');  //勾选
+		                if(uniCheck && (!uniPrice ||  uniInven == 2)) {
+		                    disBtn();
+		                    return;
+		                } else {
+		                    ableBtn();
+		                }
+		            }
+		        } else {
+		            disBtn();
+		        }
+		    }
+
+		    //按钮禁用
+		    function disBtn() {
+		        // $('#toConfirm').attr('disabled','disabled').addClass('btn-disabled');
+		    }
+
+		    //解除按钮禁用
+		    function ableBtn() {
+		        $('#toConfirm').removeAttr('disabled').removeClass('btn-disabled');
+		    }
+
+
+
+		</script>
+		{% endblock %}
+	</body>
+</html>

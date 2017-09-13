@@ -1,0 +1,419 @@
+{% extends "i3jf/base.html" %}
+        {% block css %}
+		<link rel="stylesheet" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" href="{{static_url}}css/order.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/detail.css">
+		<link rel="stylesheet" type="text/css" href="{{static_url}}css/order_detail.css">
+		{% endblock %}
+
+		{% block content %}
+		<div id="pageHead">
+			<div class="pageheadContent">
+				<div class="leftHead">
+					<div class="mainTittle left">
+						<a href="/"><img src="{{static_url}}images/logo.png" alt=""></a>
+					</div>
+											<div class="separateD" style="border-right: 4px solid rgb(102, 102, 102);"></div>
+										<div class="subTittle left" style="display: inline-block;">
+						<span class="subWord" style="color: rgb(237, 20, 91);">
+															订单详情
+													</span>
+					</div>
+				</div>
+				<div class="searchOverall">
+										<input type="text" placeholder="请输入搜索内容" class="left searchInput" style="display: inline-block; border: 1px solid rgb(211, 10, 10);">
+					<span class="left searchBtn" style="display: inline-block; background-color: rgb(211, 10, 10);">搜&nbsp;&nbsp;索</span>
+				</div>
+			</div>
+		</div>
+		 		<div id="containerBox">
+			<div id="container" class="">
+				<div class="mainCont" style="height:auto">
+	<!-- 收货人信息 开始 -->
+	<div class="guestInformation">
+		<h3>收货人信息</h3>
+		<div class="receiveDetails">
+			<div class="receiveInform clearFix">
+				<span class="left c999">收货人：</span>
+				<span class="left customerName"></span>
+			</div>
+			<div class="receiveInform clearFix">
+				<span class="left c999">地址：</span>
+				<div class="left customerAdd"></div>
+			</div>
+			<div class="receiveInform clearFix">
+				<span class="left c999">联系方式：</span>
+				<span class="left customerTel"></span>
+			</div>
+		</div>
+	</div>
+	<!-- 收货人信息 结束 -->
+	<!-- 支付方式 开始 -->
+	<div class="guestInformation">
+		<h3>支付方式</h3>
+		<div class="receiveDetails">
+			<div class="receiveInform clearFix">
+				<span class="left c999">支付方式：</span>
+				<span class="left payType">在线支付</span>
+			</div>
+		</div>
+	</div>
+	<!-- 支付方式 结束 -->
+	<!-- 物流信息 开始 -->
+<!-- 	<div class="guestInformation">
+		<h3>物流信息</h3>
+		<div class="receiveDetails">
+			<div class="receiveInform clearFix">
+				<span class="left c999">物流编号：</span>
+				<span class="left orderNum"></span>
+			</div>
+			<div class="receiveInform clearFix">
+				<span class="left c999">发货时间：</span>
+				<span class="left sendTime"></span>
+			</div>
+			<div class="receiveInform clearFix">
+				<span class="left c999">物流信息：</span>
+				<ul class="left logisticsInfor"></ul>
+			</div>
+			<div class="receiveInform clearFix">
+				<span class="left c999">收货时间：</span>
+				<span class="left receiveTime"></span>
+			</div>
+		</div>
+	</div> -->
+	<!-- 物流信息 结束 -->
+	<!-- 商品信息及服务信息 开始 -->
+					<div class="guestInformation">
+						<h3>商品信息及服务信息</h3>
+						<div class="gsDetails w1200">
+							<div class="gsTit">
+								<span class="w440">商品信息</span>
+								<span class="w260">单价（分）</span>
+								<span class="w224">数量</span>
+								<span class="w274">服务信息</span>
+							</div>
+							<div class="information w1200" id="information"></div>
+							<div class="payInfor">
+								<div class="pay">
+									<b>商品总积分：</b>
+									<strong class="allScore"></strong>
+								</div>
+								<div class="pay">
+									<b>运费：</b>
+									<strong class="yunPay"></strong>
+								</div>
+								<div class="pay">
+									<b>商品应付积分：</b>
+									<strong class="shouldPay"></strong>
+								</div>
+								<div class="pay">
+									<b>收货地址：</b>
+									<div class="acceptAdd">北京北京市东城区全境123</div>
+								</div>
+								<div class="pay">
+									<b>收货人：</b>
+									<span class="acceptName">123</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 商品信息及服务信息 结束 -->
+				</div>
+			</div>
+		</div>
+		{% endblock %}
+
+		{% block js %}
+		<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+		<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+		<script type="text/javascript">
+			var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+                logged_in(); //已登陆
+            }else{
+                not_logged_in(); //未登录
+                window.location.href = '/api/user/login/';
+            };
+            //未登录可以执行的方法
+            function not_logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+            };
+            //已登录执行的方法
+            function logged_in(){
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+                cartAmount();//购物车数量
+            };
+
+
+
+	//订单详情
+	var checkLogs='查看物流';
+	var offLogs='收起物流';
+
+	customerDetails(orderNumber) //获取订单详情执行
+	function customerDetails(orderNumber)
+	{
+		$('#information').html('');
+		// console.log("获取订单详情接口进入");
+		$.ajax({
+			url:'/api/order/retrieve',
+			type:'GET',
+			datatype:'json',
+			data:{
+				'order_no':orderNumber
+			},
+			success:function(data){
+				var data = JSON.parse(data);
+				// console.log(data);
+				var errno = data.errno;
+				if (errno == 0) {
+					// console.log("获取订单详情接口回调成功---"+data);
+					var allValue=data.orderItemList;
+					// console.log(allValue);
+					$('.customerName').html(data.name);//姓名
+					$('.customerAdd').html(data.receiverAddress);//收货地址
+					$('.customerTel').html(data.receiverTel); // 电话
+
+					$('.allScore').html(data.orderAmt+'分'); //商品积分价
+					$('.yunPay').html(data.freight+'分'); //运费
+
+					var zp = parseInt(data.orderAmt) + parseInt(data.freight);
+					// console.log(typeof(data.orderAmt),typeof(data.freight));
+					$('.shouldPay').html(zp.toFixed(2)+'分'); //总积分
+
+					if(allValue)
+					{
+						var oDiv='';
+						$.each(allValue,function (index,element){
+							oDiv+=createOrderList(element);
+						});
+						// $('.customerName').html(allValue.contact);
+						// $('.customerTel').html(allValue.telephone);
+						// $('.payType').html(allValue.payType);
+
+						var totalAmount=(parseFloat(allValue.orderAmount)+parseFloat(allValue.freight)).toFixed(2);
+
+
+						$('#information').html(oDiv);
+
+						$('.acceptName').html(allValue.contact);
+						//地址处
+		                // $('.customerAdd').html(allValue.fullAddress+allValue.address);
+						$('.acceptAdd').html($('.customerAdd').html());
+						checkLogBtn();
+					}
+				}else{
+					// console.log("获取订单详情接口回调异常---"+data);
+				}
+			},
+			error:function(error){
+				alert("获取订单详情失败,请刷新...");
+			}
+		})
+	}
+
+	function createOrderList(element)
+	{
+		// console.log(element);
+		var aSpan;
+		if(element.saleId)
+		{
+			aSpan='<span class="sales-promotion c0a2a">【促销】</span>';
+		}
+		else
+		{
+			aSpan='';
+		}
+		var aDivs='<div class="wholeInfor w1200">'+
+					'<span class="checkLog" data-btn="1" data-Sku="'+element.commdtyCode+'">'+
+						'查看物流'+
+					'</span>'+
+
+					'<div class="shopName"></div>'+
+					'<ul class="WholeDetails">'+
+						'<li class="w440">'+
+							'<p data-Sku="'+element.commdtyCode+'" class="moreLine">'+aSpan+element.commdtyName+'</p>'+
+						'</li>'+
+						'<li class="w260">'+element.skuAmt+'</li>'+
+						'<li class="w224">'+element.skuNum+'</li>'+
+						'<li class="w274">苏宁易购</li>'+
+					'</ul>'+
+					'<div class="guestInformation logistics" order-item="'+element.orderItemId+'">'+
+						'<div class="receiveDetails reDeail">'+
+							'<div class="receiveInform clearFix">'+
+								'<span class="left c999">订单编号：</span>'+
+								'<span class="left orderNum"></span>'+
+							'</div>'+
+							'<div class="receiveInform clearFix">'+
+								'<span class="left c999">发货时间：</span>'+
+								'<span class="left sendTime"></span>'+
+							'</div>'+
+							'<div class="receiveInform clearFix">'+
+								'<span class="left c999">物流信息：</span>'+
+								'<ul class="left logisticsInfor"></ul>'+
+							'</div>'+
+							'<div class="receiveInform clearFix">'+
+								'<span class="left c999">收货时间：</span>'+
+								'<span class="left receiveTime"></span>'+
+							'</div>'+
+						'</div>'+
+						'<div class="no-logistics">暂无物流信息</div>'+
+					'</div>'+
+				'</div>';
+		return aDivs;
+	}
+
+	//点击查看物流
+	var detailList=[];	//存物流信息的变量
+	function checkLogBtn()
+	{
+		$('.checkLog').off('click');
+		$('.checkLog').on('click',function (index){
+			var btn=$(this).attr('data-btn');
+			var dataFlag=$(this).attr('data-Flag');
+			var logStic=$($(this).parent().find('.logistics'));
+			var sku=$(this).attr('data-Sku');
+			if(!dataFlag)
+			{
+				// console.log("查看");
+				sendInfor(orderNumber,sku,logStic);
+				$(this).attr('data-Flag','1');
+			}
+			else
+			{
+				// console.log("收起");
+				showLogInfor(logStic,index);
+			}
+
+			if(btn==1)
+			{
+				logStic.show();
+				$(this).html(offLogs);
+				$(this).attr('data-btn','0');
+			}
+			else if(btn==0)
+			{
+				logStic.hide();
+				$(this).html(checkLogs);
+				$(this).attr('data-btn','1');
+			}
+		});
+	}
+	// console.log(detailList);
+	function showLogInfor(logStic,dId)
+	{
+		$.each(detailList,function (index,content){
+			// console.log(content);
+			if(dId==index)
+			{
+				logStic.find('.orderNum').html(content.orderNum);
+				logStic.find('.sendTime').html(content.sendTime);
+				logStic.find('.logisticsInfor').html(content.logisticsInfor);
+				logStic.find('.receiveTime').html(content.receiveTime);
+			}
+		});
+	}
+
+
+    //物流信息
+    function sendInfor(orderNumber,sku,current)
+    {
+    	var orderItemId = $(current).attr('order-item');
+    	current.find('.logisticsInfor').html('');
+    	// console.log("物流信息接口进入"+orderNumber,sku,current);
+    	$.ajax({
+    		url:'/api/order/logistics',
+    		type:'GET',
+    		datatype:'json',
+    		data:{
+    			'orderItemId':orderItemId,
+    			'order_no':orderNumber,
+    			'skuId':sku
+    		},
+    		success:function(data){
+    			var data = JSON.parse(data);
+    			// console.log(data);
+    			var errno = data.errno;
+    			if (errno == 0) {
+    				// console.log("物流信息接口回调成功---"+data);
+
+	            		var allValue=data.orderLogisticStatus;
+	            		// console.log(allValue);
+	            		if(allValue!=null && allValue.length>0)
+	            		{
+	            			var sendTime=data.shippingTime;
+	            			var recTime=data.receiveTime;
+	            			var sT='';
+	            			var rT='';
+	            			if(sendTime)
+	            			{
+	            				current.find($('.sendTime')).html(sendTime.replace(/=>/g,':'));
+	            				sT=data.shippingTime.replace(/=>/g,':');
+	            			}
+	            			else
+	            			{
+	            				current.find($('.sendTime')).html('');
+	            				sT='';
+	            			}
+	            			if(recTime)
+	            			{
+	            				rT=data.receiveTime.replace(/=>/g,':');
+		            			current.find($('.receiveTime')).html(rT);
+	            			}
+	            			else
+	            			{
+	            				rT='';
+	            				current.find($('.receiveTime')).html('');
+	            			}
+		            		current.find($('.reDeail')).show();
+		            		current.find($('.orderNum')).html(data.orderId);
+	            			var aLi='';
+	            			$.each(allValue,function (index,element){
+	            				var inform=element.operateState;
+	            				// if(inform)
+	            				// {
+	            				// 	inform=inform.replace(/=>/g,':');
+	            				// }
+
+	            				aLi+='<li>'+
+	            						'<span>'+
+	            						element.operateTime+
+	            						'</span>&nbsp;&nbsp;&nbsp;&nbsp;'+
+	            						'<span>'+inform+'</span>'+
+	            					'</li>';
+
+	            			});
+	            			current.find($('.logisticsInfor')).html(aLi);
+							detailList.push(
+							{
+								"orderNum":data.orderId,
+								"sendTime":sT,
+								"logisticsInfor":aLi,
+								"receiveTime":rT
+							});
+
+	            	}else{
+	            		current.find($('.no-logistics')).show();
+	            		current.find($('.reDeail')).hide();
+	            	}
+    			}else{
+    				// console.log("物流信息接口回调异常---"+data);
+    			}
+    		},
+    		error:function(error){
+    			alert("物流信息失败,请刷新...");
+    			// if(errno==20300)
+       //          {
+       //          	current.find($('.no-logistics')).show();
+       //      		current.find($('.reDeail')).hide();
+       //          }
+    		}
+    	})
+    }
+
+
+</script>
+	{% endblock %}

@@ -1,0 +1,1068 @@
+{% extends "i3jf/admin/template.html" %}
+    {% block css %}
+    <link rel="stylesheet" href="{{static_url}}admin/css/bootstrap.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/AdminLTE.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/skin-blue.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/dataTables.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/loop.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/myModify.css">
+    <style type="text/css" media="screen">
+      .data-control {
+          padding-top: 15px;
+          padding-bottom: 15px;
+          margin-bottom: 30px;
+      }
+      .form{
+        position:relative;
+      }
+      .form-child{
+        position:absolute;
+        top:-26px;
+        left:86px;
+      }
+    </style>
+    {% endblock %}
+          {% block content %}
+          <ul class="sidebar-menu">
+            <li class="header">菜单</li>
+            <li id="dataMenage" class="treeview">
+              <a href="/api/oam/data_analysis/"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i> <span>数据分析</span></a>
+
+            </li>
+            <li id="userMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> <span>用户管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu active">
+                <li id="1" class="active"><a href="/api/oam/user/lists">用户列表</a></li>
+              </ul>
+            </li>
+            <li id="orderMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-hamburger"></i> <span>订单管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/order/lists">订单列表</a></li>
+                <!-- <li id="2"><a href="/static/i3jf/admin/special.html">异常订单</a></li> -->
+                <li id="3"><a href="/api/oam/returned/history">退货历史</a></li>
+              </ul>
+            </li>
+            <li id="contentMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-signal"></i> <span>数据管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/price/set">价格管理</a></li>
+                <li id="2"><a href="/api/oam/product/lists">产品列表</a></li><!--
+                <li id="4"><a href="/static/i3jf/admin/bind.html">分类管理</a></li> -->
+              </ul>
+            </li>
+            <li id="marketMenage" class="treeview active">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-film"></i> <span>推广管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1" class="active"><a href="/api/oam/banner/ads/list">首页轮播管理</a></li>
+                <li id="2"><a href="/api/oam/channel/product/lists">首页频道管理</a></li>
+                <!-- <li id="3"><a href="/static/i3jf/admin/pull.html">精品推荐管理</a></li> -->
+              </ul>
+            </li>
+            <li id="productList" class="treeview">
+              <a href="/api/oam/get/product/detail"><i class="glyphicon glyphicon-volume-down"></i>
+              <span>获取产品信息</span> </a>
+
+            </li>
+            <li class="treeview">
+              <a href="/api/oam/get/area/detail"><i class="glyphicon glyphicon-th-large"></i> <span>地区管理</span> </a>
+            </li>
+          </ul>
+        </section>
+   </aside>
+      <div class="content-wrapper" style="min-height: 897px;">
+
+        <section class="content-header">
+          <h1>
+            推广管理<small>首页轮播管理</small>
+          </h1>
+        </section>
+        <section class="content">
+          	<div class="box box-default color-palette-box">
+		<div class="box-body">
+      <div class="data-control">
+          <button class="btn btn-primary pull-right topAddBtn">添加轮播广告</button>
+        </div>
+			<div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <div class="row">
+                <div class="col-sm-6"></div>
+                </div>
+            <div class="row">
+            <div class="col-sm-12">
+                <table id="dataTable" class="table table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="dataTable_info">
+
+              </table>
+                   <div id="dataTable_processing" class="dataTables_processing" style="display: none;">处理中...</div>
+                   </div>
+                   </div>
+            </div>
+		</div>
+    </div>
+
+
+        </section>
+      </div>
+      <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
+    </div>
+    <div class="fixedLayer">
+    <div class="fixedContainer">
+    </div>
+</div>
+
+    <img id="basePicInfo" src="" style="display:none;">
+
+    {% endblock %}
+
+    {% block js %}
+    <script src="{{static_url}}admin/js/jQuery-2.1.4.min.js"></script>
+    <script src="{{static_url}}admin/js/bootstrap.min.js"></script>
+    <script src="{{static_url}}admin/js/checkAction.js"></script>
+    <script src="{{static_url}}admin/js/public.js"></script>
+    <script src="{{static_url}}admin/js/base.js"></script>
+    <script src="{{static_url}}admin/js/dataTables.min.js"></script>
+    <script type="text/javascript">
+
+      	$(function(){
+          var checkLogin = new checkLogin();//判断登录
+          if (checkLogin.flag) {
+
+          }else{
+            window.location.href = "/api/oam/admin/login";
+          }
+
+          //判断登录
+          function checkLogin(){
+              var loginName = '';
+              var loginList = '';
+              var topOrderN = '';
+              //获取session 判断登录
+              var Login = sessionStorage.getItem("adminLogin");
+              console.log(Login);
+              // var Login = getSessionstronge("login");
+              if (Login == null) {  //没有登录
+                  console.log("没登录");
+                  this.flag = false;
+              }else{  //登录
+                  console.log("已经登陆");
+                  this.flag = true;
+                  $(".info p").eq(0).text(Login);
+                  $(".hidden-xs").text(Login);
+                  $(".navbar-nav>.user-menu>.dropdown-menu>li.user-header>p").prepend(Login);
+              }
+          }
+
+      		initMenu('market',1);
+          console.log(initMenu(1,2))
+          setDefaultRedirectType();
+           getAdsList(false);
+
+          var typeTimer = setInterval(function(){
+              if(redirectDatas&&fullDatas){
+                  getAdsList(false);
+                  clearInterval(typeTimer);
+              }
+          },500);
+          loadDefaultDOM();
+          loadSecondPage();
+      	});
+
+        var redirectDatas='';
+        var fullDatas='';
+        var uploadStatus = [0,0,0];       //两次文件上传时的状态
+        var addJson={};                 //添加时请求Json
+        var updateJson = {};            //更新时请求Json
+        var uploadConst = {
+            "unitType":1,
+            "maxSize":10240,
+            "checkFileExt":function(encUrl){
+                if (!encUrl.match(/(.jpeg|.png|.gif|.jpg)/i)) {
+                    return false;
+                }
+                return true;
+            }
+        }
+        var appConst = {
+            "fileErrmsg":"app图片格式错误！",
+        };
+        var webConst = {
+            "fileErrmsg":"web图片格式错误！",
+        };
+        var uploadConst1={};
+        var uploadConst2={};
+        $.extend(uploadConst1,uploadConst,appConst);
+        $.extend(uploadConst2,uploadConst,webConst);
+        // var arr = [];
+        // function aa(){
+        //   $.ajax({
+        //     url:'/api/oam/main/list',
+        //     type:'GET',
+        //     datatype:'json',
+        //     data:{
+
+        //     },
+        //     success:function(data){
+        //       var data = JSON.parse(data);
+        //       $.each(data.productlist,function(index,item){
+        //         if (item.is_default) {
+        //           arr.push(item);
+        //         }
+        //       });
+        //       getAdsList();
+        //     }
+
+        //   })
+        // }
+        function getAdsList(keepFlag){
+
+            $.fn.dataTable.ext.errMode = 'none';
+            dt = $('#dataTable').dataTable({
+                // data:arr,
+                paging: true,//分页
+                ordering: true,//是否启用排序
+                searching: true,//搜索
+                processing:true,//loading
+                "language": {
+                  lengthMenu: '<select class="form-control input-xsmall">' + '<option value="1">1</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="30">30</option>' + '<option value="40">40</option>' + '<option value="50">50</option>' + '</select>条记录',//左上角的分页大小显示。
+                  search: '<span>关键字搜索：</span>',
+                  paginate: {//分页的样式内容。
+                    previous: "上一页",
+                    next: "下一页",
+                    first: "第一页",
+                    last: "最后"
+                  },
+                  processing : "载入中...<img src='/static/i3jf/admin/images/loading.gif' style='width:100px;height:100px;' />",
+                  zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
+                  //下面三者构成了总体的左下角的内容。
+                  info: "总共_PAGES_ 页，显示第_START_ 到第 _END_ ，筛选之后得到 _TOTAL_ 条，初始_MAX_ 条 ",//左下角的信息显示，大写的词为关键字。
+                  infoEmpty: "0条记录",//筛选为空时左下角的显示。
+                  infoFiltered: ""//筛选之后的左下角筛选提示，
+                },
+                paging: true,
+                pagingType: "full_numbers",//分页样式的类型
+                stateSave: keepFlag,
+                "ajax": {
+                    "url":"/api/oam/main/list",
+                //     // "type":"GET",
+                    // "data":"productlist"
+                //     // function(paramet) {
+                //     //     var requestJson = {};
+                //     //     requestJson.categoryD1Id=$('#selectPage option:selected').attr("data-categoryD1Id");
+                //     //     return requestJson;
+                //     // },
+                    "dataSrc":"productlist"
+                },
+                "columns": [
+                  {
+                    "title":'',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"id",
+                    "title":'id',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"backend_image",
+                    "title":'轮播图背景',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"image",
+                    "title":'web图片',
+                    "class":'th-center td-center'
+                  },
+                  // {
+                  //   "data":"appPicUrl",
+                  //   "title":'app图片',
+                  //   "class":'th-center td-center'
+                  // },
+                  {
+                    "data":"redirect_type",
+                    "title":'跳转类型',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"is_default",
+                    "title":'是否显示',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"content",
+                    "title":'跳转内容',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"priority",
+                    "title":'排序号',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "title":'操作',
+                    "class":'th-center td-center'
+                  }
+                ],
+                "columnDefs": [
+                {
+                    "render": function(data,type,row){
+                        var inputDiv = '<input type="checkbox" class="table-checkbox" name="showLists" data-name="'+row.name+'" data-default="'+row.is_default+'" data-id="'+row.id+'"/>';
+                        return inputDiv;
+                    },
+                    "targets":0
+                },
+                {
+                    "render": function(data,type,row){
+                        var imgDiv
+                        if (!row.backend_iamge) {
+                          imgDiv = '<img class="backgroundPic" style="border:1px solid #ddd" src=""/>';
+                        }else{
+                          imgDiv = '<img class="backgroundPic" src="/upload/'+row.backend_iamge+'"/>';
+                        }
+
+                        return imgDiv;
+
+                    },
+                    "targets":2
+                },
+                {
+                    "render": function(data,type,row){
+                        var imgDiv
+                        if (!data) {
+                          imgDiv = '<img class="backgroundPic" style="border:1px solid #ddd" src=""/>';
+                        }else{
+                          imgDiv = '<img class="backgroundPic" src="/upload/'+data+'"/>';
+                        }
+
+                        return imgDiv;
+
+                    },
+                    "targets":3
+                },
+                // {
+                //     "render": function(data,type,row){
+                //         var imgDiv = '<img class="appPic" src="'+data+'"/>';
+                //         return imgDiv;
+                //     },
+                //     "targets":3
+                // },
+                {
+                    "render": function(data,type,row){
+                        var redirectType = '';
+                        switch(row.redirect_type){
+                          case 0:
+                            redirectType = '关键字';
+                          break;
+                          case 1:
+                            redirectType = 'url';
+                          break;
+                        };
+                        return redirectType;
+                    },
+                    "targets":4
+                },
+                {
+                    "render":function(data,type,row){
+                      var isDefault;
+                      switch(row.is_default){
+                        case false:
+                          isDefault = '不显示';
+                        break;
+                        case true:
+                          isDefault = '显示';
+                        break;
+                      }
+                      return isDefault;
+                    },
+                    "targets":5
+                },
+                {
+                    "render": function(data,type,row){
+                        var editD = '<a class="btn btn-sm editInfo">编辑</a><br/><a class="btn btn-sm goUp">上线</a><br/><a class="btn btn-sm goDown">下线</a><br/><a class="btn btn-sm delInfo">删除</a>';
+                        return editD;
+                    },
+                    "targets":8
+                }
+                ],
+
+                "createdRow":function(row,data,index){
+                    function showOrgImg(url){
+                        var oImg = $('<img style="max-height:600px;max-width:800px;">');
+                        oImg.load(function() {
+                            var oWidth = $(oImg)[0].width+'px';
+                            var oHeight = $(oImg)[0].height+'px';
+                            $('.fixedContainer').html('<div class="image-prev"></div>')
+                            $('.fixedContainer .image-prev').html(oImg);
+                            $('.fixedContainer').css({
+                                'width':oWidth,
+                                'height':oHeight,
+                                'max-width':'800px',
+                                'max-height':'600px',
+                                'box-shadow':'0px 0px 10px rgba(0,0,0,0)',
+                                'background-color':'rgba(0,0,0,0)'
+                            });
+                            $('.fixedContainer img').after('<div class="closeBtn"><img src="/bundles/oam/images/close.png" alt=""/></div>');
+                            $('.closeBtn').css('right','-30px');
+                            $('.fixedLayer').css('display','block');
+                            $('.closeBtn').css('display','block');
+                        });
+                        oImg.attr('src',url);
+                    }
+                    $('.fixedContainer').on('click','.closeBtn',function(){
+                        $('.fixedLayer').css('display','none');
+                        $('.fixedContainer').html('');
+                    });
+                    $('td',row).eq(2).on('click',function(){
+                        showOrgImg(data.fileUrl);
+                    });
+                    $('td',row).eq(3).on('click',function(){
+                        showOrgImg(data.webPicUrl);
+                    });
+                    // $('td',row).eq(4).on('click',function(){
+                    //     showOrgImg(data.appPicUrl);
+                    // });
+
+                    $('td',row).eq(8).on('click','.editInfo',function(){
+                        showEditLevel(data);
+                    });
+                    $('td',row).eq(8).on('click','.delInfo',function(){
+                        if(!myConfirm('是否删除该信息？')) return;
+                        delAds(data.id);
+                    });
+
+                    $('td',row).eq(8).on('click','.goUp',function(){
+                        goUp(data);
+                    });
+                    $('td',row).eq(8).on('click','.goDown',function(){
+                        goDown(data);
+                    });
+                },
+                // "language":{
+                //     url:dataTable_zh
+                // }
+            });
+
+        }
+        function goUp(data){
+          $.ajax({
+            url:'/api/oam/main/up_or_down',
+            type:'POST',
+            datatype:'json',
+            data:{
+              'id':data.id,
+              'state':true
+            },
+            success:function(data){
+              alert("上线成功！");
+              location.reload();
+            },
+            error:function(error){
+              alert("上线失败！");
+            }
+          })
+        }
+        function goDown(data){
+          $.ajax({
+            url:'/api/oam/main/up_or_down',
+            type:'POST',
+            datatype:'json',
+            data:{
+              'id':data.id,
+              'state':false
+            },
+            success:function(data){
+              alert("下线成功！");
+              location.reload();
+            },
+            error:function(error){
+              alert("下线失败！");
+            }
+          })
+        }
+        function showEditLevel(rowData){
+          console.log(rowData);
+            var editPanel = '<div class="editPanel panel panel-primary">'
+                    +'<div class="panel-heading">编辑</div>'
+                    +'<div class="panel-body">'
+                    // +'<form class="form-horizontal">'
+                    // +'<div class="form-group">'
+                    // +'<label class="col-sm-3 control-label">跳转id</label>'
+                    // +'<div class="col-sm-9">'
+                    // +'<span id="redirectId"></span>'
+                    // +'<span class="btn btn-default" id="gotoBtn">点击选择跳转id</span>'
+                    // +'</div>'
+                    // +'</div>'
+                    +'<form class="form-horizontal" id="submitForm2" method="POST" action="/api/oam/main/add" target="id_iframe" enctype="multipart/form-data">'
+                    +'<div class="row">'
+                    +'<label class="col-sm-3 control-label">跳转类型</label>'
+                    +'<div class="col-sm-9">'
+                    +'<select id="redirect" name="redirect"><option value=1>url</option><option value=0>关键字</option></select>'
+                    // +'<span id="redirectType" class="form-control"></span>'
+                    +'</div>'
+                    +'</div></br>'
+                    +'<div class="row">'
+                    +'<label class="col-sm-3 control-label">排序号</label>'
+                    +'<div class="col-sm-9">'
+                    +'<input type="text" class="form-control" name="rankNum" id="rankNum"/>'
+                    +'</div>'
+                    +'</div></br>'
+                    // +'</form>'
+//                     +'<form class="form-horizontal" id="submitForm1" method="POST" enctype="multipart/form-data">'
+//                     +'<div class="form-group ">'
+//                     +'<label class="col-sm-3 control-label" >app图片</label>'
+//                     +'<div class="col-sm-9 upload-container">'
+//                     +'<input type="file" class="upload-input" name="file" onchange="showFileNameandPreview(this);" />'
+//                     +'<div class="tips">图片比例为414:248</div>'
+//                     +'<div class="upload-simulate">'
+//                     +'<input type="text" class="file-name form-control" readonly="readOnly" title="" />'
+//                     +'<div class="btn btn-default upload-btn">浏览</div>'
+//                     +'<div class="nailDiv">'
+// //
+//                     +'</div>'
+//                     +'</div>'
+//                     +'</div>'
+//                     +'</div>'
+//                     +'</form>'
+                    +'<div class="row">'
+                    +'<label class="col-sm-3 control-label" >关键字</label>'
+                    +'<div class="col-sm-9 upload-container">'
+                    +'<input type="text" class="form-control" name="content" id="bannerText"/>'
+                    // +'<input type="file" class="upload-input" name="file" onchange="showFileNameandPreview(this);" />'
+//
+                    // +'<div class="upload-simulate">'
+                    // +'<input type="text" class="file-name form-control" readonly="readOnly" title="" />'
+                    // +'<div class="btn btn-default upload-btn">浏览</div>'
+                    // +'<div class="nailDiv">'
+
+                    // +'</div>'
+                    // +'</div>'
+                    +'</div>'
+                    +'</div></br>'
+                    +'<div class="row">'
+                    +'<label class="col-sm-3 control-label" >是否显示</label>'
+                    +'<div class="col-sm-9 upload-container">'
+                    +'<select id="isDefault" name="is_default"><option value="false">否</option><option value="true">是</option></select>'
+                    // +'<input type="file" class="upload-input" name="file" onchange="showFileNameandPreview(this);" />'
+//
+                    // +'<div class="upload-simulate">'
+                    // +'<input type="text" class="file-name form-control" readonly="readOnly" title="" />'
+                    // +'<div class="btn btn-default upload-btn">浏览</div>'
+                    // +'<div class="nailDiv">'
+
+                    // +'</div>'
+                    // +'</div>'
+                    +'</div>'
+                    +'</div></br>'
+
+                    // +'<form class="form-horizontal" id="submitForm2" method="POST" action="/api/oam/main/add" enctype="multipart/form-data">'
+                    +'<div class="row">'
+                    +'<label class="col-sm-3 control-label" >web图片</label>'
+                    +'<div class="col-sm-9 upload-container">'
+                    // +'<input type="text" class="form-control" id="webIpt"/>'
+                    +'<input type="file" class="upload-input" name="webImg" onchange="showFileNameandPreview(this);" />'
+                    +'<div class="tips">图片比例为750:450</div>'
+                    +'<div class="upload-simulate">'
+                    +'<input type="text" class="file-name form-control" readonly="readOnly" id="webIpt" title="" />'
+                    +'<div class="btn btn-default upload-btn">浏览</div>'
+                    +'<div class="nailDiv">'
+//
+                    +'</div>'
+                    +'</div>'
+                    +'</div>'
+                    +'</div></br>'
+                    // +'</form>'
+                    // +'<form class="form-horizontal" id="submitForm3" method="POST" action="/api/oam/main/add" enctype="multipart/form-data">'
+                    +'<div class="row" id="submitForm3">'
+                    +'<label class="col-sm-3 control-label" >web背景图</label>'
+                    +'<div class="col-sm-9 upload-container">'
+                    // +'<input type="text" class="form-control" id="webIptbg"/>'
+                    +'<input type="file" class="upload-input" name="webbgImg" id="webIptbg" onchange="showFileNameandPreview(this);" />'
+//
+                    +'<div class="upload-simulate">'
+                    +'<input type="text" class="file-name form-control" readonly="readOnly" title="" />'
+                    +'<div class="btn btn-default upload-btn">浏览</div>'
+                    +'<div class="nailDiv">'
+
+                    +'</div>'
+                    +'</div>'
+                    +'</div>'
+                    +'</div></br>'
+                    +'</form>'
+
+                    +'<iframe id="id_iframe" name="id_iframe" style="display:none;"></iframe>'
+
+                    +'<div class="submitDiv form-group form">'
+                    +'<label class="col-sm-3 control-label" ></label>'
+                    +'<div class="col-sm-9 form-child">'
+                    +'<input type="button" class="btn btn-primary saveBtn" value="保存"/>'
+                    +'<input type="button" class="btn btn-default cancelBtn" value="取消"/>'
+                    +'</div>'
+                    +'</div>'
+                    +'<div class="imgPreviewDiv"><img id="imgPreview" /></div>'
+                    +'</div>'
+                    +'</div>';
+            $('.fixedContainer').html(editPanel);
+
+
+            if(rowData){
+                console.log("编辑");
+                $('#redirect option[value='+rowData.redirect_type+']').attr('selected',true);
+                $('#rankNum').val(rowData.priority);
+
+                setDefaultEditValue(rowData);
+                // submitFiles('submitForm1',0,rowData.id);
+                // submitFiles('submitForm2',1,rowData.id);
+                // submitFiles('submitForm3',2,rowData.id);
+            }else{
+                console.log("添加");
+                // submitFiles('submitForm1',0,'');
+                submitFiles('submitForm2',1,'');
+                submitFiles('submitForm3',2,'');
+            }
+            hideRightPreimg();
+            setPanelSize();
+            $('.fixedLayer').css('display','block');
+            $('.fixedLayer ').off('click','.sureGoto').on('click','.sureGoto',function(){
+                saveSelectedGoto();
+            });
+
+            $('.fixedLayer').off('click','.cancelGoto').on('click','.cancelGoto',function(){
+                cancelSelectedGoto();
+            });
+            $('#help').on('click',function(){
+                showHelpMsg();
+            });
+            $('.submitDiv .saveBtn').on('click',function(){
+                if(!checkNull($('#rankNum').val(),"请填写排序号！")) return;
+                if(!checkNum($('#rankNum').val(),"排序号只能为数字！")) return;
+                addJson.orderIndex = $('#rankNum').val();
+                if(!rowData){
+                    // if(!checkNull($('#submitForm1 input[type="file"]').val(),'请上传app图片！')) return;
+                    // if(!checkNull($('#submitForm2').val(),'请上传web图片！')) return;
+                    // if(!checkNull($('#submitForm3').val(),'请上传web背景图！')) return;
+                    var subF2 = $('#webIpt').val();
+                    var subF3 = $('#webIptbg').val();
+                    if (subF2.length == 0 ) {
+                      alert("请上传web图片！");
+                      return;
+                    }
+                    // if (subF3.length == 0 ) {
+                    //   alert("请上传web背景图！");
+                    //   return;
+                    // }
+                    addBanner();
+                    return false;
+                    // changeBind(this,true);
+                    // $('#submitForm1').submit();
+                    // $('#submitForm2').submit();
+                    // $('#submitForm3').submit();
+                }else{
+                    $('#submitForm1').submit();
+                    $('#submitForm2').submit();
+                    $('#submitForm3').submit();
+                    changeBind(this,true);
+                    var fileNum = 0;
+                    var statusNum = 0;
+                    var inputV1 = $('#submitForm1 input[type="file"]').val();
+                    var inputV2 = $('#submitForm2 input[type="file"]').val();
+                    var inputV3 = $('#submitForm3 input[type="file"]').val();
+                    if(inputV1){
+                        $('#submitForm1').submit();
+                        fileNum+=1;
+                    }
+                    if(inputV2){
+                        $('#submitForm2').submit();
+                        fileNum+=1;
+                    }
+                    if(inputV3){
+                        $('#submitForm3').submit();
+                        fileNum+=1;
+                    }
+                    var timer = setInterval(function(){
+                        $.each(uploadStatus,function(ind,val){
+                            statusNum+=val;
+                            if(ind==2&&statusNum!=fileNum){
+                                statusNum=0;
+                            }
+                        });
+                        if(statusNum==fileNum){
+                            updateBanner();
+                            fileNum = 0;
+                            statusNum=0;
+                            clearInterval(timer);
+                        }else if(!inputV1&&!inputV2&&!inputV3){
+                            updateBanner();
+                            clearInterval(timer);
+                        }
+                    },500);
+                    // alert("添加");
+                }
+            });
+            $('.submitDiv .cancelBtn').on('click',function(){
+                $('.fixedContainer').html('');
+                $('.fixedLayer').css('display','none');
+                updateJson={};
+                addJson={};
+                changeBind($('.submitDiv .saveBtn')[0],true);
+            });
+        }
+        function setPanelSize(){
+            var orgWidth = $('.editPanel').width()+'px' ;
+            var orgHeight = $('.editPanel').height()+'px';
+            $('.fixedContainer').removeAttr('style');
+            $('.fixedContainer').css('width',orgWidth).css('height',orgHeight);
+        }
+
+        function checkNum(value,msg){
+            if((/\D/ig).test(value)){
+                alert(msg);
+                return false;
+            }else{
+                return true;
+            }
+        }
+        //设置编辑状态下的默认值
+        function setDefaultEditValue(data){
+            console.log(data);
+            $("#submitForm2").append('<input style="width:0;height:0;opacity:0;" type="text" name="id" value="'+data.id+'">')
+            $("#submitForm2").attr('action','/api/oam/main/set');
+
+            // var redirectId=data.redirectId;
+            // $('#redirectType').html(matchRedirectType(data.redirectType));
+            var orderIndex = data.priority;
+            // var appPicId = data.appPicId;
+            // var webPicId = data.webPicId;
+            var fileUrl = data.backend_image;
+            // var appPicUrl = data.appPicUrl;
+            var webPicUrl = data.image;
+            // $('#redirectId').text(redirectId).css('margin-right','20px');
+            $('#rankNum').val(orderIndex);
+            $('#webIpt').val(webPicUrl);
+
+            $('.nailDiv').eq(0).html('<img style="width:100%" src="/upload/'+webPicUrl+'" />');
+            if (!fileUrl) {
+              $('#webIptbg').val(fileUrl);
+            }
+            putBanner();
+            // setImgDefaultStatus(appPicUrl,$('#submitForm1 .file-name'),$('#submitForm1 .nailDiv'));
+            // setImgDefaultStatus(webPicUrl,$('#submitForm2 .file-name'),$('#submitForm2 .nailDiv'));
+            // setImgDefaultStatus(fileUrl,$('#submitForm3 .file-name'),$('#submitForm3 .nailDiv'));
+            // updateJson.redirectId=redirectId;
+            updateJson.id=data.id;
+            updateJson.orderIndex =orderIndex ;
+            // updateJson.appPic=appPicId;
+            // updateJson.webPic=webPicId;
+            updateJson.fileUrl=fileUrl;
+        }
+        //编辑修改
+        function putBanner(){
+          console.log("bianji");
+
+          $(".saveBtn").click(function(){
+            $("#submitForm2").submit();
+            location.reload();
+          })
+        }
+        // 获取限制预览的参数
+        function setParameters(uploadConst,formId){
+            var parameters;
+            var appConst = {
+                "checkFormatErrMsg":"app图片格式错误！",
+                "scaleValue":414/248
+            };
+            var webConst = {
+                "checkFormatErrMsg":"web图片格式错误！",
+                "scaleValue":750/450
+            };
+            var backgroundConst={
+                "checkFormatErrMsg":"web背景图格式错误！",
+                "scaleValue":''
+            }
+            var uploadConst1={};
+            var uploadConst2={};
+            var uploadConst3 = {};
+            $.extend(uploadConst1,uploadConst,appConst);
+            $.extend(uploadConst2,uploadConst,webConst);
+            $.extend(uploadConst3,uploadConst,backgroundConst);
+            if(formId=='submitForm1'){
+                parameters = uploadConst1;
+            }else if(formId=='submitForm2'){
+                parameters = uploadConst2;
+            }else if(formId=='submitForm3'){
+                parameters = uploadConst3;
+            };
+            return parameters;
+        }
+        function selectGoto(aSpan){
+            var controlPanel = '<div class="actPart" id="actPanel">'
+                    +'<input type="button" class="btn btn-default pull-right cancelGoto" value="取消" />'
+                    +'<input type="button" class="btn btn-primary pull-right sureGoto" value="确定" />'
+                    +'</div>';
+            var datatables2 = '<div id="gotoListsDiv">'
+                    +'<table id="gotoListsTable" class="table table-bordered table-hover"></table>'
+                    +'</div>';
+            $('.fixedContainer').append(controlPanel + datatables2);
+            $('.fixedContainer').css('width','800px').css('height','600px');
+            $('.editPanel').css('display','none');
+            $('#gotoListsTable').css('display','block');
+            showGotoLists(aSpan);
+        }
+
+        //保存所选的跳转id
+        function saveSelectedGoto(){
+            //数据层
+            var gotoName = $('.goto-radio:checked').attr('data-name');    //跳转类型
+            var gotoId = $('.goto-radio:checked').attr('data-id');    //跳转id
+            $('#redirectId').html(gotoId).css('margin-right','20px');
+            $('#redirectType').html(gotoName);
+            addJson.redirectId = gotoId;
+
+            //表现层
+            $('#gotoBtn').html("重新选择跳转id");
+            hideGotoLayer();
+        }
+        function hideGotoLayer(){
+            $('#gotoListsDiv').remove();
+            $('#actPanel').remove();
+            setPanelSize();
+            $('.editPanel').css('display','block');
+        }
+        //取消所选的跳转id
+        function cancelSelectedGoto(){
+            $('#gotoBtn').html("点击选择跳转id");
+            hideGotoLayer();
+        }
+
+        function showGotoLists(aSpan){
+            $('#gotoListsTable').dataTable({
+                "destroy":true,
+                "processing":true,
+                "serverSide":true,
+                "lengthChange":false,
+                "filter":false,
+                "displayLength":12,
+                "ordering":false,
+                "paginationType":"simple_numbers",
+                "autoWidth":true,
+                "ajax": {
+                    "url":'/api/redirect/search',
+                    "type":"GET",
+                    "data":function(paramet) {
+                        var start = paramet.start;
+                        var rows = paramet.length;
+                        var requestJson = {};
+                        requestJson.rows = rows;
+                        requestJson.page = (start/rows)+1;
+                        return requestJson;
+                    },
+                    "dataSrc":function(json){
+                        return json.rows;
+                    }
+                },
+                "initComplete":function(settings,json){
+                    if(!aSpan){
+                        $('.goto-radio:first').prop('checked',true);
+                    }else{
+                        $('.goto-radio[data-id="'+aSpan+'"]').prop('checked',true);
+                    }
+                },
+                "columns": [
+                    { "title":'',"class":'th-center td-center',"width":'50'},
+                    { "data":"id","title":'编号',"class":'th-center td-center',"width":'50'},
+                    { "data":"name","title":'跳转类型',"class":'th-center td-center',"width":'100'},
+                    { "data":"detailId","title":'跳转目标Id',"class":'th-center td-center',"width":'100'},
+                    { "data":"content","title":'跳转内容',"class":'th-center td-center',"width":'276'}],
+                "columnDefs": [
+                    {
+                        "render": function(data,type,row){
+                            var inputDiv = '<input type="radio"  class="goto-radio" name="gotoLists" data-name="'+row.name+'" data-id="'+row.id+'"/>';
+                            return inputDiv;
+                        },
+                        "targets":0
+                    }],
+
+                "createdRow":function(row,data,index){
+
+                },
+                "language":{
+                    url:dataTable_zh
+                }
+            });
+
+        }
+        function submitFiles(element,index,editId){
+            console.log(element,index,editId);
+            // $('#'+element).form({
+            //     url:'/api/oam/main/add',
+            //     success:function(data){
+            //         console.log(data);
+            //         data = $.evalJSON(data);
+            //         console.log(data);
+            //         if(data.errno == 0){
+            //             if(index==0) addJson.appPic=data.id;
+            //             else if(index==1) addJson.webPic = data.id;
+            //             else if(index==2) addJson.fileUrl = data.url;
+            //             uploadStatus[index]=1;
+            //             if(!editId) addCallback();
+            //             else editCallback();
+            //         }
+            //     },
+            //     error:function(error,errmsg){
+            //         console.log(errmsg);
+            //     }
+            // });
+        }
+
+        //新增状态下，文件上传成功的回调函数
+        function addCallback(){
+            var fileNum = 0;
+            $.each(uploadStatus,function(ind,val){
+                fileNum+=val;
+            });
+            if(fileNum==$('.editPanel input[type="file"]').length){
+                addBanner();
+                uploadStatus=[0,0];
+                fileNum = 0;
+            }
+        }
+        //添加轮播广告
+        function addBanner(){
+
+          var redirect = $('#redirect').val();
+          var webInp = $('#webIpt').val();
+          var webInpbg = $('#webIptbg').val();
+          var bannerText = $('#bannerText').val();
+          var isDefault = $('#isDefault').val();
+          var rankNum = $('#rankNum').val();
+          console.log(redirect,webInp,webInpbg,bannerText,isDefault,rankNum);
+          $("#submitForm2").submit();
+          location.reload();
+
+
+          // $("#submitForm3").submit();
+          // $.ajax({
+          //   url:'/api/oam/main/add',
+          //   type:'POST',
+          //   datatype:'json',
+          //   data:{
+          //     'priority':rankNum,
+          //     'is_default':isDefault,
+          //     'redirect_type':redirect,
+          //     'content':bannerText
+          //   },
+          //   success:function(data){
+          //     alert('轮播广告添加成功！');
+          //     $('.fixedContainer').html('');
+          //     $('.fixedLayer').css('display','none');
+          //     getAdsList(false);
+          //     addJson={};
+          //     updateJson={};
+
+          //   },
+          //   error:function(error){
+          //     alert("添加失败！");
+          //   }
+          // })
+        }
+        function updateBanner(){
+            if(addJson)   updateJson = $.extend(updateJson,addJson);
+            // return ajaxAction(
+            //         'PUT',
+            //         apiPath('/api/circle/update'),
+            //         updateJson,
+            //         true,
+            //         function(data,textStatus){
+            //             alert('轮播广告图'+updateJson.id+'编辑成功！');
+            //             $('.fixedContainer').html('');
+            //             $('.fixedLayer').css('display','none');
+            //             getAdsList(true);
+            //             uploadStatus=[0,0];
+            //             updateJson={};
+            //             addJson={};
+            //         },
+            //         function(errno,errmsg){
+            //             alert(errmsg);
+            //         });
+        }
+
+        //编辑状态下，文件上传成功的回调函数
+        function editCallback(){
+
+        }
+
+        function delAds(adsId){
+          $.ajax({
+            url:'/api/oam/main/delete',
+            type:'POST',
+            datatype:'json',
+            data:{
+              'id':adsId
+            },
+            success:function(data){
+              alert("删除成功！");
+              getAdsList(true);
+              window.location.reload();
+            },
+            error:function(error){
+              alert('删除失败！');
+            }
+          })
+        }
+        function loadDefaultDOM(){
+            var closeBtn = '<img src="/bundles/oam/images/close.png" alt=""/>';
+            $('.closeBtn').append(closeBtn);
+            $('.topAddBtn').on('click',function(){
+                showEditLevel();
+            });
+            $('.fixedLayer').off('click','#gotoBtn').on('click','#gotoBtn',function(){
+                var aSpan = $('#gotoBtn').prev().text();
+                if(!aSpan)  selectGoto('');
+                else selectGoto(aSpan);
+
+            });
+        }
+        //请求跳转类型的数据
+        function setDefaultRedirectType(){
+            // ajaxAction(
+            //         'GET',
+            //         apiPath('/api/redirect/search/type'),
+            //         '',
+            //         true,
+            //         function(data,textStatus){
+            //             redirectDatas= data.rows;
+            //         },
+            //         function(errno,errmsg){
+            //         });
+        }
+        //查找匹配的跳转类型
+        function matchRedirectType(redirectType){
+            var redirectTypeName='';
+            $.each(redirectDatas,function(index,content){
+                if(redirectType==content.id){
+                    redirectTypeName = content.name;
+                    return false;
+                };
+            });
+            return redirectTypeName;
+        }
+
+        // 加载二级页面数据
+        function loadSecondPage(){
+            // ajaxAction(
+            //         'GET',
+            //         apiPath('/api/category/search?parentId=0'),
+            //         '',
+            //         true,
+            //         function(data,textStatus){
+            //             fullDatas = data.rows;
+            //             var option='<option value="secP1" data-categoryD1Id="0">首页</option>';
+            //             $.each(fullDatas,function(index,content){
+            //                 option += '<option value="secP'+(content.index+2)+'" data-categoryD1Id="'+content.id+'">'+content.name+'</option>';
+            //             });
+            //             $('#selectPage').html(option);
+            //         },
+            //         function(errno,errmsg){
+            //             alert(errmsg);
+            //         });
+        }
+
+    </script>
+    {% endblock %}

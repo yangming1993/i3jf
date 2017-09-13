@@ -1,0 +1,540 @@
+{% extends "i3jf/admin/template.html" %}
+    {% block css %}
+    <link rel="stylesheet" href="{{static_url}}admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/AdminLTE.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/skin-blue.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/dataTables.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/daterangepicker.css">
+    <style type="text/css">
+        .control-panel{
+            padding:10px;
+        }
+        #order-status,
+        #order-timeline,
+        #control-btns{
+            display:inline-block;
+            margin-left:15px;
+        }
+        #order-status *,
+        #order-timeline *,
+        #control-btns *{
+            vertical-align:middle;
+        }
+        #order-status #status-select{
+            display:inline-block;
+            width:auto;
+        }
+        #order-timeline #timeline{
+            display:inline-block;
+            width:270px;
+            background-color:#fff;
+            cursor:pointer;
+        }
+    </style>
+    <style type="text/css">
+      .logo{
+        font-size:26px;
+        font-weight:bold;
+        /* color:#222d32; */
+      }
+      .logo span{
+
+      }
+      .tips{
+        font-size: 10px;
+        color:darkgray;
+      }
+    </style>
+    <link rel="stylesheet" href="{{static_url}}admin/css/myModify.css">
+
+    {% endblock %}
+
+    {% block content %}
+                    <ul class="sidebar-menu">
+            <li class="header">菜单</li>
+            <li id="dataMenage" class="treeview">
+              <a href="/api/oam/data_analysis/"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i> <span>数据分析</span></a>
+
+            </li>
+            <li id="userMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> <span>用户管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu active">
+                <li id="1" class="active"><a href="/api/oam/user/lists">用户列表</a></li>
+              </ul>
+            </li>
+            <li id="orderMenage" class="treeview active">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-hamburger"></i> <span>订单管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1" class="active"><a href="/api/oam/order/lists">订单列表</a></li>
+                <!-- <li id="2"><a href="/static/i3jf/admin/special.html">异常订单</a></li> -->
+                <li id="3"><a href="/api/oam/returned/history">退货历史</a></li>
+              </ul>
+            </li>
+            <li id="contentMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-signal"></i> <span>数据管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/price/set">价格管理</a></li>
+                <li id="2"><a href="/api/oam/product/lists">产品列表</a></li><!--
+                <li id="4"><a href="/static/i3jf/admin/bind.html">分类管理</a></li> -->
+              </ul>
+            </li>
+            <li id="marketMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-film"></i> <span>推广管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/banner/ads/list">首页轮播管理</a></li>
+                <li id="2"><a href="/api/oam/channel/product/lists">首页频道管理</a></li>
+                <!-- <li id="3"><a href="/static/i3jf/admin/pull.html">精品推荐管理</a></li> -->
+              </ul>
+            </li>
+            <li id="productList" class="treeview">
+              <a href="/api/oam/get/product/detail"><i class="glyphicon glyphicon-volume-down"></i>
+              <span>获取产品信息</span> </a>
+
+            </li>
+            <li class="treeview">
+              <a href="/api/oam/get/area/detail"><i class="glyphicon glyphicon-th-large"></i> <span>地区管理</span> </a>
+            </li>
+          </ul>
+        </section>
+      </aside>
+      <div class="content-wrapper" style="min-height: 897px;">
+        <!-- init -->
+
+        <!-- init -->
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+
+          <h1>
+            订单管理<small>订单列表</small>
+          </h1>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+          <!-- Your Page Content Here -->
+      <div class="box box-default color-palette-box">
+        <div class="control-panel">
+            <div id="order-status">
+              订单状态：
+              <select id="status-select" class="form-control">
+                  <option value="" selected="selected">全部订单</option>
+                  <option value="0">订单成功</option>
+                  <option value="1">未支付</option>
+                  <option value="2">未发货</option>
+                  <option value="3">取消中</option>
+                  <option value="4">已退货</option>
+                  <option value="5">审核中</option>
+              </select>
+            </div>
+            <div id="order-timeline">
+                生成时间：
+                <input id="timeline" class="form-control" readonly="readonly" type="text">
+            </div>
+            <div id="control-btns">
+                <button id="doSearch" class="status-item btn btn-primary" onclick="searchOrder();">搜索</button>
+                <button id="doReset" class="status-item btn btn-warning" onclick="resetOrder();">重置</button>
+            </div>
+        </div>
+
+		<div class="box-body">
+			<div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+          <div class="row">
+             <div class="col-sm-6"></div>
+             <div class="col-sm-6"></div>
+          </div>
+          <div class="row">
+             <div class="col-sm-12">
+                <table id="dataTable" class="table table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="dataTable_info">
+
+                </table>
+
+             </div>
+        </div>
+
+
+
+   </section>
+      <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
+    </div>
+    <div class="fixedLayer">
+    <div class="fixedContainer">
+    </div>
+</div>
+
+    <img id="basePicInfo" src="" style="display:none;">
+
+{% endblock %}
+
+{% block js %}
+    <script src="{{static_url}}admin/js/jQuery-2.1.4.min.js"></script>
+    <script src="{{static_url}}admin/js/bootstrap.min.js"></script>
+    <script src="{{static_url}}admin/js/checkAction.js"></script>
+    <script src="{{static_url}}admin/js/public.js"></script>
+    <script src="{{static_url}}admin/js/base.js"></script>
+    <script src="{{static_url}}admin/js/dataTables.min.js"></script>
+    <script src="{{static_url}}admin/js/moment.js" type="text/javascript"></script>
+    <script src="{{static_url}}admin/js/daterangepicker-2.0.8.js" type="text/javascript"></script>
+
+
+
+    <script type="text/javascript">
+    	$(function(){
+        var checkLogin = new checkLogin();//判断登录
+        if (checkLogin.flag) {
+
+        }else{
+          window.location.href = "/api/oam/admin/login";
+        }
+
+        //判断登录
+        function checkLogin(){
+            var loginName = '';
+            var loginList = '';
+            var topOrderN = '';
+            //获取session 判断登录
+            var Login = sessionStorage.getItem("adminLogin");
+            console.log(Login);
+            // var Login = getSessionstronge("login");
+            if (Login == null) {  //没有登录
+                console.log("没登录");
+                this.flag = false;
+            }else{  //登录
+                console.log("已经登陆");
+                this.flag = true;
+                $(".info p").eq(0).text(Login);
+                $(".hidden-xs").text(Login);
+            }
+        }
+        getOrderList();
+
+    		initMenu('order',1);
+        // changeBind($('#doSearch')[0],true);
+        // changeBind($('#doReset')[0],true);
+        $("#timeline").daterangepicker({
+            'singleDatePicker': false,
+            'showDropdowns': true,
+            'autoUpdateInput': false,
+            'locale':{
+              format: 'YYYY-MM-DD',
+              separator: ' ~ ',
+              applyLabel: '确认',
+              cancelLabel: '取消',
+              fromLabel: '从',
+              toLabel: '到',
+              customRangeLabel: '自定义日期',
+              daysOfWeek: ['日', '一', '二', '三', '四', '五','六'],
+              monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+              firstDay: 1
+            }
+          },function(start,end){
+              $("#timeline").val(start.format('YYYY-MM-DD') + ' 00:00:00' + ' ~ ' + end.format('YYYY-MM-DD') + ' 23:59:59');
+          });
+
+    	});
+
+
+
+        function resetOrder(){
+            var searchInfo = {};
+            $('#status-select').val('');
+            $('#timeline').val('');
+            // changeBind($('#doSearch')[0],true);
+            // changeBind($('#doReset')[0],true);
+            getOrderList(false,searchInfo);
+        }
+
+        function searchOrder(){
+            var searchInfo = {};
+            var timeline = $("#timeline").val();
+            if(!timeline){
+                searchInfo.beginTime = '';
+                searchInfo.endTime = '';
+            }else{
+                searchInfo.beginTime = timeline.split(' ~ ')[0];
+                searchInfo.endTime = timeline.split(' ~ ')[1];
+            }
+            searchInfo.status = $('#status-select').val();
+            // changeBind($('#doSearch')[0],true);
+            // changeBind($('#doReset')[0],true);
+
+            getOrderList(false,searchInfo);
+        }
+
+        function getOrderList(keepFlag,searchInfo){
+          console.log(keepFlag);
+          console.log(searchInfo);
+
+          var dt = $('#dataTable').DataTable({
+              paging: true,//分页
+              ordering: true,//是否启用排序
+              searching: true,//搜索
+              processing:true, //加载开启
+              language: {
+                  lengthMenu: '<select class="form-control input-xsmall">' + '<option value="1">1</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="30">30</option>' + '<option value="40">40</option>' + '<option value="50">50</option>' + '</select>条记录',//左上角的分页大小显示。
+                  search: '<span>关键字搜索：</span>',//右上角的搜索文本，可以写html标签
+
+                  paginate: {//分页的样式内容。
+                      previous: "上一页",
+                      next: "下一页",
+                      first: "第一页",
+                      last: "最后"
+                  },
+                  processing : "载入中...<img src='./images/loading.gif' style='width:100px;height:100px;' />",
+                  zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
+                  //下面三者构成了总体的左下角的内容。
+                  info: "总共_PAGES_ 页，显示第_START_ 到第 _END_ ，筛选之后得到 _TOTAL_ 条，初始_MAX_ 条 ",//左下角的信息显示，大写的词为关键字。
+                  infoEmpty: "0条记录",//筛选为空时左下角的显示。
+                  infoFiltered: ""//筛选之后的左下角筛选提示，
+              },
+              pagingType: "full_numbers",//分页样式的类型
+              "ajax":{
+                "url":'/api/oam/order/all',
+                "dataSrc":'orderlist'
+              },
+              "columns": [
+                  {
+                    "title":'',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"orderId",
+                    "title":'订单编号',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"id",
+                    "title":'用户ID',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"customer__phone",
+                    "title":'昵称',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"customer__realname",
+                    "title":'真实姓名',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"name",
+                    "title":'收货人姓名',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"telephone",
+                    "title":'联系人电话',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"address",
+                    "title":'收货人地址',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"amount",
+                    "title":'订单价格',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"freight",
+                    "title":'运费',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"state",
+                    "title":'订单状态',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "data":"date_created",
+                    "title":'订单时间',
+                    "class":'th-center td-center'
+                  },
+                  {
+                    "title":'操作',
+                    "class":'th-center td-center'
+                  }
+                ],
+
+                "columnDefs": [
+                    {
+                        "render": function(data,type,row){
+                            var inputDiv = '<input type="checkbox" class="table-checkbox" name="showLists" data-name="'+row.name+'" data-id="'+row.id+'"/>';
+                            return inputDiv;
+                        },
+                        "targets":0
+                    },{
+
+                        "render": function(data,type,row){
+                            var state = '';
+                            switch(row.state){
+                              case 0:
+                                state = '成功';
+                              break;
+                              case 1:
+                                state = '未支付';
+                              break;
+                              case 2:
+                                state = '未发货';
+                              break;
+                              case 3:
+                                state = '取消中';
+                              break;
+                              case 4:
+                                state = '已退货';
+                              break;
+                              case 5:
+                                state = '审核中';
+                              break;
+                            }
+                            return state;
+                      },
+                      "targets":10
+                    },{
+
+                        "render": function(data,type,row){
+                            return '<a target="_blank" href="/api/oam/order/detail?orderId='+row.id+'" class="btn btn-sm">查看详情</a>';
+                      },
+                      "targets":12
+                    }
+                ],
+
+                createdRow:function(row,data,index){
+                    // $('td',row).eq(7).find('.user-disabled').bind('click',function(){
+                    //     var target = this;
+                    //     var disabledStatus = $(target).attr('status');
+                    //     if(disabledStatus == 'true'){
+                    //         if(!myConfirm('是否禁用该账号？')) return;
+                    //         disableUser(data.id);
+                    //     }else{
+                    //         if(!myConfirm('是否启用该账号？')) return;
+                    //         enableUser(data.id);
+                    //     }
+                    // });
+                    $('td',row).eq(7).find('.rechargeBtn').on('click',function(){
+                        showEditLevel(data.id);
+                    });
+                }
+
+            });
+            $("#doReset").click(function(){
+                window.location.reload();
+            });
+            $("#doSearch").removeAttr('disabled');
+            if (keepFlag == undefined || searchInfo == undefined) {  //未搜索
+
+            }
+            else{
+              console.log(searchInfo.status,searchInfo.beginTime,searchInfo.endTime);
+              var startTime = searchInfo.beginTime.substr(0,10);
+              var endTime = searchInfo.endTime.substr(0,10);
+              var Url = "/api/oam/order/statelist?rows=15&page=1&state="+searchInfo.status+"&time=1&start_time="+startTime+"&end_time="+endTime;
+              dt.ajax.url(Url).load();
+
+              if (searchInfo.status.length == 0) {
+                dt.ajax.url("/api/oam/order/all?rows=15&page=1").load();
+              }
+            }
+        }
+
+        orderList({
+          'rows':10,
+          'page':1
+        })
+        function orderList(json){
+          // $.ajax({
+          //   url:'/api/oam/order/all',
+          //   type:'GET',
+          //   datatype:'json',
+          //   data:{
+          //     'rows':json.rows,
+          //     'page':json.page
+          //   },
+          //   success:function(data){
+          //     var data = JSON.parse(data);
+          //     console.log(data);
+          //     var userList = data.userlist;
+          //     var orderList = '';
+          //     $.each(userList,function(index,item){
+          //       orderList += '<tr role="row" class="odd">'+
+          //             '<td class=" th-center td-center">'+
+          //                '<input class="table-checkbox" name="showLists" data-name="undefined" data-id="undefined" type="checkbox">'+
+          //             '</td>'+
+          //             '<td class=" th-center td-center">'+item.orderId+'</td><td class=" th-center td-center">17</td>'+
+          //             '<td class=" th-center td-center">'+item.customer__phone+'</td>'+
+          //             '<td class=" th-center td-center">'+item.customer__realname+'</td>'+
+          //             '<td class=" th-center td-center">'+item.name+'</td>'+
+          //             '<td class=" th-center td-center">'+item.telephone+'</td>'+
+          //             '<td class=" th-center td-center">'+item.address+'</td>'+
+          //             '<td class=" th-center td-center">'+item.amount+'</td><td class=" th-center td-center">'+item.freight+'</td>'+
+          //             '<td class=" th-center td-center">待支付</td>'+
+          //             '<td class=" th-center td-center">'+item.date_created+'</td>'+
+          //             '<td class=" th-center td-center">'+
+          //                '<a target="_blank" href="/static/i3jf/admin/orderDetail.html?orderId='+item.id+'" class="btn btn-sm">查看详情</a>'+
+          //             '</td>'+
+          //          '</tr>'
+          //     });
+          //     $("#dataTable_processing").hide();
+          //     $("#orderList").html(orderList);
+          //   },
+          //   error:function(error){
+
+          //   }
+          // })
+        }
+
+        // function searchOrder(){
+        //   var state = $("#status-select option:selected").attr('value');
+        //   $("#orderList").html('');
+        //   $.ajax({
+        //     url:'/api/oam/order/statelist',
+        //     type:'GET',
+        //     datatype:'json',
+        //     data:{
+        //       'rows':10,
+        //       'page':1,
+        //       'state':state,
+        //       'time':0,
+        //       'start_time':20170606,
+        //       'end_time':20170808
+        //     },
+        //     success:function(data){
+        //       var data = JSON.parse(data);
+        //       console.log(data);
+        //       var userList = data.userlist;
+        //       var orderList = '';
+        //       if (data.amount>=0) {
+        //         $("#dataTable_processing").show();
+        //         return;
+        //       }
+        //       $.each(userList,function(index,item){
+        //         orderList += '<tr role="row" class="odd">'+
+        //               '<td class=" th-center td-center">'+
+        //                  '<input class="table-checkbox" name="showLists" data-name="undefined" data-id="undefined" type="checkbox">'+
+        //               '</td>'+
+        //               '<td class=" th-center td-center">'+item.orderId+'</td><td class=" th-center td-center">17</td>'+
+        //               '<td class=" th-center td-center">'+item.customer__phone+'</td>'+
+        //               '<td class=" th-center td-center">'+item.customer__realname+'</td>'+
+        //               '<td class=" th-center td-center">'+item.name+'</td>'+
+        //               '<td class=" th-center td-center">'+item.telephone+'</td>'+
+        //               '<td class=" th-center td-center">'+item.address+'</td>'+
+        //               '<td class=" th-center td-center">'+item.amount+'</td><td class=" th-center td-center">'+item.freight+'</td>'+
+        //               '<td class=" th-center td-center">待支付</td>'+
+        //               '<td class=" th-center td-center">'+item.date_created+'</td>'+
+        //               '<td class=" th-center td-center">'+
+        //                  '<a target="_blank" href="/static/i3jf/admin/orderDetail.html?orderId='+item.id+'" class="btn btn-sm">查看详情</a>'+
+        //               '</td>'+
+        //            '</tr>'
+        //       });
+        //       $("#dataTable_processing").hide();
+        //       $("#orderList").html(orderList);
+        //     },
+        //     error:function(error){
+        //       alert("获取失败");
+        //     }
+        //   })
+        // }
+</script>
+{% endblock %}

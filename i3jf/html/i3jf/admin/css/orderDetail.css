@@ -1,0 +1,182 @@
+    .item{
+        display: inline-block;
+        width: 130px;
+    }
+    body{
+        min-width:1300px;
+        background:#f9f9f9;
+    }
+    a{
+        text-decoration: none;
+    }
+    img{
+        border:none;
+    }
+    input{
+        outline:none;
+    }
+    body{
+        background:#fff;
+    }
+    .clearFix:after{
+        content:'';
+        clear:both;
+        display:block;
+    }
+    .clearFix{
+        zoom:1;
+    }
+
+    .searchOverall{
+        display:none;
+    }
+    /* 主要内容显示 */
+    .mainCont{
+        width:1200px;
+        margin:35px 0 100px;
+    }
+    /*收货人、支付方式、商品等信息  开始*/
+    .guestInformation{
+        width:1200px;
+    }
+    .guestInformation h3{
+        font-size:18px;
+        margin-bottom:20px;
+    }
+    .receiveDetails{
+        width:1178px;
+        border:1px solid #f5f5f5;
+        padding:20px 0 3px 20px;
+        margin-bottom:30px;
+    }
+    .receiveInform{
+        margin-bottom:18px;
+        width:1178px;
+        font-size:14px;
+    }
+    .receiveInform span:nth-child(1){
+        width:74px;
+    }
+    .c999{
+        color:#999;
+    }
+    .receiveInform span:nth-child(2){
+        width:1084px;
+        white-space:nowrap;
+        overflow: hidden;
+        text-overflow:ellipsis;
+    }
+    .logisticsInfor{
+        width:1084px;
+    }
+    .logisticsInfor li{
+        width:1084px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        margin-bottom:10px;
+    }
+    .gsDetails{
+        width:1120px;
+    }
+    .gsTit{
+        width:100%;
+        height:48px;
+        border:1px solid #f5f5f5;
+        display:table;
+    }
+    .gsTit span,.gsTit div{
+        text-align:center;
+        display:table-cell;
+        vertical-align: middle;
+        margin-bottom:6px;
+    }
+    .gsTit-item{
+        margin-top: -1px;
+    }
+    .w440{
+        width:30%;
+    }
+    .w440 p{
+        margin: 0;
+    }
+    .w260{
+        width:15%;
+    }
+    .w224{
+        width:20%;
+    }
+    .w274{
+        width:20%;
+    }
+    .w1200{
+        width:100%;
+    }
+    .shopName{
+        width:1180px;
+        padding-left:20px;
+        height:48px;
+        font-size:14px;
+        line-height:48px;
+    }
+    .wholeInfor{
+        background: #fff;
+    }
+    .WholeDetails{
+        width:1198px;
+        margin-top:-1px;
+        border:1px solid #f5f5f5;
+        display:table;
+    }
+    .WholeDetails li{
+        height:78px;
+        display:table-cell;
+        vertical-align:middle;
+        font-size:14px;
+        text-align:center;
+    }
+    .WholeDetails li p{
+        margin:0px;
+        text-align:left;
+    }
+    .payInfor{
+        width:1180px;
+        border:1px solid #f5f5f5;
+        margin-top:-1px;
+        text-align:right;
+        padding:30px 18px 0 0;
+    }
+    .pay{
+        margin-bottom:20px;
+        height:18px;
+        line-height:18px;
+        font-size:14px;
+    }
+    .pay strong{
+        color:#cc082c;
+        font-size:18px;
+    }
+    .acceptAdd{
+        display:inline-block;
+    }
+    #order-panel{
+        padding:10px 20px;
+        width:100%;
+    }
+    #order-panel *{
+        max-width:1000px;
+    }
+
+
+      .logo{
+        font-size:26px;
+        font-weight:bold;
+        /* color:#222d32; */
+      }
+      .logo span{
+
+      }
+      .tips{
+        font-size: 10px;
+        color:darkgray;
+      }

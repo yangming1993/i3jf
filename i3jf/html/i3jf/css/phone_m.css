@@ -1,0 +1,157 @@
+	body{
+		background-color: #fafafa; 
+	}
+	.main{
+		width: 59.5%;
+		/*height: 330px;*/
+		height:auto;
+		border: 1px solid #f5f5f5;
+		background-color: white;
+		margin: 129px auto 280px;
+	}
+	.main_title{
+		font-size: 20px;
+		font-weight: bold;
+		text-align: center;
+		margin: 30px 0 20px;
+	}
+	.main table{
+		margin-left: 20%;
+		border-collapse: separate;
+		border-spacing: 10px 10px;
+	}
+	.main table span{
+		font-size: 16px;
+		float: right;
+		padding-bottom:28px;
+	}
+	.main table span.now-phone{
+		float: left;
+	}
+	.phone,.code,.message_imgs{
+		border: 1px solid #cccccc;
+		padding-left: 20px;
+	}
+	.code2{
+		border: 1px solid #cccccc;
+		padding-left: 20px;
+	}
+	.phone{
+		width: 278px;
+		height: 38px;
+	}
+	.code,.message_imgs{
+		width: 138px;
+		height: 38px;
+	}
+	.code2{
+	    width: 138px;
+	    height: 38px;
+	}
+	.get_code{
+		width: 130px;
+		height: 40px;
+		border: 1px solid #cccccc;
+		background-color: #f5f5f5;
+		margin-left: 6px; 
+	}
+	.get_code2{
+	    width: 130px;
+	    height: 40px;
+	    border: 1px solid #cccccc;
+	    background-color: #f5f5f5;
+	    margin-left: 6px;
+	}
+	.msg_code{
+        display: inline-block;
+        vertical-align: top;
+        width: 130px;
+        height: 38px;
+        border: 1px solid #cccccc;
+        margin-left: 6px;
+    }
+    .msg_code:hover{
+        cursor: pointer;
+    }
+	.timeOut{
+		color:#fff;
+		background-color:#ccc;
+	}
+	.post{
+		width: 300px;
+		height: 40px;
+		border: 0;
+		color: white;
+		font-size: 20px;
+		text-align: center;
+		background-color: #cc0a2a;
+		margin-bottom: 30px;
+	}
+    /*成功*/
+	.success{
+		width: 59.5%;
+		height: auto;
+		margin: 60px auto 70px;
+		background-color: white;
+		padding: 70px 0;
+		border: 1px solid #f5f5f5;
+		display: none;
+	}
+	.success img{
+		display: block;
+		margin: 0 auto 40px;
+	}
+	.success p{
+		text-align: center;
+		font-size: 20px;
+		font-weight: bold;
+		margin-bottom: 40px;
+	}
+	.success a{
+		width: 300px;
+		height: 40px;
+		border: 0px;
+		background-color: #cc0a2a;
+		display: block;
+		margin: 0 auto;
+		color: white;
+		font-size: 16px;
+		font-weight: bold;
+		line-height: 40px;
+		text-align: center;
+	}
+	/*错误提示*/
+	.errmsg{
+		padding-top:10px;
+		height: 20px;
+		color: #cc0a2a;
+		font-size: 14px;
+		line-height: 20px;
+	}
+	.errmsg2{
+		padding-top:10px;
+		height: 20px;
+		color: #cc0a2a;
+		font-size: 14px;
+		line-height: 20px;
+	}
+	.main button:hover{
+		cursor: pointer;
+	}
+	.jump-info span{
+        vertical-align:middle;
+    }
+    .jump-info .second{
+        display: inline-block;
+        vertical-align: middle;
+        padding: 0px 3px;
+        font-size: 24px;
+        color: #cc0a2a;
+    }
+    .phone_errmsg{
+	    padding-top: 10px;
+	    height: 20px;
+	    color: #cc0a2a;
+	    font-size: 14px;
+	    line-height: 20px;
+	}

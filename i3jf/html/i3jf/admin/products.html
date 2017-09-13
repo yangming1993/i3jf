@@ -1,0 +1,255 @@
+{% extends "i3jf/admin/template.html" %}
+
+    {% block css %}
+    <link rel="stylesheet" href="{{static_url}}admin/css/bootstrap.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/AdminLTE.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/skin-blue.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/dataTables.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/common.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/myModify.css">
+    <style>
+
+          .box-body{
+            padding: 20px 70px 25px;
+          }
+
+          .t1{
+            float:left;
+            margin-right:20px;
+            position:relative;
+          }
+          #sect{
+            /* position:absolute; */
+            bottom:30px;
+            left:200px;
+          }
+          article{
+            /* position:absolute; */
+            top:50px;
+            left:202px;
+          }
+          article span{
+            display:block;
+            margin-top:30px;
+            font-size:20px;
+
+          }
+          .opa{
+            width:100%;
+            height:100%;
+            font-size:20px;
+            background:url('./images/1.gif') no-repeat right center #3c8dbd;
+            background-size:40px 40px;
+            position:absolute;
+            top:0;
+            left:0;
+            line-height:42px;
+            padding-left:30px;
+            font-weight:500;
+            display:none;
+            color:#f3f3f3
+          }
+
+
+    </style>
+
+    {% endblock %}
+      {% block content %}
+                    <ul class="sidebar-menu">
+            <li class="header">菜单</li>
+            <li id="dataMenage" class="treeview">
+              <a href="/api/oam/data_analysis/"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i> <span>数据分析</span></a>
+
+            </li>
+            <li id="userMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> <span>用户管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/user/lists">用户列表</a></li>
+              </ul>
+            </li>
+            <li id="orderMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-hamburger"></i> <span>订单管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/order/lists">订单列表</a></li>
+                <!-- <li id="2"><a href="/static/i3jf/admin/special.html">异常订单</a></li> -->
+                <li id="3"><a href="/api/oam/returned/history">退货历史</a></li>
+              </ul>
+            </li>
+            <li id="contentMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-signal"></i> <span>数据管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/price/set">价格管理</a></li>
+                <li id="2"><a href="/api/oam/product/lists">产品列表</a></li><!--
+                <li id="4"><a href="/static/i3jf/admin/bind.html">分类管理</a></li> -->
+              </ul>
+            </li>
+            <li id="marketMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-film"></i> <span>推广管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/banner/ads/list">首页轮播管理</a></li>
+                <li id="2"><a href="/api/oam/channel/product/lists">首页频道管理</a></li>
+                <!-- <li id="3"><a href="/static/i3jf/admin/pull.html">精品推荐管理</a></li> -->
+              </ul>
+            </li>
+            <li id="productList" class="treeview active">
+              <a href="/api/oam/get/product/detail"><i class="glyphicon glyphicon-volume-down"></i>
+              <span>获取产品信息</span> </a>
+
+            </li>
+            <li class="treeview">
+              <a href="/api/oam/get/area/detail"><i class="glyphicon glyphicon-th-large"></i> <span>地区管理</span> </a>
+            </li>
+          </ul>
+        </section>
+      </aside>
+      <div class="content-wrapper" style="min-height: 897px;">
+        <section class="content-header">
+          <h1>
+            产品信息<!-- <small>退货历史</small> -->
+          </h1>
+        </section>
+        <section class="content" id="content">
+          <div class="box box-default color-palette-box">
+            <div class="box-body">
+                <article>
+                    <h3 class="introduce">
+                      数据获取控制台
+                    </h3>
+                    <p>
+                      数据控制台，图片按钮不可多次点击
+                    </p>
+                    <br>
+                    <br>
+                    <br>
+                </article>
+                <section id="sect">
+                    <div class="t1">
+                        <button type="button" class="btn btn-primary" style="font-size:16px" title="获取分类信息按钮" id="t1">
+                          <span class="glyphicon glyphicon-grain" style="margin-right:10px;font-size:23px"></span>
+                          获取本地分类信息
+                        </button>
+                        <p class="opa">loading...</p>
+                    </div>
+                    <div class="t1">
+                        <button type="button" class="btn btn-primary" style="font-size:16px" title="获取商品池信息按钮" id="t2">
+                          <span class="glyphicon glyphicon-hourglass" style="margin-right:10px;font-size:23px"></span>
+                          获取商品池信息
+                        </button>
+                        <p class="opa">loading...</p>
+                    </div>
+                    <div class="t1">
+                        <button type="button" class="btn btn-primary" style="font-size:16px" title="获取产品详情按钮" id="t3">
+                          <span class="glyphicon glyphicon-ice-lolly" style="margin-right:10px;font-size:23px"></span>
+                          获取产品详情信息
+                        </button>
+                        <p class="opa">loading...</p>
+                    </div>
+                    <div class="t1">
+                        <button type="button" class="btn btn-primary" style="font-size:16px" title="获取产品图片按钮" id="t4">
+                          <span class="glyphicon glyphicon-picture" style="margin-right:10px;font-size:23px"></span>
+                          获取产品图片信息
+                        </button>
+                        <p class="opa">loading...</p>
+                    </div>
+                    <div class="t1">
+                        <button type="button" class="btn btn-primary" style="font-size:16px" title="获取产品价格按钮" id="t5">
+                          <span class="glyphicon glyphicon-usd" style="margin-right:10px;font-size:23px"></span>
+                          获取产品价格信息
+                        </button>
+                        <p class="opa">loading...</p>
+                    </div>
+                    <div class="t1">
+                        <button type="button" class="btn btn-primary" style="font-size:16px;color:#fff" title="获取产品库存按钮" id="t6">
+                          <span class="glyphicon glyphicon-lamp" style="margin-right:10px;font-size:23px"></span>
+                          获取产品库存信息
+                        </button>
+                        <p class="opa">loading...</p>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+
+        </section>
+      </div>
+      <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
+    </div>
+    <div class="fixedLayer">
+    <div class="fixedContainer">
+    </div>
+</div>
+
+    <img id="basePicInfo" src="" style="display:none;">
+
+<div class="daterangepicker dropdown-menu show-calendar opensright">
+     <div class="calendar left">
+      <div class="daterangepicker_input">
+         <input class="input-mini" name="daterangepicker_start" type="text">
+         <i class="fa fa-calendar glyphicon glyphicon-calendar"></i>
+         <div class="calendar-time" style="display: none;">
+            <div></div>
+            <i class="fa fa-clock-o glyphicon glyphicon-time"></i>
+         </div>
+      </div>
+      <div class="calendar-table"></div>
+     </div>
+     <div class="calendar right">
+       <div class="daterangepicker_input">
+         <input class="input-mini" name="daterangepicker_end" type="text">
+         <i class="fa fa-calendar glyphicon glyphicon-calendar"></i>
+         <div class="calendar-time" style="display: none;">
+            <div></div>
+            <i class="fa fa-clock-o glyphicon glyphicon-time"></i>
+         </div>
+       </div>
+       <div class="calendar-table"></div>
+     </div>
+     <div class="ranges">
+       <div class="range_inputs">
+           <button class="applyBtn btn btn-sm btn-success" disabled="disabled" type="button">确认</button>
+           <button class="cancelBtn btn btn-sm btn-default" type="button">取消</button>
+       </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{{static_url}}admin/js/jQuery-2.1.4.min.js"></script>
+    <script src="{{static_url}}admin/js/bootstrap.min.js"></script>
+    <script src="{{static_url}}admin/js/checkAction.js"></script>
+    <script src="{{static_url}}admin/js/public.js"></script>
+    <script src="{{static_url}}admin/js/base.js"></script>
+    <script>
+        $(function(){
+            var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+
+            }else{
+              window.location.href = "/api/oam/admin/login";
+            }
+
+            //判断登录
+            function checkLogin(){
+                var loginName = '';
+                var loginList = '';
+                var topOrderN = '';
+                //获取session 判断登录
+                var Login = sessionStorage.getItem("adminLogin");
+                console.log(Login);
+                // var Login = getSessionstronge("login");
+                if (Login == null) {  //没有登录
+                    console.log("没登录");
+                    this.flag = false;
+                }else{  //登录
+                    console.log("已经登陆");
+                    this.flag = true;
+                    $(".info p").eq(0).text(Login);
+                    $(".hidden-xs").text(Login);
+                }
+            }
+
+        });
+
+    </script>
+    {% endblock %}

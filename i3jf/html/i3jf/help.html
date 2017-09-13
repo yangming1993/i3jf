@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)https://www.i3jf.com/super/helper -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="shortcut icon" href="{{static_url}}images/browserLogo.ico">
+		<title>超级积分I3JF.com、省钱网购首选、正品保障、配送便捷、积分当钱花，省钱购购购！</title>
+
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<meta name="keywords" content="积分购物,积分商城,手机,笔记本,电脑,零食,CD,VCD,DV,相机,数码,配件,手表,存储卡,超级积分">
+		<meta name="description" content="超级积分I3JF.COM-专业的综合网上积分购物商城,销售家电、数码通讯、电脑、家居百货、服装服饰、母婴、图书、食品等数千个品牌优质商品.便捷、诚信的服务，为您提供愉悦的网上购物体验!">
+
+		<link rel="stylesheet" href="{{static_url}}css/base.css">
+		<link rel="stylesheet" href="{{static_url}}css/style.css">
+		<link rel="stylesheet" href="{{static_url}}css/help.css">
+
+		<script type="text/javascript" src="{{static_url}}js/jquery.js"></script>
+
+	</head>
+	<body>
+		<div id="top">
+			<div id="topAd"></div>
+			<div id="nav">
+				<div id="loginMenu">
+					<div class="left backToHome">
+						<a href="/">
+							<img src="{{static_url}}images/index.png" alt="">
+							<span>返回首页</span>
+						</a>
+					</div>
+					<ul class="right  ">
+						<li class="left unloginStatus"><a href="/api/user/login" class="offline">[登录]</a></li>
+						<li class="left unloginStatus"><a href="/api/user/register/">[免费注册]</a></li>
+						<li class="left cart"><a class="myCart" data-href="/api/user/mycart" onclick="check_login(this);">购物车 <span>(0)</span></a></li>
+						<li class="left"><a href="javascript:void(0);" onclick="toHelper();">帮助中心</a></li>
+						<!-- <li class="left"><a href="javascript:void(0);">客户服务</a></li> -->
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="pageHead">
+            <div class="pageheadContent">
+                <div class="leftHead">
+                    <div class="mainTittle left">
+                        <a href="/"><img src="{{static_url}}images/logo.png" alt=""></a>
+                    </div>
+                    <div class="separateD" style="border-right: 4px solid rgb(102, 102, 102);"></div>
+                    <div class="subTittle left" style="display: inline-block;">
+                        <span class="subWord" style="color: rgb(237, 20, 91);">
+                            商城
+                        </span>
+                    </div>
+                </div>
+                <div class="searchOverall">
+                    <input type="text" placeholder="请输入搜索内容" class="left searchInput" onkeyup="searchKey(event);" style="display: inline-block; border: 1px solid rgb(211, 10, 10);">
+                    <span class="left searchBtn" style="display: inline-block; background-color: rgb(211, 10, 10);">搜&nbsp;&nbsp;索</span>
+                </div>
+            </div>
+        </div>
+		<div id="banner">
+	            <div id="topList">
+			        <div class="topMenu">
+			            <div class="menuNav">
+			                <div class="sortMenu">
+			                    <img src="{{static_url}}images/menu.png" alt="">
+			                    <span>全部商品分类</span>
+			                </div>
+			                <div class="sortListContainer">
+			                    <div class="sortListBox">
+			                        <div class="sortList">
+			                            <ul class="categoryUl">
+
+			                             </ul>
+			                        </div>
+			                    </div>
+			                </div>
+			                <div class="clear"></div>
+			            </div>
+			            <div class="topListBox">
+			                <ul class="topList ">
+			                </ul>
+			            </div>
+			            <div class="clear"></div>
+			        </div>
+			    </div>
+		</div>
+		<div id="containerBox">
+			<div id="container" class="">
+				<div class="contTit"></div>
+					<div class="left-nav">
+						<div class="nav-con">
+							<dl>
+								<dt><em></em><span>购物指南</span></dt>
+								<dd class="hide">
+									<a pagehref="/helper_content?main=0&sub=0" onclick="toHelper(0,0)">积分账户</a>
+									<a pagehref="/helper_content?main=0&sub=1" onclick="toHelper(0,1)">积分充值</a>
+									<a pagehref="/helper_content?main=0&sub=2" onclick="toHelper(0,2)">积分使用</a>
+									<a pagehref="/helper_content?main=0&sub=3" onclick="toHelper(0,3)">导购演示</a>
+								</dd>
+							</dl>
+							<dl>
+								<dt><em></em><span>订单服务</span></dt>
+								<dd class="hide">
+									<a pagehref="/helper_content?main=1&sub=0" onclick="toHelper(1,0)">订单管理</a>
+									<a pagehref="/helper_content?main=1&sub=1" onclick="toHelper(1,1)">配送方式</a>
+									<a pagehref="/helper_content?main=1&sub=2" onclick="toHelper(1,2)">配送查询</a>
+									<a pagehref="/helper_content?main=1&sub=3" onclick="toHelper(1,3)">配送须知</a>
+								</dd>
+							</dl>
+							<dl>
+								<dt><em></em><span>售后服务</span></dt>
+								<dd class="hide">
+									<a pagehref="/helper_content?main=2&sub=0" onclick="toHelper(2,0)">退换货政策</a>
+									<a pagehref="/helper_content?main=2&sub=1" onclick="toHelper(2,1)">退换货流程</a>
+									<a pagehref="/helper_content?main=2&sub=2" onclick="toHelper(2,2)">退款说明</a>
+									<a pagehref="/helper_content?main=2&sub=3" onclick="toHelper(2,3)">客服咨询</a>
+								</dd>
+							</dl>
+							<dl>
+								<dt><em></em><span>积分通兑</span></dt>
+								<dd class="hide">
+									<a pagehref="/helper_content?main=3&sub=0" onclick="toHelper(3,0)">积分兑入</a>
+									<a pagehref="/helper_content?main=3&sub=1" onclick="toHelper(3,1)">积分兑出</a>
+									<a pagehref="/helper_content?main=3&sub=2" onclick="toHelper(3,2)">通兑伙伴</a>
+								</dd>
+							</dl>
+							<dl class="last">
+								<dt><em></em><span>关于我们</span></dt>
+								<dd class="hide">
+									<a pagehref="/helper_content?main=4&sub=0" onclick="toHelper(4,0)">超级积分</a>
+									<a pagehref="/helper_content?main=4&sub=1" onclick="toHelper(4,1)">用户协议</a>
+									<a pagehref="/helper_content?main=4&sub=2" onclick="toHelper(4,2)">法律声明</a>
+									<a pagehref="/helper_content?main=4&sub=3" onclick="toHelper(4,3)">常见问题</a>
+								</dd>
+							</dl>
+					    </div>
+					</div>
+					<div class="info-classify">
+						<h3 id="contentTitle">积分账户</h3>
+						<div id="contentShow">
+							<iframe id="helpPage" src="./helpPages/account.html" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" onload="iFrameHeight();"></iframe>
+						</div>
+					</div>
+			</div>
+		</div>
+		<div id="bottom">
+        <div class="helpContainer">
+        <div class="help">
+            <div class="left theSame helpDetailBox">
+                <img class="" src="{{static_url}}images/quality.png" alt="">
+                <div class="curText">
+                    <p><strong>正品保障</strong></p>
+                </div>
+            </div>
+            <div class="left theSame helpDetailBox">
+                <img class="" src="{{static_url}}images/speed.png" alt="">
+                <div class="curText">
+                    <p><strong>急速物流</strong></p>
+                </div>
+            </div>
+            <div class="left theSame helpDetailBox">
+                <img class="" src="{{static_url}}images/good.png" alt="">
+                <div class="curText">
+                    <p><strong>无忧售后</strong></p>
+                </div>
+            </div>
+            <div class="left theSame helpDetailBox ">
+                <img class="" src="{{static_url}}images/hui.png" alt="">
+                <div class="curText">
+                    <p><strong>省钱实惠</strong></p>
+                </div>
+            </div>
+            <div class="left helpDetailBox">
+                <img class="" src="{{static_url}}images/question.png" alt="">
+                <div class="curText">
+                    <p><strong>帮助中心</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contactContainer">
+        <div class="contact">
+            <dl class="left sameCol">
+                <dt><strong>购物指南</strong></dt>
+                <dd><a href="javascript:void(0);" onclick="toHelper(0,0)">积分账户</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(0,1)">积分充值</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(0,2)">积分使用</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(0,3)">导购演示</a></dd>
+            </dl>
+            <dl class="left sameCol">
+                <dt><strong>订单服务</strong></dt>
+                <dd><a href="javascript:void(0);" onclick="toHelper(1,0)">订单管理</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(1,1)">配送方式</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(1,2)">配送查询</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(1,3)">配送须知</a></dd>
+            </dl>
+            <dl class="left sameCol">
+                <dt><strong>售后服务</strong></dt>
+                <dd><a href="javascript:void(0);" onclick="toHelper(2,0)">退换货政策</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(2,1)">退换货流程</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(2,2)">退款说明</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(2,3)">客服咨询</a></dd>
+            </dl>
+            <dl class="left sameCol">
+                <dt><strong>积分通兑</strong></dt>
+                <dd><a href="javascript:void(0);" onclick="toHelper(3,0)">积分兑入</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(3,1)">积分兑出</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(3,2)">通兑伙伴</a></dd>
+            </dl>
+            <dl class="left sameCol">
+                <dt><strong>关于我们</strong></dt>
+                <dd><a href="javascript:void(0);" onclick="toHelper(4,0)">超级积分</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(4,1)">用户协议</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(4,2)">法律声明</a></dd>
+                <dd><a href="javascript:void(0);" onclick="toHelper(4,3)">常见问题</a></dd>
+            </dl>
+            <div class="left" style="text-align:center;">
+                <div style="margin-bottom: 15px;"><strong>超级积分客户端</strong></div>
+                <div>
+                    <img width="88" height="88" src="{{static_url}}images/dimension.png" alt="">
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+</div>
+		<div id="footer">
+			<div id="footerContent">
+				<div class=" ">
+					<p>版权所有深圳前海艾智信科技有限公司
+					</p>
+					<a href="http://www.miibeian.gov.cn/" target="_blank">©2016&nbsp;&nbsp;I3JF&nbsp;&nbsp;粤ICP备16021142号-1</a>
+				</div>
+				<ul class="right ">
+					<!-- <li class="left">法律声明</li> -->
+					<li class="left" onclick="toHelper(4,1)">服务条款</li>
+					<li class="left" onclick="toHelper(4,2)">隐私声明</li>
+					<li class="left" onclick="toHelper(4,0)">关于我们</li>
+					<li class="left" onclick="toHelper(2,3)">联系我们</li>
+					<!-- <li class="left">网站导航</li> -->
+				</ul>
+			</div>
+		</div>
+		<div class="toolback"></div>
+		<div class="tooltip">
+			<div class="cue">
+				<h3></h3>
+				<span></span>
+			</div>
+			<div class="delBox">
+				<strong></strong>
+				<p></p>
+				<div class="cancel">
+					<button class="confirm left"></button>
+					<button class="abolish right"></button>
+				</div>
+			</div>
+		</div>
+
+
+<script type="text/javascript" src="{{static_url}}js/publics.js"></script>
+
+		<script type="text/javascript">
+			var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+                logged_in(); //已登陆
+            }else{
+                not_logged_in(); //未登录
+                // window.location.href = '/static/login/index.html';
+            };
+
+            //未登录可以执行的方法
+            function not_logged_in(){
+                // getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+            };
+            //已登录执行的方法
+            function logged_in(){
+            	cartAmount();//购物车数量
+                getCategoryList();//获取分类导航
+                setSortListHover();//分类导航hover
+
+            };
+
+
+
+			initMenu(main,sub);
+			setChangePage();
+			showDetailCategory();
+			showMenus();
+
+
+			function initMenu(main,sub){
+				var a = parseInt(main);
+				var b = parseInt(sub);
+				// console.log(a,b);
+				var dt = $('.nav-con dt')[a];
+				var dd = $(dt).next().find('a')[b];
+
+				var main = $(dt).find('span').text();
+				var title = $(dd).text();
+				var pageHref = $(dd).attr('pagehref');
+				if(!pageHref){
+					toHelper(0,0);
+					return;
+				}
+				var contTit = '<a href="/">首页</a>&nbsp;>&nbsp;<span id="faCheck">'+main+'</span>&nbsp;>&nbsp;<span id="check">'+title+'</span>';
+
+				$('.contTit').html(contTit);
+				$('#contentTitle').text(title);
+				$('#helpPage').attr('src',pageHref);
+				$(dt).find('span').addClass('spcli');
+				$(dt).find('em').addClass('on');
+				$(dt).next().removeClass('hide');
+				$(dd).addClass('on');
+			}
+
+			function iFrameHeight(){
+				var ifm= document.getElementById("helpPage");
+				// console.log(ifm);
+				var contentFm = document.getElementById("contentShow");
+				var subWeb = document.frames ? document.frames["helpPage"].document : ifm.contentDocument;
+				// console.log(subWeb);
+				if(ifm != null && subWeb != null) {
+					var ifmHtml = $(subWeb.body).parents('html')[0];
+				    $(contentFm).css('height',ifmHtml.scrollHeight);
+				    $(ifm).css('height',ifmHtml.scrollHeight);
+				}
+			}
+
+			function setChangePage(){
+				$('.nav-con a').on('click', function () {
+					var target = $(this);
+					var pageHref = target.attr('pagehref');
+					var title = target.text();
+
+					$('#contentTitle').text(title);
+					$("#check").text(title);
+					$('.nav-con a.on').removeClass('on');
+
+					target.addClass('on');
+		        	$('#helpPage').attr('src',pageHref);
+
+		        });
+			}
+
+			/*--------帮助菜单点击效果---------*/
+			function showMenus() {
+		        $('.nav-con dt').on('click', function () {
+		        	var target = $(this);
+		        	if(!target.find('span').hasClass('spcli')){
+		        		$('.nav-con .spcli').removeClass('spcli');
+		        		target.find('span').addClass('spcli');
+		        	}
+		        	if(target.next().hasClass('hide')){
+		        		target.find('em').addClass('on');
+		        		target.next().removeClass('hide');
+		        	}else{
+		        		target.find('em').removeClass('on');
+		        		target.next().addClass('hide');
+		        	}
+		        });
+		    }
+
+			/*--------全部商品分类点击展开---------*/
+			// showDetailCategory();
+			var flag = false;
+		    function showDetailCategory() {
+		        $('.sortMenu').on('click', function () {
+		            if ($(this).hasClass('activeSortMenu') && flag) {
+		                $('.activeSortMenu').removeClass('activeSortMenu');
+		                $('.sortListContainer').slideUp(function () {
+		                    setTimeout('flag=false', 500);
+		                });
+		            } else if (!$(this).hasClass('activeSortMenu') && !flag) {
+		                $(this).addClass('activeSortMenu');
+		                $('.sortListContainer').slideDown(function () {
+		                    setTimeout('flag=true', 500);
+		                });
+		            };
+		        });
+		    }
+		</script>
+
+</body></html>

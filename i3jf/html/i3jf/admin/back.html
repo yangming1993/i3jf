@@ -1,0 +1,372 @@
+{% extends "i3jf/admin/template.html" %}
+    {% block css %}
+    <link rel="stylesheet" href="{{static_url}}admin/css/bootstrap.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/AdminLTE.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/skin-blue.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/dataTables.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/common.css">
+    <link rel="stylesheet" href="{{static_url}}admin/css/myModify.css">
+    {% endblock %}
+
+    {% block content%}
+          <ul class="sidebar-menu">
+            <li class="header">菜单</li>
+            <li id="dataMenage" class="treeview">
+              <a href="/api/oam/data_analysis/"><i class="glyphicon glyphicon-gift" aria-hidden="true"></i> <span>数据分析</span></a>
+
+            </li>
+            <li id="userMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-user" aria-hidden="true"></i> <span>用户管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1" class="active"><a href="/api/oam/user/lists">用户列表</a></li>
+              </ul>
+            </li>
+            <li id="orderMenage" class="treeview active">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-hamburger"></i> <span>订单管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/order/lists">订单列表</a></li>
+                <!-- <li id="2"><a href="/static/i3jf/admin/special.html">异常订单</a></li> -->
+                <li id="3" class="active"><a href="/api/oam/returned/history">退货历史</a></li>
+              </ul>
+            </li>
+            <li id="contentMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-signal"></i> <span>数据管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/price/set">价格管理</a></li>
+                <li id="2"><a href="/api/oam/product/lists">产品列表</a></li><!--
+                <li id="4"><a href="/static/i3jf/admin/bind.html">分类管理</a></li> -->
+              </ul>
+            </li>
+            <li id="marketMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-film"></i> <span>推广管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="/api/oam/banner/ads/list">首页轮播管理</a></li>
+                <li id="2"><a href="/api/oam/channel/product/lists">首页频道管理</a></li>
+                <!-- <li id="3"><a href="/static/i3jf/admin/pull.html">精品推荐管理</a></li> -->
+              </ul>
+            </li>
+            <li id="productList" class="treeview">
+              <a href="/api/oam/get/product/detail"><i class="glyphicon glyphicon-volume-down"></i> <span>获取产品信息</span> </a>
+            </li>
+            <li id="productList" class="treeview">
+              <a href="/api/oam/get/area/detail"><i class="glyphicon glyphicon-th-large"></i> <span>地区管理</span> </a>
+            </li>
+
+            <!--
+            <li id="gotoMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-share-alt"></i><span>跳转管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">跳转类型列表</a></li>
+                <li id="2"><a href="javascript:void(0)">跳转列表</a></li>
+              </ul>
+            </li>
+            <li id="onsaleMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-gift"></i><span>促销管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">促销列表</a></li>
+              </ul>
+            </li>
+            <li id="noticeMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-volume-down"></i><span>公告管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">公告列表</a></li>
+              </ul>
+            </li>
+            <li id="adsMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-picture"></i><span>广告管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">广告列表</a></li>
+              </ul>
+            </li>
+            <li id="subStationMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-th-large"></i><span>子站管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">子站扣款记录列表</a></li>
+                <li id="2"><a href="javascript:void(0)">子站退款记录列表</a></li>
+              </ul>
+            </li>
+            <li id="sncategoryMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-th"></i> <span>苏宁分类管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">苏宁分类列表</a></li>
+              </ul>
+            </li>
+            <li id="financeMenage" class="treeview">
+              <a href="javascript:void(0)"><i class="glyphicon glyphicon-usd"></i> <span>财务管理</span> <i class="glyphicon glyphicon-menu-left fa-angle-left"></i></a>
+              <ul class="treeview-menu">
+                <li id="1"><a href="javascript:void(0)">充值记录</a></li>
+              </ul>
+            </li> -->
+          </ul>
+        </section>
+      </aside>
+      <div class="content-wrapper" style="min-height: 897px;">
+        <section class="content-header">
+          <h1>
+            订单管理<small>退货历史</small>
+          </h1>
+        </section>
+        <section class="content">
+              <div class="box box-default color-palette-box">
+        <div class="box-body">
+            <div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+               <div class="row">
+                 <div class="col-sm-6"></div>
+
+               </div>
+               <div class="row">
+                 <div class="col-sm-12">
+                    <table id="dataTable" class="table table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="dataTable_info">
+
+                  </table>
+                  <div id="dataTable_processing" class="dataTables_processing" style="display: none;">处理中...</div>
+                  </div>
+                  </div>
+
+                  </div>
+        </div>
+    </div>
+
+        </section>
+      </div>
+      <div class="control-sidebar-bg" style="position: fixed; height: auto;"></div>
+    </div>
+    <div class="fixedLayer">
+    <div class="fixedContainer">
+    </div>
+</div>
+
+    <img id="basePicInfo" src="" style="display:none;">
+{% endblock %}
+
+{% block js %}
+    <script src="{{static_url}}admin/js/jQuery-2.1.4.min.js"></script>
+    <script src="{{static_url}}admin/js/bootstrap.min.js"></script>
+    <script src="{{static_url}}admin/js/checkAction.js"></script>
+    <script src="{{static_url}}admin/js/public.js"></script>
+    <script src="{{static_url}}admin/js/base.js"></script>
+    <script src="{{static_url}}admin/js/dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            var checkLogin = new checkLogin();//判断登录
+            if (checkLogin.flag) {
+
+            }else{
+              window.location.href = "/api/oam/admin/login";
+            }
+
+            //判断登录
+            function checkLogin(){
+                var loginName = '';
+                var loginList = '';
+                var topOrderN = '';
+                //获取session 判断登录
+                var Login = sessionStorage.getItem("adminLogin");
+                console.log(Login);
+                // var Login = getSessionstronge("login");
+                if (Login == null) {  //没有登录
+                    console.log("没登录");
+                    this.flag = false;
+                }else{  //登录
+                    console.log("已经登陆");
+                    this.flag = true;
+                    $(".info p").eq(0).text(Login);
+                    $(".hidden-xs").text(Login);
+                }
+            }
+            searchOrder();
+        });
+
+
+        function resetOrder(){
+            $("#timeline").val('');
+            var searchInfo = {};
+            changeBind($('#doSearch')[0],true);
+            changeBind($('#doReset')[0],true);
+            getOrderList(searchInfo);
+        }
+
+        function searchOrder(){
+            var searchInfo = {};
+            var timeline = $("#timeline").val();
+            if(!timeline){
+                searchInfo.beginTime = '';
+                searchInfo.endTime = '';
+            }else{
+                searchInfo.beginTime = timeline.split(' ~ ')[0];
+                searchInfo.endTime = timeline.split(' ~ ')[1];
+            }
+            changeBind($('#doSearch')[0],true);
+            changeBind($('#doReset')[0],true);
+            getOrderList(searchInfo);
+        }
+        getOrderList();
+        function getOrderList(searchInfo){
+            $.fn.dataTable.ext.errMode = 'none';
+            $('#dataTable').dataTable({
+                "paging": true,//分页
+                "ordering": true,//是否启用排序
+                "searching": true,//搜索
+                "processing":true, //加载开启
+                "autoWidth":true,
+                "language": {
+                  "processing" : "载入中...<img src='./images/loading.gif' style='width:100px;height:100px;' />",
+                  "lengthMenu": "每页显示 _MENU_ 条记录",
+                  "zeroRecords": "抱歉， 没有找到",
+                  "info": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                  "infoEmpty": "没有数据",
+                  "infoFiltered": "(从 _MAX_ 条数据中检索)",
+                  "zeroRecords": "没有检索到数据",
+                  "search": "关键字搜索：",
+                  "paginate": {
+                      "first": "首页",
+                      "previous": "前一页",
+                      "next": "后一页",
+                      "last": "尾页"
+                               },
+                    },
+                  "ajax": {
+                    "url":'/api/oam/order/ordercancels',
+                    "dataSrc":"orderlist"
+                         },
+                 "columns": [
+                    {
+                     "title":'',
+                     "class":'th-center td-center'
+                   },
+                    {
+                      "data":"orderId",
+                      "title":'订单编号',
+                      "class":'th-center td-center',
+                    },
+                    {
+                      "data":"id",
+                      "title":'用户ID',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"telephone",
+                      "title":'昵称',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"name",
+                      "title":'真实姓名',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"customer__realname",
+                      "title":'退货人姓名',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"customer__phone",
+                      "title":'联系人电话',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"address",
+                      "title":'退货人地址',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"amount",
+                      "title":'订单价格',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"state",
+                      "title":'订单状态',
+                      "class":'th-center td-center'
+                    },
+                    {
+                      "data":"date_created",
+                      "title":'订单时间',
+                      "class":'th-center td-center',
+                      render:function(data,type,row,meta){
+                        return new Date(Date.parse(data)).Format("yyyy-MM-dd hh:mm:ss");
+                      }
+                    },
+                    {
+                      "title":'操作',
+                      "class":'th-center td-center'
+                    }
+
+                ],
+                "columnDefs": [
+                    {
+                        "render": function(data,type,row){
+                            var inputDiv = '<input type="checkbox" class="table-checkbox" name="showLists" data-name="'+row.name+'" data-id="'+row.id+'"/>';
+                            return inputDiv;
+                        },
+                        "targets":0
+                    },{
+                        "render": function(data,type,row){
+
+                            var state = ''
+                            switch (row.state){
+                              case 0:
+                                state = '成功';
+                              break;
+                              case 1:
+                                state = '未支付';
+                              break;
+                              case 2:
+                                state = '未发货';
+                              break;
+                              case 3:
+                                state = '取消中';
+                              break;
+                              case 4:
+                                state = '已退货';
+                              break;
+                              case 5:
+                                state = '审核中';
+                              break;
+                            }
+                            return state;
+                        },
+                        "targets":9
+                    },{
+                        "render": function(data,type,row){
+                            return '<a target="_blank" href="/api/oam/order/detail?orderId='+row.id+'" class="btn btn-sm">查看详情</a>';
+                      },
+                      "targets":11
+                    }
+                ],
+                "createdRow":function(row,data,index){
+
+                },
+
+
+            });
+       Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1,
+            //月份
+            "d+": this.getDate(),
+            //日
+            "h+": this.getHours(),
+            //小时
+            "m+": this.getMinutes(),
+            //分
+            "s+": this.getSeconds(),
+            //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3),
+            //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+           if (/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+          }
+           for (var k in o) {
+            if (new RegExp("(" + k + ")").test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+         }
+         return fmt;
+        };
+        }
+    </script>
+{% endblock %}
